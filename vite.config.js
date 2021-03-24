@@ -21,5 +21,13 @@ export default env => {
         "@": path.resolve(__dirname, "src"),
       },
     },
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://dev.erp.com",
+          changeOrigin: true,
+        },
+      },
+    },
   });
 };
