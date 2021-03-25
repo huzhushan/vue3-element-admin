@@ -12,7 +12,7 @@ const service = axios.create({
 // 拦截请求
 service.interceptors.request.use(
   (config) => {
-    const authorization = store.state.user;
+    const authorization = store.state.app;
     if (authorization) {
       config.headers.Authorization = `Bearer ${authorization.token}`;
     }
@@ -36,7 +36,7 @@ service.interceptors.response.use(
     // 响应拦截器中的 error 就是那个响应的错误对象
     if (error.response && error.response.status === 401) {
       // 校验是否有 refresh_token
-      const { authorization } = store.state;
+      const { authorization } = store.state.app;
       if (!authorization || !authorization.refresh_token) {
         router.push("/login");
 
@@ -54,7 +54,7 @@ service.interceptors.response.use(
         });
         // 如果获取成功，则把新的 token 更新到容器中
         // console.log('刷新 token  成功', res)
-        store.commit("setToken", {
+        store.commit("app/setToken", {
           token: res.data.data.token, // 最新获取的可用 token
           refresh_token: authorization.refresh_token, // 还是原来的 refresh_token
         });
@@ -67,7 +67,7 @@ service.interceptors.response.use(
         // console.log('请求刷线 token 失败', err)
         router.push("/login");
         // 清除token
-        store.commit("clearToken")
+        store.commit("app/clearToken")
       }
     }
 

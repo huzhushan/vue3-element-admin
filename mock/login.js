@@ -12,4 +12,18 @@ export default [
       }
     },
   },
+  {
+    url: "/api/userinfo",
+    method: "get",
+    timeout: 100,
+    response: {
+      code: 200,
+      message: "获取用户信息成功",
+      data: {
+        id: 1,
+        userName: 'admin',
+        avatar: "@image('48x48', '#fb0a2a')"
+      }
+    },
+  },
 ]

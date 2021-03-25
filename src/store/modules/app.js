@@ -5,6 +5,10 @@ export default {
   namespaced: true,
   state: {
     authorization: getItem(TOKEN),
+    sidebar: {
+      collapse: getItem('collapse')
+    },
+    userinfo: null
   },
   mutations: {
     setToken (state, data) {
@@ -17,6 +21,21 @@ export default {
       // 保存到localStorage
       removeItem(TOKEN);
     },
+    setCollapse (state, data) {
+      state.sidebar.collapse = data;
+      // 保存到localStorage
+      setItem('collapse', data);
+    },
+    clearCollapse (state) {
+      state.sidebar.collapse = '';
+      // 保存到localStorage
+      removeItem('collapse');
+    },
+    setUserinfo (state, data) {
+      state.userinfo = data;
+    }
   },
-  actions: {},
+  actions: {
+
+  },
 };

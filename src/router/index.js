@@ -1,18 +1,24 @@
 // index.js
-import { createRouter, createWebHistory } from "vue-router"
-import home from './modules/home'
+import { createRouter, createWebHashHistory } from "vue-router"
+import layout from '@/layout/index.vue'
 import login from './modules/login'
+import home from './modules/home'
+import user from './modules/user'
 
-import { TOKEN } from '@/store/modules/user'
+import { TOKEN } from '@/store/modules/app'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      component: layout,
+      redirect: '/home',
+      children: [
+        ...home,
+        ...user
+      ]
     },
-    ...home,
     ...login
   ],
 });

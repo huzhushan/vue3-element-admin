@@ -97,7 +97,7 @@ export default defineComponent({
                   router.push(!!targetPath ? targetPath : "/");
                 },
               });
-              store.commit("user/setToken", data);
+              store.commit("app/setToken", data);
             } else {
               ctx.$message.error(message);
             }
