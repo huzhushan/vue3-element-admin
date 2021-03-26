@@ -7,8 +7,7 @@ export default {
     authorization: getItem(TOKEN),
     sidebar: {
       collapse: getItem('collapse')
-    },
-    userinfo: null
+    }
   },
   mutations: {
     setToken (state, data) {
@@ -30,12 +29,7 @@ export default {
       state.sidebar.collapse = '';
       // 保存到localStorage
       removeItem('collapse');
-    },
-    setUserinfo (state, data) {
-      state.userinfo = data;
     }
   },
-  actions: {
-
-  },
+  actions: {},
 };

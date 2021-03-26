@@ -13,29 +13,16 @@
   </div>
 </template>
 <script>
-import { defineComponent, onBeforeMount } from "vue";
-import { useStore } from "vuex";
+import { defineComponent } from "vue";
 import Sidebar from "./components/Sidebar/index.vue";
 import Topbar from "./components/Topbar/index.vue";
 import Tabsbar from "./components/Tabsbar/index.vue";
-import { GetUserinfo } from "@/api/app";
+
 export default defineComponent({
   components: {
     Sidebar,
     Topbar,
     Tabsbar,
-  },
-  setup() {
-    const store = useStore();
-    const getUserinfo = async () => {
-      const { code, data } = await GetUserinfo();
-      if (+code === 200) {
-        store.commit("app/setUserinfo", data);
-      }
-    };
-    onBeforeMount(() => {
-      getUserinfo();
-    });
   },
 });
 </script>

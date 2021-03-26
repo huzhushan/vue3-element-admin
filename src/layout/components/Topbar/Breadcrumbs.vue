@@ -14,34 +14,39 @@
   </el-breadcrumb>
 </template>
 <script>
-import { defineComponent, ref, onBeforeMount } from "vue";
-import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import {
+  defineComponent,
+  ref,
+  onBeforeMount,
+  getCurrentInstance,
+  watch,
+} from "vue";
+
 export default defineComponent({
   setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const routes = router.getRoutes();
+    const { ctx } = getCurrentInstance();
+    const route = ctx.$router.currentRoute; // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
     const breadcrumbs = ref([]);
 
     const getBreadcrumbs = (route) => {
-      const res = [{ path: "/", meta: { title: "首页" } }];
-      const { parentBreadcrumb } = route.meta;
-      if (!!parentBreadcrumb) {
-        const parents = routes.filter((item) =>
-          parentBreadcrumb.includes(item.name)
+      const home = [{ path: "/", meta: { title: "首页" } }];
+      if (route.name === "home") {
+        return home;
+      } else {
+        const matched = route.matched.filter(
+          (item) => !!item.meta && !!item.meta.title
         );
-        res.push(...parents);
+
+        return [...home, ...matched];
       }
-      if (route.name !== "home") res.push(route);
-      breadcrumbs.value = res;
     };
 
     onBeforeMount(() => {
-      getBreadcrumbs(route);
+      breadcrumbs.value = getBreadcrumbs(route.value);
     });
 
-    onBeforeRouteUpdate((to) => {
-      getBreadcrumbs(to);
+    watch(route, (newRoute) => {
+      breadcrumbs.value = getBreadcrumbs(newRoute);
     });
 
     return {

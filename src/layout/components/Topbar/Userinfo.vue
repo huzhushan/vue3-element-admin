@@ -8,7 +8,7 @@
         <img
           class="avatar"
           :src="userinfo.avatar"
-        /> {{userinfo.userName}}
+        /> {{userinfo.name}}
       </template>
     </div>
     <template #dropdown>
@@ -29,7 +29,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-    const userinfo = computed(() => store.state.app.userinfo);
+    const userinfo = computed(() => store.state.login.userinfo);
     const logout = () => {
       store.commit("app/clearToken");
       router.push("/login");
@@ -53,7 +53,8 @@ export default defineComponent({
     background: #f5f5f5;
   }
   .el-icon-user {
-    font-size: 16px;
+    font-size: 20px;
+    margin-right: 8px;
   }
   .avatar {
     margin-right: 8px;
