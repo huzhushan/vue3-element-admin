@@ -1,7 +1,7 @@
 <template>
   <router-view />
 </template>
-<style lang="less">
+<style lang="scss">
 html,
 body,
 #app {

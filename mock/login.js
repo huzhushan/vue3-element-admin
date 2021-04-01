@@ -3,6 +3,7 @@ export default [
     url: "/api/login",
     method: "post",
     timeout: 1000,
+    statusCode: 200,
     response: {
       code: 200,
       message: "登录成功",

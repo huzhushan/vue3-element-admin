@@ -1,30 +1,49 @@
 <template>
-  <el-submenu
+  <el-menu-item
+    v-if="!menu.children"
     :index="menu.url"
-    v-for="(menu, index) in menus"
-    :key="index"
+  >
+    <item
+      :icon="menu.icon"
+      :title="menu.title"
+    />
+  </el-menu-item>
+  <el-submenu
+    v-else
+    :index="menu.url"
   >
     <template #title>
-      <i class="el-icon-location"></i>
-      <span>{{menu.title}}</span>
+      <item
+        :icon="menu.icon"
+        :title="menu.title"
+      />
+
     </template>
-    <el-menu-item
-      :index="submenu.url"
-      v-for="(submenu, subindex) in menu.children"
-      :key="subindex"
-    >{{submenu.title}}</el-menu-item>
+    <submenu
+      v-for="submenu in menu.children"
+      :key="submenu.url"
+      :is-nest="true"
+      :menu="submenu"
+    />
   </el-submenu>
 </template>
 <script>
 import { defineComponent } from "vue";
-
+import Item from "./Item.vue";
 export default defineComponent({
+  name: "Submenu",
+  components: {
+    Item,
+  },
   props: {
-    menus: {
-      type: Array,
+    menu: {
+      type: Object,
       required: true,
     },
+    isNest: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup() {},
 });
 </script>

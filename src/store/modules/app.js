@@ -4,6 +4,7 @@ export const TOKEN = "TOKEN";
 export default {
   namespaced: true,
   state: {
+    title: 'Vue3 Element Admin',
     authorization: getItem(TOKEN),
     sidebar: {
       collapse: getItem('collapse')

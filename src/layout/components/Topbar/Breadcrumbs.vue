@@ -5,7 +5,7 @@
   >
     <el-breadcrumb-item
       v-for="(item, index) in breadcrumbs"
-      :key="item.path"
+      :key="index"
       :class="{no_link: index === breadcrumbs.length - 1}"
       :to="index < breadcrumbs.length - 1 ? item.path : ''"
     >
@@ -56,7 +56,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .breadcrumb {
   margin-left: 10px;
   ::v-deep(a),

@@ -22,7 +22,7 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .fold-btn {
   line-height: 48px;
   padding: 0 10px;

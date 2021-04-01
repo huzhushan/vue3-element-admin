@@ -113,7 +113,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .login {
   transition: transform 1s;
   transform: scale(1);

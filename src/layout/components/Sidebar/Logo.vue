@@ -5,7 +5,7 @@
       src="~@/assets/logo.png"
       @click="goHome"
     >
-    <div class="title">ERP管理系统</div>
+    <div class="title">Vue3 Element Admin</div>
   </div>
 </template>
 <script>
@@ -22,7 +22,7 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .brand {
   height: 48px;
   padding: 0 8px;
@@ -36,7 +36,7 @@ export default defineComponent({
   }
   .title {
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
     margin-left: 8px;

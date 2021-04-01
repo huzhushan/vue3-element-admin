@@ -6,6 +6,11 @@ export default [
   {
     path: '/home',
     component: layout,
+    name: "Dashboard",
+    meta: {
+      title: "Dashboard",
+    },
+    icon: 'home',
     children: [
       {
         path: "",

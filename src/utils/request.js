@@ -12,7 +12,7 @@ const service = axios.create({
 // 拦截请求
 service.interceptors.request.use(
   (config) => {
-    const authorization = store.state.app;
+    const { authorization } = store.state.app;
     if (authorization) {
       config.headers.Authorization = `Bearer ${authorization.token}`;
     }
@@ -41,13 +41,14 @@ service.interceptors.response.use(
         router.push("/login");
 
         // 代码不要往后执行了
-        return;
+        return Promise.reject(error);
       }
       // 如果有refresh_token，则请求获取新的 token
       try {
         const res = await axios({
           method: "PUT",
           url: "/api/authorizations",
+          timeout: 10000,
           headers: {
             Authorization: `Bearer ${authorization.refresh_token}`,
           },
@@ -64,14 +65,16 @@ service.interceptors.response.use(
         return service(error.config);
       } catch (err) {
         // 如果获取失败，直接跳转 登录页
-        // console.log('请求刷线 token 失败', err)
+        // console.log('请求刷新 token 失败', err)
         router.push("/login");
         // 清除token
         store.commit("app/clearToken")
+        return Promise.reject(error);
       }
     }
 
-    ElMessage.error(error.response.message);
+    // console.dir(error) // 可在此进行错误上报
+    ElMessage.error(error.message);
 
     return Promise.reject(error);
   }

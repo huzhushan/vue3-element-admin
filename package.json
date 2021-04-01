@@ -28,10 +28,11 @@
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.5",
     "element-plus": "^1.0.2-beta.35",
-    "less": "^4.1.1",
     "mockjs": "^1.1.0",
+    "sass": "^1.32.8",
     "vite": "^2.1.0",
-    "vite-plugin-mock": "^2.3.0"
+    "vite-plugin-mock": "^2.3.0",
+    "vite-plugin-svg-icons": "^0.4.0"
   },
   "repository": {
     "type": "git",

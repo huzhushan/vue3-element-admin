@@ -30,10 +30,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .left {
   width: 210px;
-  background: #2d3a4b;
+  background: $menuBg;
   transition: all 0.3s;
   overflow: hidden;
   display: flex;

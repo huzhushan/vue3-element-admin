@@ -23,7 +23,7 @@ export default defineComponent({
   setup() {},
 });
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .header {
   height: 48px;
   border-bottom: 1px solid #eaeaea;

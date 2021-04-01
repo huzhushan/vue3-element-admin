@@ -1,0 +1,17 @@
+// 该文件中的变量是全局变量，在css文件和vue组件中可以直接使用
+
+$mainColor: #409eff; // 网站主题色
+
+// 菜单配置
+$menuBg: #304156; // 菜单背景颜色
+$menuTextColor: #fff; // 菜单文字颜色
+$menuActiveTextColor: $mainColor; // 已选中菜单文字颜色
+$menuActiveBg: none; // 已选中菜单背景颜色
+$menuHover: #263445; // 鼠标经过菜单时的背景颜色
+$subMenuBg: #1f2d3d; // 子菜单背景颜色
+$subMenuHover: #001528; // 鼠标经过子菜单时的背景颜色
+$collapseMenuActiveBg: #1f2d3d; // 菜单宽度折叠后，已选中菜单的背景颜色
+$collapseMenuActiveColor: $menuTextColor; // 菜单宽度折叠后，已选中菜单的文字颜色
+$collapseMenuActiveBorderBg: $mainColor; // 菜单宽度折叠后，已选中菜单的边框颜色
+$collapseMenuActiveBorderWidth: 2px; // 菜单宽度折叠后，已选中菜单的边框宽度
+$arrowColor: #909399; // 展开/收起箭头颜色

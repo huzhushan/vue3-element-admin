@@ -29,9 +29,10 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-    const userinfo = computed(() => store.state.login.userinfo);
+    const userinfo = computed(() => store.state.account.userinfo);
     const logout = () => {
       store.commit("app/clearToken");
+      store.commit("account/clearUserinfo");
       router.push("/login");
     };
     return {
@@ -42,7 +43,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .userinfo {
   padding: 0 16px;
   line-height: 48px;

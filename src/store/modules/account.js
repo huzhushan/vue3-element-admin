@@ -8,6 +8,9 @@ export default {
   mutations: {
     setUserinfo (state, data) {
       state.userinfo = data;
+    },
+    clearUserinfo (state) {
+      state.userinfo = null;
     }
   },
   actions: {
