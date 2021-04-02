@@ -7,7 +7,7 @@ import home from './modules/home'
 import test from './modules/test'
 
 
-// 左侧菜单(左侧菜单请配置在此，否则无法显示)
+// 左侧菜单
 export const allMenus = [
   ...home,
   ...test,

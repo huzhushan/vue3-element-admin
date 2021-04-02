@@ -4,11 +4,9 @@
     <div class="right">
       <div class="top">
         <topbar />
-        <tabsbar />
+        <tagsbar />
       </div>
-      <div class="main">
-        <router-view />
-      </div>
+      <content />
     </div>
   </div>
 </template>
@@ -16,13 +14,15 @@
 import { defineComponent } from "vue";
 import Sidebar from "./components/Sidebar/index.vue";
 import Topbar from "./components/Topbar/index.vue";
-import Tabsbar from "./components/Tabsbar/index.vue";
+import Tagsbar from "./components/Tagsbar/index.vue";
+import Content from "./components/Content/index.vue";
 
 export default defineComponent({
   components: {
     Sidebar,
     Topbar,
-    Tabsbar,
+    Tagsbar,
+    Content,
   },
 });
 </script>
@@ -38,12 +38,6 @@ export default defineComponent({
     flex-direction: column;
     .top {
       background: #fff;
-    }
-    .main {
-      flex: 1;
-      background: #f0f2f5;
-      padding: 16px;
-      overflow: auto;
     }
   }
 }

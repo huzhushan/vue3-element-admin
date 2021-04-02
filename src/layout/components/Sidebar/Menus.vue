@@ -92,7 +92,7 @@ export default defineComponent({
       top: 0;
       width: $collapseMenuActiveBorderWidth;
       height: 100%;
-      background-color: $collapseMenuActiveBorderBg;
+      background-color: $collapseMenuActiveBorderColor;
     }
   }
 }

@@ -14,18 +14,13 @@
   </el-breadcrumb>
 </template>
 <script>
-import {
-  defineComponent,
-  ref,
-  onBeforeMount,
-  getCurrentInstance,
-  watch,
-} from "vue";
+import { defineComponent, ref, onBeforeMount, watch } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
-    const { ctx } = getCurrentInstance();
-    const route = ctx.$router.currentRoute; // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
+    const router = useRouter();
+    const route = router.currentRoute; // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
     const breadcrumbs = ref([]);
 
     const getBreadcrumbs = (route) => {

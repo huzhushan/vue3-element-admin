@@ -2,27 +2,24 @@
   <div class="error">
     <template v-if="error === '403'">
       <span class="code-403">403</span>
-      <img
-        src="~@/assets/error-icons/403.svg"
-        alt=""
+      <svg-icon
+        name="error-icons-403"
         class="error-img"
-      >
+      />
       <h2 class="title">您无权访问此页面</h2>
     </template>
     <template v-else-if="error === '500'">
-      <img
-        src="~@/assets/error-icons/500.svg"
-        alt=""
+      <svg-icon
+        name="error-icons-500"
         class="error-img"
-      >
+      />
       <h2 class="title">服务器出错了</h2>
     </template>
     <template v-else-if="error === '404'">
-      <img
-        src="~@/assets/error-icons/404.svg"
-        alt=""
+      <svg-icon
+        name="error-icons-404"
         class="error-img"
-      >
+      />
       <h2 class="title">您访问的页面不存在</h2>
     </template>
 
@@ -66,7 +63,7 @@ export default defineComponent({
     color: #ee5c42;
   }
   .error-img {
-    width: 320px;
+    font-size: 320px;
     pointer-events: none;
   }
   .title {
