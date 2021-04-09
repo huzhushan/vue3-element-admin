@@ -1,3 +1,1 @@
-<template>
-  Page1
-</template>
+<template>Page1</template>

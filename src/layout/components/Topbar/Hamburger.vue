@@ -1,13 +1,14 @@
 <template>
   <i
     class="fold-btn el-icon-s-fold"
-    :class="{collapse:collapse}"
+    :class="{ collapse: collapse }"
     @click="handleToggleMenu"
   ></i>
 </template>
 <script>
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
+
 export default defineComponent({
   setup() {
     const store = useStore();

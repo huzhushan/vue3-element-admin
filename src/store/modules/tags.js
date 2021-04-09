@@ -1,20 +1,28 @@
+import { getItem, setItem, removeItem } from "@/utils/storage"; //getItem和setItem是封装的操作localStorage的方法
+
+const TAGLIST = 'VEA-TAGLIST'
+
 const state = {
-  tagList: [],
+  tagList: getItem(TAGLIST) || [],
   cacheList: [],
   activePosition: 0
 }
 
 const mutations = {
-  ADD_TAG_LIST: (state, tag) => {
-    if (state.tagList.some(v => v.path === tag.path)) return;
+  ADD_TAG_LIST: (state, { path, fullPath, name, meta }) => {
+    if (state.tagList.some(v => v.path === path)) return false;
+
     state.tagList.splice(
       state.activePosition + 1,
       0,
-      Object.assign({}, tag, {
-        title: tag.meta.title || 'no-name'
+      Object.assign({}, { path, fullPath, name, meta }, {
+        title: meta.title || '未命名',
+        fullPath: fullPath || path
       })
     )
 
+    // 保存到localStorage
+    setItem(TAGLIST, state.tagList);
   },
   ADD_CACHE_LIST: (state, tag) => {
     if (state.cacheList.includes(tag.name)) return
@@ -25,6 +33,8 @@ const mutations = {
 
   DEL_TAG_LIST: (state, tag) => {
     state.tagList = state.tagList.filter(v => v.path !== tag.path)
+    // 保存到localStorage
+    setItem(TAGLIST, state.tagList);
   },
   DEL_CACHE_LIST: (state, tag) => {
     state.cacheList = state.cacheList.filter(v => v !== tag.name)
@@ -32,6 +42,8 @@ const mutations = {
 
   DEL_OTHER_TAG_LIST: (state, tag) => {
     state.tagList = state.tagList.filter(v => !!v.meta.affix || v.path === tag.path)
+    // 保存到localStorage
+    setItem(TAGLIST, state.tagList);
   },
   DEL_OTHER_CACHE_LIST: (state, tag) => {
     state.cacheList = state.cacheList.filter(v => v === tag.name)
@@ -39,6 +51,8 @@ const mutations = {
 
   DEL_ALL_TAG_LIST: state => {
     state.tagList = state.tagList.filter(v => !!v.meta.affix)
+    // 保存到localStorage
+    removeItem(TAGLIST);
   },
   DEL_ALL_CACHE_LIST: state => {
     state.cacheList = []
@@ -47,7 +61,9 @@ const mutations = {
   UPDATE_TAG_LIST: (state, tag) => {
     const index = state.tagList.findIndex(v => v.path === tag.path);
     if (index > -1) {
-      state.tagList[index] = Object.assign({}, tag)
+      state.tagList[index] = Object.assign({}, state.tagList[index], tag)
+      // 保存到localStorage
+      setItem(TAGLIST, state.tagList);
     }
   },
 

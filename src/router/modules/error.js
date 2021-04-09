@@ -1,16 +1,17 @@
-import layout from '@/layout/index.vue'
+const Layout = () => import('@/layout/index.vue')
 const Error = () => import("@/views/error/index.vue");
 
 
 export default [
   {
     path: '/error',
-    component: layout,
+    component: Layout,
     children: [
       {
         path: '403',
         name: 'error-forbidden',
         component: Error,
+        meta: { title: '403' },
         props: {
           error: '403'
         }
@@ -19,6 +20,7 @@ export default [
         path: '500',
         name: 'error-server-error',
         component: Error,
+        meta: { title: '500' },
         props: {
           error: '500'
         }
@@ -27,6 +29,7 @@ export default [
         path: '404',
         name: 'error-not-found',
         component: Error,
+        meta: { title: '404' },
         props: {
           error: '404'
         }

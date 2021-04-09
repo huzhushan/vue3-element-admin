@@ -1,15 +1,18 @@
-import layout from '@/layout/index.vue'
+const Layout = () => import('@/layout/index.vue')
 const List = () => import("@/views/test/index.vue");
 const Add = () => import("@/views/test/Add.vue");
 const Auth = () => import("@/views/test/Auth.vue");
+const NoAuth = () => import("@/views/test/NoAuth.vue");
 const Nest = () => import("@/views/test/Nest.vue");
 const NestPage1 = () => import("@/views/test/nest/Page1.vue");
 const NestPage2 = () => import("@/views/test/nest/Page2.vue");
+const Iscache = () => import("@/views/test/Cache.vue");
+const Nocache = () => import("@/views/test/Nocache.vue");
 
 export default [
   {
     path: '/test',
-    component: layout,
+    component: Layout,
     name: "test",
     meta: {
       title: "测试页面",
@@ -41,8 +44,37 @@ export default [
         name: "testAuth",
         component: Auth,
         meta: {
+          title: "权限测试",
+          roles: ["admin", "visitor"],
+        }
+      },
+      {
+        path: "noauth",
+        name: "testNoAuth",
+        component: NoAuth,
+        meta: {
           title: "权限页面",
           roles: ["admin"],
+        },
+        hidden: true
+      },
+      {
+        path: "cache",
+        name: "test-cache",
+        component: Iscache,
+        meta: {
+          title: "该页面可缓存",
+          roles: ["admin", "visitor"]
+        }
+      },
+      {
+        path: "nocache",
+        name: "test-no-cache",
+        component: Nocache,
+        meta: {
+          title: "该页面不缓存",
+          roles: ["admin", "visitor"],
+          noCache: true, // 不缓存页面
         }
       },
       {

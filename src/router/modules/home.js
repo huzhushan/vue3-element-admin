@@ -1,11 +1,11 @@
 // home.js
-import layout from '@/layout/index.vue'
+const Layout = () => import('@/layout/index.vue')
 const Home = () => import("@/views/home/index.vue");
 
 export default [
   {
     path: '/home',
-    component: layout,
+    component: Layout,
     name: "Dashboard",
     meta: {
       title: "Dashboard",
@@ -18,6 +18,7 @@ export default [
         component: Home,
         meta: {
           title: "首页",
+          affix: true
         }
       }
     ]

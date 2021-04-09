@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <div class="navigation">
+      <logo v-if="device === 'mobile'" class="mobile" />
       <hamburger />
       <breadcrumbs />
     </div>
@@ -10,17 +11,28 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import Logo from "@/layout/components/Sidebar/Logo.vue";
 import Hamburger from "./Hamburger.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Userinfo from "./Userinfo.vue";
+import { useStore } from "vuex";
+
 export default defineComponent({
   components: {
+    Logo,
     Hamburger,
     Breadcrumbs,
     Userinfo,
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const device = computed(() => store.state.app.device);
+
+    return {
+      device,
+    };
+  },
 });
 </script>
 <style lang="scss" scoped>
@@ -32,6 +44,17 @@ export default defineComponent({
   .navigation {
     display: flex;
     align-items: center;
+    overflow: hidden;
+  }
+}
+.mobile {
+  padding-right: 0;
+  ::v-deep(.logo) {
+    max-width: 24px;
+    max-height: 24px;
+  }
+  ::v-deep(.title) {
+    display: none;
   }
 }
 </style>

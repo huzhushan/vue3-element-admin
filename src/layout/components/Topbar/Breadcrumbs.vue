@@ -2,23 +2,27 @@
   <el-breadcrumb
     separator="/"
     class="breadcrumb"
+    :class="{ mobile: device === 'mobile' }"
   >
     <el-breadcrumb-item
       v-for="(item, index) in breadcrumbs"
       :key="index"
-      :class="{no_link: index === breadcrumbs.length - 1}"
+      :class="{ no_link: index === breadcrumbs.length - 1 }"
       :to="index < breadcrumbs.length - 1 ? item.path : ''"
     >
-      {{item.meta.title}}
+      {{ item.meta.title }}
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 <script>
-import { defineComponent, ref, onBeforeMount, watch } from "vue";
+import { defineComponent, computed, ref, onBeforeMount, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
+    const store = useStore();
+    const device = computed(() => store.state.app.device);
     const router = useRouter();
     const route = router.currentRoute; // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
     const breadcrumbs = ref([]);
@@ -45,6 +49,7 @@ export default defineComponent({
     });
 
     return {
+      device,
       breadcrumbs,
     };
   },
@@ -54,15 +59,23 @@ export default defineComponent({
 <style lang="scss" scoped>
 .breadcrumb {
   margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   ::v-deep(a),
   ::v-deep(.is-link) {
     font-weight: normal;
   }
-
+  ::v-deep(.el-breadcrumb__item) {
+    float: none;
+  }
   .no_link {
     ::v-deep(.el-breadcrumb__inner) {
       color: #97a8be !important;
     }
+  }
+  &.mobile {
+    display: none;
   }
 }
 </style>

@@ -1,11 +1,12 @@
 <template>
   <div
     class="left"
-    :class="{collapse:collapse}"
+    :class="{ collapse: collapse, mobile: device === 'mobile' }"
   >
     <logo />
     <menus :collapse="collapse" />
   </div>
+  <div class="mask" @click="closeSidebar"></div>
 </template>
 
 <script>
@@ -22,9 +23,16 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const collapse = computed(() => !!store.state.app.sidebar.collapse);
+    const device = computed(() => store.state.app.device);
+
+    const closeSidebar = () => {
+      store.commit("app/setCollapse", 1);
+    };
 
     return {
       collapse,
+      device,
+      closeSidebar,
     };
   },
 });
@@ -42,6 +50,28 @@ export default defineComponent({
     width: 64px;
     ::v-deep(.brand .title) {
       display: none;
+    }
+  }
+  &.mobile {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    & + .mask {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 9;
+    }
+    &.collapse {
+      transform: translateX(-100%);
+      & + .mask {
+        display: none;
+      }
     }
   }
 }

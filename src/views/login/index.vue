@@ -1,12 +1,7 @@
 <template>
   <div class="login">
-    <el-form
-      class="form"
-      :model="model"
-      :rules="rules"
-      ref="loginForm"
-    >
-      <h1 class="title">欢迎登录ERP系统</h1>
+    <el-form class="form" :model="model" :rules="rules" ref="loginForm">
+      <h1 class="title">Vue3 Element Admin</h1>
       <el-form-item prop="userName">
         <el-input
           class="text"
@@ -29,10 +24,12 @@
       </el-form-item>
       <el-form-item>
         <el-button
+          :loading="loading"
           type="primary"
           class="btn"
           @click="submit"
-        >{{btnText}}</el-button>
+          >{{ btnText }}</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
@@ -87,20 +84,18 @@ export default defineComponent({
           if (valid) {
             state.loading = true;
             const { code, data, message } = await Login(state.model);
-            state.loading = false;
             if (+code === 200) {
               ctx.$message.success({
                 message: "登录成功",
-                duration: 500,
-                onClose: () => {
-                  const targetPath = route.query.redirect;
-                  router.push(!!targetPath ? targetPath : "/");
-                },
+                duration: 1000,
               });
+              const targetPath = route.query.redirect;
+              router.push(!!targetPath ? targetPath : "/");
               store.commit("app/setToken", data);
             } else {
               ctx.$message.error(message);
             }
+            state.loading = false;
           }
         });
       },
@@ -124,6 +119,8 @@ export default defineComponent({
   .form {
     width: 520px;
     max-width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
     margin: 160px auto 0;
     .title {
       color: #fff;

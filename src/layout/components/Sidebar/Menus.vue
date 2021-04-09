@@ -10,13 +10,7 @@
       :text-color="variables.menuTextColor"
       :active-text-color="variables.menuActiveTextColor"
     >
-
-      <submenu
-        v-for="menu in menus"
-        :key="menu.url"
-        :menu="menu"
-      />
-
+      <submenu v-for="menu in menus" :key="menu.url" :menu="menu" />
     </el-menu>
   </el-scrollbar>
 </template>

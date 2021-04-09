@@ -1,5 +1,6 @@
 import { getItem, setItem, removeItem } from "@/utils/storage"; //getItem和setItem是封装的操作localStorage的方法
-export const TOKEN = "TOKEN";
+export const TOKEN = "VEA-TOKEN";
+const COLLAPSE = "VEA-COLLAPSE";
 
 export default {
   namespaced: true,
@@ -7,8 +8,9 @@ export default {
     title: 'Vue3 Element Admin',
     authorization: getItem(TOKEN),
     sidebar: {
-      collapse: getItem('collapse')
-    }
+      collapse: getItem(COLLAPSE)
+    },
+    device: 'desktop',
   },
   mutations: {
     setToken (state, data) {
@@ -18,19 +20,22 @@ export default {
     },
     clearToken (state) {
       state.authorization = '';
-      // 保存到localStorage
+
       removeItem(TOKEN);
     },
     setCollapse (state, data) {
       state.sidebar.collapse = data;
       // 保存到localStorage
-      setItem('collapse', data);
+      setItem(COLLAPSE, data);
     },
     clearCollapse (state) {
       state.sidebar.collapse = '';
-      // 保存到localStorage
-      removeItem('collapse');
-    }
+
+      removeItem(COLLAPSE);
+    },
+    setDevice (state, device) {
+      state.device = device
+    },
   },
   actions: {},
 };

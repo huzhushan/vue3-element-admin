@@ -23,7 +23,7 @@ export default [
       data: {
         id: 1,
         name: 'zhangsan',
-        role: 'visitor',
+        'role|1': ['admin', 'visitor'], // 随机返回一个角色admin或visitor
         avatar: "@image('48x48', '#fb0a2a')"
       }
     },

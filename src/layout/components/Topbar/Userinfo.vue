@@ -1,14 +1,13 @@
 <template>
-  <el-dropdown>
+  <el-dropdown trigger="click">
     <div class="userinfo">
       <template v-if="!userinfo">
-        <i class="el-icon-user" /> admin
+        <i class="el-icon-user" />
+        admin
       </template>
       <template v-else>
-        <img
-          class="avatar"
-          :src="userinfo.avatar"
-        /> {{userinfo.name}}
+        <img class="avatar" :src="userinfo.avatar" />
+        {{ userinfo.name }}
       </template>
     </div>
     <template #dropdown>
