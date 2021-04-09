@@ -1,5 +1,17 @@
+import store from '@/store'
+
+const checkUserinfo = (code) => {
+  const userinfo = store.state.account.userinfo
+  if (!!userinfo) {
+    return `/error/${code}`
+  }
+  return true
+}
+
 const Layout = () => import('@/layout/index.vue')
 const Error = () => import("@/views/error/index.vue");
+
+
 
 
 export default [
@@ -42,6 +54,9 @@ export default [
     component: Error,
     props: {
       error: '403'
+    },
+    beforeEnter () {
+      return checkUserinfo('403')
     }
   },
   {
@@ -50,14 +65,20 @@ export default [
     component: Error,
     props: {
       error: '500'
+    },
+    beforeEnter () {
+      return checkUserinfo('500')
     }
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: '/:pathMatch(.*)',
     name: 'not-found',
     component: Error,
     props: {
       error: '404'
+    },
+    beforeEnter () {
+      return checkUserinfo('404')
     }
   },
 ]

@@ -23,12 +23,11 @@ export const useContextMenu = (tagList) => {
       state.visible = false;
     },
     refreshSelectedTag (tag) {
-      store.dispatch("tags/delCacheList", tag).then(() => {
-        const { fullPath } = tag;
-        nextTick(() => {
-          router.replace({
-            path: "/redirect" + fullPath,
-          });
+      store.dispatch("tags/delCacheList", tag)
+      const { fullPath } = tag;
+      nextTick(() => {
+        router.replace({
+          path: "/redirect" + fullPath,
         });
       });
     },
@@ -38,21 +37,18 @@ export const useContextMenu = (tagList) => {
       const closedTagIndex = tagList.value.findIndex(
         (item) => item.fullPath === tag.fullPath
       );
-      store.dispatch("tags/delTag", tag).then(() => {
-        if (isActive(tag)) {
-          toLastTag(closedTagIndex - 1);
-        }
-      });
+      store.dispatch("tags/delTag", tag)
+      if (isActive(tag)) {
+        toLastTag(closedTagIndex - 1);
+      }
     },
     closeOtherTags () {
-      store.dispatch("tags/delOtherTags", state.selectedTag).then(() => {
-        router.push(state.selectedTag);
-      });
+      store.dispatch("tags/delOtherTags", state.selectedTag)
+      router.push(state.selectedTag);
     },
     closeAllTags () {
-      store.dispatch("tags/delAllTags").then(() => {
-        router.push("/");
-      });
+      store.dispatch("tags/delAllTags")
+      router.push("/");
     }
   })
 

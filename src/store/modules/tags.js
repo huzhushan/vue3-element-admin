@@ -87,73 +87,37 @@ const actions = {
     commit('ADD_CACHE_LIST', tag)
   },
 
-  delTag ({ dispatch, state }, tag) {
-    return new Promise(resolve => {
-      dispatch('delTagList', tag)
-      dispatch('delCacheList', tag)
-      resolve({
-        tagList: [...state.tagList],
-        cacheList: [...state.cacheList]
-      })
-    })
+  delTag ({ dispatch }, tag) {
+    dispatch('delTagList', tag)
+    dispatch('delCacheList', tag)
   },
-  delTagList ({ commit, state }, tag) {
-    return new Promise(resolve => {
-      commit('DEL_TAG_LIST', tag)
-      resolve([...state.tagList])
-    })
+  delTagList ({ commit }, tag) {
+    commit('DEL_TAG_LIST', tag)
   },
-  delCacheList ({ commit, state }, tag) {
-    return new Promise(resolve => {
-      commit('DEL_CACHE_LIST', tag)
-      resolve([...state.cacheList])
-    })
+  delCacheList ({ commit }, tag) {
+    commit('DEL_CACHE_LIST', tag)
   },
 
-  delOtherTags ({ dispatch, state }, tag) {
-    return new Promise(resolve => {
-      dispatch('delOtherTagList', tag)
-      dispatch('delOtherCacheList', tag)
-      resolve({
-        tagList: [...state.tagList],
-        cacheList: [...state.cacheList]
-      })
-    })
+  delOtherTags ({ dispatch }, tag) {
+    dispatch('delOtherTagList', tag)
+    dispatch('delOtherCacheList', tag)
   },
-  delOtherTagList ({ commit, state }, tag) {
-    return new Promise(resolve => {
-      commit('DEL_OTHER_TAG_LIST', tag)
-      resolve([...state.tagList])
-    })
+  delOtherTagList ({ commit }, tag) {
+    commit('DEL_OTHER_TAG_LIST', tag)
   },
-  delOtherCacheList ({ commit, state }, tag) {
-    return new Promise(resolve => {
-      commit('DEL_OTHER_CACHE_LIST', tag)
-      resolve([...state.cacheList])
-    })
+  delOtherCacheList ({ commit }, tag) {
+    commit('DEL_OTHER_CACHE_LIST', tag)
   },
 
-  delAllTags ({ dispatch, state }) {
-    return new Promise(resolve => {
-      dispatch('delAllTagList')
-      dispatch('delAllCacheList')
-      resolve({
-        tagList: [...state.tagList],
-        cacheList: [...state.cacheList]
-      })
-    })
+  delAllTags ({ dispatch }) {
+    dispatch('delAllTagList')
+    dispatch('delAllCacheList')
   },
-  delAllTagList ({ commit, state }) {
-    return new Promise(resolve => {
-      commit('DEL_ALL_TAG_LIST')
-      resolve([...state.tagList])
-    })
+  delAllTagList ({ commit }) {
+    commit('DEL_ALL_TAG_LIST')
   },
-  delAllCacheList ({ commit, state }) {
-    return new Promise(resolve => {
-      commit('DEL_ALL_CACHE_LIST')
-      resolve([...state.cacheList])
-    })
+  delAllCacheList ({ commit }) {
+    commit('DEL_ALL_CACHE_LIST')
   },
 
   updateTagList ({ commit }, tag) {
