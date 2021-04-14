@@ -46,6 +46,27 @@ export const useContextMenu = (tagList) => {
       store.dispatch("tags/delOtherTags", state.selectedTag)
       router.push(state.selectedTag);
     },
+    closeLeftTags () {
+      state.closeSomeTags('left')
+
+    },
+    closeRightTags () {
+      state.closeSomeTags('right')
+
+    },
+    closeSomeTags (direction) {
+      const index = tagList.value.findIndex(
+        (item) => item.fullPath === state.selectedTag.fullPath
+      );
+
+      if ((direction === 'left' && index <= 0) || (direction === 'right' && index >= tagList.value.length - 1)) {
+        return;
+      }
+
+      const needToClose = direction === 'left' ? tagList.value.slice(0, index) : tagList.value.slice(index + 1)
+      store.dispatch("tags/delSomeTags", needToClose)
+      router.push(state.selectedTag);
+    },
     closeAllTags () {
       store.dispatch("tags/delAllTags")
       router.push("/");

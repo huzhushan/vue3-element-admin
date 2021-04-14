@@ -6,6 +6,9 @@ const app = createApp(App)
 // 引入element-plus
 import ElementPlus from "element-plus";
 import './assets/style/element-variables.scss'
+// 引入中文语言包
+import 'dayjs/locale/zh-cn'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 
 // 引入路由
 import router from './router'
@@ -25,4 +28,8 @@ Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
 
-app.use(ElementPlus).use(store).use(router).mount('#app')
+// 引入vue3-pro-table
+import Vue3ProTable from "vue3-pro-table";
+app.use(Vue3ProTable);
+
+app.use(ElementPlus, { locale }).use(store).use(router).mount('#app')

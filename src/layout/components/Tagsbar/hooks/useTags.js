@@ -1,5 +1,5 @@
 import { useScrollbar } from "./useScrollbar";
-import { onMounted, watch, computed, ref, nextTick } from 'vue';
+import { watch, computed, ref, nextTick, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'
 
@@ -73,7 +73,7 @@ export const useTags = () => {
 
 
 
-  onMounted(() => {
+  onBeforeMount(() => {
     initTags();
     addTag();
     moveToCurrentTag();

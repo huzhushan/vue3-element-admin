@@ -39,6 +39,8 @@
     <li @click="refreshSelectedTag(selectedTag)">刷新</li>
     <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
     <li @click="closeOtherTags">关闭其他</li>
+    <li @click="closeLeftTags">关闭左侧</li>
+    <li @click="closeRightTags">关闭右侧</li>
     <li @click="closeAllTags">关闭全部</li>
   </ul>
 </template>

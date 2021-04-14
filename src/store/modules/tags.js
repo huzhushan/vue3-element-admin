@@ -38,6 +38,7 @@ const mutations = {
   },
   DEL_CACHE_LIST: (state, tag) => {
     state.cacheList = state.cacheList.filter(v => v !== tag.name)
+
   },
 
   DEL_OTHER_TAG_LIST: (state, tag) => {
@@ -47,6 +48,18 @@ const mutations = {
   },
   DEL_OTHER_CACHE_LIST: (state, tag) => {
     state.cacheList = state.cacheList.filter(v => v === tag.name)
+
+  },
+
+  DEL_SOME_TAG_LIST: (state, tags) => {
+    state.tagList = state.tagList.filter(v => !!v.meta.affix || tags.every(tag => tag.path !== v.path))
+    // 保存到localStorage
+    setItem(TAGLIST, state.tagList);
+  },
+
+  DEL_SOME_CACHE_LIST: (state, tags) => {
+    state.cacheList = state.cacheList.filter(v => tags.every(tag => tag.name !== v))
+
   },
 
   DEL_ALL_TAG_LIST: state => {
@@ -56,6 +69,7 @@ const mutations = {
   },
   DEL_ALL_CACHE_LIST: state => {
     state.cacheList = []
+
   },
 
   UPDATE_TAG_LIST: (state, tag) => {
@@ -107,6 +121,11 @@ const actions = {
   },
   delOtherCacheList ({ commit }, tag) {
     commit('DEL_OTHER_CACHE_LIST', tag)
+  },
+
+  delSomeTags ({ commit }, tags) {
+    commit('DEL_SOME_TAG_LIST', tags)
+    commit('DEL_SOME_CACHE_LIST', tags)
   },
 
   delAllTags ({ dispatch }) {

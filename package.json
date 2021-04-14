@@ -1,5 +1,5 @@
 {
-  "name": "erp-vue3",
+  "name": "vue3-element-admin",
   "version": "1.0.0",
   "author": {
     "name": "huzhushan",
@@ -32,15 +32,16 @@
     "sass": "^1.32.8",
     "vite": "^2.1.0",
     "vite-plugin-mock": "^2.3.0",
-    "vite-plugin-svg-icons": "^0.4.0"
+    "vite-plugin-svg-icons": "^0.4.0",
+    "vue3-pro-table": "^1.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huzhushan/erp-vue3.git"
+    "url": "git+https://github.com/huzhushan/vue3-element-admin.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/huzhushan/erp-vue3/issues"
+    "url": "https://github.com/huzhushan/vue3-element-admin/issues"
   },
-  "homepage": "https://github.com/huzhushan/erp-vue3"
+  "homepage": "https://github.com/huzhushan/vue3-element-admin"
 }
