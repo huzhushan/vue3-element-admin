@@ -32,6 +32,7 @@ export default defineComponent({
     const logout = () => {
       store.commit("app/clearToken");
       store.commit("account/clearUserinfo");
+      store.dispatch("tags/delAllTags");
       router.push("/login");
     };
     return {

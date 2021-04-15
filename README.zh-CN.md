@@ -14,6 +14,11 @@
 - [在线预览](https://huzhushan.gitee.io/vue3-element-admin-site/)
 - [使用文档](https://huzhushan.gitee.io/vue3-element-admin)
 
+## 项目地址
+
+- [github 项目地址](https://github.com/huzhushan/vue3-element-admin)
+- [gitee 项目地址](https://gitee.com/huzhushan/vue3-element-admin)
+
 ## 视频教程
 
 - [使用 vue3-element-admin 开发后台管理系统]()
