@@ -9,7 +9,7 @@
 
 ## 简介
 
-**Vue3 Element Admin** 是一个免费开源的中后台模版。基于`vue3`+`ElementPlus`+`Vite`开发，是一个开箱即用的中后台前端解决方案，它可以帮助你快速搭建企业级中后台产品原型，也可用于学习参考。
+**Vue3 Element Admin** 是一个免费开源的中后台模版。基于`vue3`+`ElementPlus`+`Vite`开发，是一个开箱即用的中后台系统前端解决方案，它可以帮助你快速搭建企业级中后台产品原型，也可用于学习参考。
 
 - [在线预览](https://huzhushan.gitee.io/vue3-element-admin-site/)
 - [使用文档](https://huzhushan.gitee.io/vue3-element-admin)
