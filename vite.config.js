@@ -9,12 +9,19 @@ export default env => {
   // console.log(111, env);
 
   return defineConfig({
+    // base: '/vue3-element-admin-site/',
     plugins: [
       vue(),
       viteMockServe({
+        ignore: /^\_/, // 忽略以下划线`_`开头的文件
         mockPath: "mock", // 指定mock目录中的文件全部是mock接口
-        localEnabled: env.mode === "mock", // 指定在mock模式下才启动mock服务（可以在package.json的启动命令中指定mode为mock）
         supportTs: false, // mockPath目录中的文件是否支持ts文件，现在我们不使用ts，所以设为false
+        localEnabled: env.mode === "mock", // 开发环境是否开启mock功能（可以在package.json的启动命令中指定mode为mock）
+        prodEnabled: env.mode === "mock", // 生产环境是否开启mock功能
+        injectCode: `
+          import { setupProdMockServer } from '../mock/_createProductionServer';
+          setupProdMockServer();
+        `,
       }),
       viteSvgIcons({
         // 指定需要缓存的图标文件夹
@@ -26,7 +33,8 @@ export default env => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "./src/assets/style/global-variables.scss";' // 全局变量
+          // 全局变量
+          additionalData: '@import "./src/assets/style/global-variables.scss";' 
         }
       }
     },
@@ -42,6 +50,26 @@ export default env => {
           target: "http://dev.erp.com",
           changeOrigin: true,
         },
+      },
+    },
+    esbuild: false,
+    build: {
+      terserOptions: {
+        compress: {
+          keep_infinity: true,
+          // 删除console
+          drop_console: true,
+        },
+      },
+      // 禁用该功能可能会提高大型项目的构建性能
+      brotliSize: false,
+      rollupOptions: {
+        output: {
+          // 拆分单独模块
+          manualChunks: {
+            'element-plus': ['element-plus']
+          }
+        }
       },
     },
   });

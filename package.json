@@ -7,10 +7,11 @@
     "url": "https://github.com/huzhushan"
   },
   "scripts": {
-    "start": "npm run mock",
+    "start": "npm run dev:mock",
     "dev": "vite",
-    "mock": "vite --mode mock",
+    "dev:mock": "vite --mode mock",
     "build": "vite build",
+    "build:mock": "vite build --mode mock",
     "serve": "vite preview"
   },
   "browserslist": [
