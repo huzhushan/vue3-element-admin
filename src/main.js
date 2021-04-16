@@ -28,8 +28,5 @@ Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
 
-// 引入vue3-pro-table
-import Vue3ProTable from "vue3-pro-table";
-app.use(Vue3ProTable);
 
 app.use(ElementPlus, { locale }).use(store).use(router).mount('#app')

@@ -1,5 +1,5 @@
 <template>
-  <vue3-pro-table
+  <pro-table
     ref="table"
     title="列表"
     :request="getList"
@@ -28,7 +28,7 @@
       <el-button size="mini" type="primary">编辑</el-button>
       <el-button size="mini" type="danger">删除</el-button>
     </template>
-  </vue3-pro-table>
+  </pro-table>
 </template>
 
 <script>
