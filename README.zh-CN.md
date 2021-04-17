@@ -1,11 +1,10 @@
-<div align="center"> <a href="https://github.com/huzhushan/vue3-element-admin"> <img alt="VEA Logo" width="160" src="https://cn.vuejs.org/images/logo.png"> </a> <br> <br>
+<div align="center"> <a href="https://github.com/huzhushan/vue3-element-admin"> <img alt="VEA Logo" width="160" src="https://huzhushan.gitee.io/vue3-element-admin-site/assets/logo.1d6978fb.svg"> </a> <br> <br>
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 <h1>Vue3 Element Admin</h1>
 </div>
 
-**中文** | [English](./README.md)
 
 ## 简介
 
@@ -21,8 +20,8 @@
 
 ## 视频教程
 
-- [使用 vue3-element-admin 开发后台管理系统]()
-- [vue3-element-admin 架构搭建过程]()
+- [使用 vue3-element-admin 开发后台管理系统]() - 待更新
+- [vue3-element-admin 架构搭建过程]() - 待更新
 
 ## 技术储备
 
