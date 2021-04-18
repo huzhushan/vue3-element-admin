@@ -47,7 +47,7 @@ export default env => {
       open: true,
       proxy: {
         "/api": {
-          target: "http://dev.erp.com",
+          target: "http://dev.erp.com", // 后端接口的域名
           changeOrigin: true,
         },
       },

@@ -109,7 +109,7 @@ npm run build
 ## 捐赠
 
 如果你觉得这个项目对你有帮助，你可以帮作者买一杯果汁表示支持:tropical_drink:
-![donate](https://huzhushan.gitee.io/donate/donation.png)
+![donate](https://huzhushan.gitee.io/vue3-element-admin/donate.png)
 
 ## 交流
 
