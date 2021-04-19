@@ -14,6 +14,7 @@
     "build:mock": "vite build --mode mock",
     "serve": "vite preview",
     "lint": "eslint --fix --ext .js,.vue src",
+    "precommit": "lint-staged"
   },
   "browserslist": [
     "> 1%",
@@ -44,14 +45,9 @@
     "vite-plugin-mock": "^2.3.0",
     "vite-plugin-svg-icons": "^0.4.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "npm run lint",
+      "eslint --fix",
       "git add"
     ]
   },
