@@ -13,7 +13,7 @@
     "build": "vite build",
     "build:mock": "vite build --mode mock",
     "serve": "vite preview",
-    "lint": "eslint --fix --ext .js,.vue src"
+    "lint": "eslint --fix --ext .js,.vue src",
   },
   "browserslist": [
     "> 1%",
@@ -51,7 +51,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "eslint --fix",
+      "npm run lint",
       "git add"
     ]
   },
