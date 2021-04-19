@@ -19,7 +19,7 @@ import store from './store';
 // 权限控制
 import './permission';
 
-// 引入svg图标注册脚本
+// 引入svg图标注册 脚本
 import 'vite-plugin-svg-icons/register';
 
 // 注册全局组件
