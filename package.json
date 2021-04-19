@@ -47,7 +47,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "eslint --fix",
+      "npm run lint",
       "git add"
     ]
   },
