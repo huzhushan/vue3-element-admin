@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 import path from "path";
 import { viteMockServe } from "vite-plugin-mock";
-import viteSvgIcons from 'vite-plugin-svg-icons';
+import viteSvgIcons from "vite-plugin-svg-icons";
 
 // https://vitejs.dev/config/
 export default env => {
@@ -25,18 +25,18 @@ export default env => {
       }),
       viteSvgIcons({
         // 指定需要缓存的图标文件夹
-        iconDirs: [path.resolve(__dirname, 'src/assets/svg')],
+        iconDirs: [path.resolve(__dirname, "src/assets/svg")],
         // 指定symbolId格式
-        symbolId: 'icon-[dir]-[name]',
+        symbolId: "icon-[dir]-[name]",
       }),
     ],
     css: {
       preprocessorOptions: {
         scss: {
           // 全局变量
-          additionalData: '@import "./src/assets/style/global-variables.scss";'
-        }
-      }
+          additionalData: '@import "./src/assets/style/global-variables.scss";',
+        },
+      },
     },
     resolve: {
       alias: {
@@ -67,10 +67,10 @@ export default env => {
         output: {
           // 拆分单独模块
           manualChunks: {
-            'element-plus': ['element-plus'],
-            'mockjs': ['mockjs']
-          }
-        }
+            "element-plus": ["element-plus"],
+            mockjs: ["mockjs"],
+          },
+        },
       },
     },
   });
