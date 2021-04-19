@@ -34,7 +34,7 @@ export default env => {
       preprocessorOptions: {
         scss: {
           // 全局变量
-          additionalData: '@import "./src/assets/style/global-variables.scss";' 
+          additionalData: '@import "./src/assets/style/global-variables.scss";'
         }
       }
     },
@@ -67,7 +67,8 @@ export default env => {
         output: {
           // 拆分单独模块
           manualChunks: {
-            'element-plus': ['element-plus']
+            'element-plus': ['element-plus'],
+            'mockjs': ['mockjs']
           }
         }
       },

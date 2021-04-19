@@ -12,7 +12,8 @@
     "dev:mock": "vite --mode mock",
     "build": "vite build",
     "build:mock": "vite build --mode mock",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue src"
   },
   "browserslist": [
     "> 1%",
@@ -27,14 +28,32 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "autoprefixer": "^10.2.5",
+    "babel-eslint": "^10.1.0",
     "element-plus": "^1.0.2-beta.35",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
     "mockjs": "^1.1.0",
+    "prettier": "^1.19.1",
     "sass": "^1.32.8",
     "vite": "^2.1.0",
     "vite-plugin-mock": "^2.3.0",
-    "vite-plugin-svg-icons": "^0.4.0",
-    "vue3-pro-table": "^1.0.0"
+    "vite-plugin-svg-icons": "^0.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
