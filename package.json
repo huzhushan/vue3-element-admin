@@ -45,6 +45,11 @@
     "vite-plugin-mock": "^2.3.0",
     "vite-plugin-svg-icons": "^0.4.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "src/**/*.{js,vue}": [
       "eslint --fix",
