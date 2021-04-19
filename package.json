@@ -14,7 +14,7 @@
     "build:mock": "vite build --mode mock",
     "serve": "vite preview",
     "lint": "eslint --fix --ext .js,.vue src",
-    "precommit": "lint-staged"
+    "precommit": "npm run lint-staged"
   },
   "browserslist": [
     "> 1%",
