@@ -1,15 +1,15 @@
-import store from '@/store';
+import store from '@/store'
 
 const checkUserinfo = code => {
-  const userinfo = store.state.account.userinfo;
+  const userinfo = store.state.account.userinfo
   if (userinfo) {
-    return `/error/${code}`;
+    return `/error/${code}`
   }
-  return true;
-};
+  return true
+}
 
-const Layout = () => import('@/layout/index.vue');
-const Error = () => import('@/views/error/index.vue');
+const Layout = () => import('@/layout/index.vue')
+const Error = () => import('@/views/error/index.vue')
 
 export default [
   {
@@ -53,7 +53,7 @@ export default [
       error: '403',
     },
     beforeEnter() {
-      return checkUserinfo('403');
+      return checkUserinfo('403')
     },
   },
   {
@@ -64,7 +64,7 @@ export default [
       error: '500',
     },
     beforeEnter() {
-      return checkUserinfo('500');
+      return checkUserinfo('500')
     },
   },
   {
@@ -75,7 +75,7 @@ export default [
       error: '404',
     },
     beforeEnter() {
-      return checkUserinfo('404');
+      return checkUserinfo('404')
     },
   },
-];
+]

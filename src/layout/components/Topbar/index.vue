@@ -11,12 +11,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from 'vue';
-import Logo from '@/layout/components/Sidebar/Logo.vue';
-import Hamburger from './Hamburger.vue';
-import Breadcrumbs from './Breadcrumbs.vue';
-import Userinfo from './Userinfo.vue';
-import { useStore } from 'vuex';
+import { defineComponent, computed } from 'vue'
+import Logo from '@/layout/components/Sidebar/Logo.vue'
+import Hamburger from './Hamburger.vue'
+import Breadcrumbs from './Breadcrumbs.vue'
+import Userinfo from './Userinfo.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   components: {
@@ -26,14 +26,14 @@ export default defineComponent({
     Userinfo,
   },
   setup() {
-    const store = useStore();
-    const device = computed(() => store.state.app.device);
+    const store = useStore()
+    const device = computed(() => store.state.app.device)
 
     return {
       device,
-    };
+    }
   },
-});
+})
 </script>
 <style lang="scss" scoped>
 .header {

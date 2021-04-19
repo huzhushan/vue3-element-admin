@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, toRefs } from 'vue';
+import { defineComponent, reactive, ref, toRefs } from 'vue'
 
 export default defineComponent({
   name: 'testList',
@@ -210,15 +210,15 @@ export default defineComponent({
       },
       selectedItems: [],
       batchDelete() {
-        console.log(state.selectedItems);
+        console.log(state.selectedItems)
       },
       // 选择
       handleSelectionChange(arr) {
-        state.selectedItems = arr;
+        state.selectedItems = arr
       },
       // 请求函数
       async getList(params) {
-        console.log(params);
+        console.log(params)
         // params是从组件接收的，包含分页和搜索字段。
         const { data } = await new Promise(rs => {
           setTimeout(() => {
@@ -239,23 +239,23 @@ export default defineComponent({
                 ],
                 total: 100,
               },
-            });
-          }, 3000);
-        });
+            })
+          }, 3000)
+        })
 
         // 必须要返回一个对象，包含data数组和total总数
         return {
           data: data.list,
           total: +data.total,
-        };
+        }
       },
-    });
-    const table = ref(null);
+    })
+    const table = ref(null)
     const refresh = () => {
-      table.value.refresh();
-    };
+      table.value.refresh()
+    }
 
-    return { ...toRefs(state), refresh, table };
+    return { ...toRefs(state), refresh, table }
   },
-});
+})
 </script>

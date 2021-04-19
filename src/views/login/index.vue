@@ -43,17 +43,17 @@ import {
   toRefs,
   ref,
   computed,
-} from 'vue';
-import { Login } from '@/api/login';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
+} from 'vue'
+import { Login } from '@/api/login'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'login',
   setup() {
-    const { ctx } = getCurrentInstance(); // 可以把ctx当成vue2中的this
-    const store = useStore();
-    const router = useRouter();
-    const route = useRoute();
+    const { ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
+    const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
     const state = reactive({
       model: {
         userName: 'admin',
@@ -78,34 +78,34 @@ export default defineComponent({
       loginForm: ref(null),
       submit: () => {
         if (state.loading) {
-          return;
+          return
         }
         state.loginForm.validate(async valid => {
           if (valid) {
-            state.loading = true;
-            const { code, data, message } = await Login(state.model);
+            state.loading = true
+            const { code, data, message } = await Login(state.model)
             if (+code === 200) {
               ctx.$message.success({
                 message: '登录成功',
                 duration: 1000,
-              });
-              const targetPath = route.query.redirect;
-              router.push(targetPath ? targetPath : '/');
-              store.commit('app/setToken', data);
+              })
+              const targetPath = route.query.redirect
+              router.push(targetPath ? targetPath : '/')
+              store.commit('app/setToken', data)
             } else {
-              ctx.$message.error(message);
+              ctx.$message.error(message)
             }
-            state.loading = false;
+            state.loading = false
           }
-        });
+        })
       },
-    });
+    })
 
     return {
       ...toRefs(state),
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

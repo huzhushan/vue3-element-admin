@@ -6,21 +6,21 @@
   </router-view>
 </template>
 <script>
-import { computed, defineComponent } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+import { computed, defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   setup() {
-    const store = useStore();
-    const route = useRoute();
-    const cacheList = computed(() => store.state.tags.cacheList);
-    const key = computed(() => route.fullPath);
+    const store = useStore()
+    const route = useRoute()
+    const cacheList = computed(() => store.state.tags.cacheList)
+    const key = computed(() => route.fullPath)
 
     return {
       cacheList,
       key,
-    };
+    }
   },
-});
+})
 </script>

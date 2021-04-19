@@ -46,28 +46,28 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { useTags } from './hooks/useTags';
-import { useContextMenu } from './hooks/useContextMenu';
+import { defineComponent } from 'vue'
+import { useTags } from './hooks/useTags'
+import { useContextMenu } from './hooks/useContextMenu'
 
 export default defineComponent({
   name: 'Tagsbar',
   setup() {
-    const tags = useTags();
-    const contextMenu = useContextMenu(tags.tagList);
+    const tags = useTags()
+    const contextMenu = useContextMenu(tags.tagList)
 
     const onScroll = e => {
-      tags.handleScroll(e);
-      contextMenu.closeMenu.value();
-    };
+      tags.handleScroll(e)
+      contextMenu.closeMenu.value()
+    }
 
     return {
       onScroll,
       ...tags,
       ...contextMenu,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

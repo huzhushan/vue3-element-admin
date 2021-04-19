@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
-import Logo from './Logo.vue';
-import Menus from './Menus.vue';
-import { useStore } from 'vuex';
+import { defineComponent, computed } from 'vue'
+import Logo from './Logo.vue'
+import Menus from './Menus.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   components: {
@@ -21,21 +21,21 @@ export default defineComponent({
     Menus,
   },
   setup() {
-    const store = useStore();
-    const collapse = computed(() => !!store.state.app.sidebar.collapse);
-    const device = computed(() => store.state.app.device);
+    const store = useStore()
+    const collapse = computed(() => !!store.state.app.sidebar.collapse)
+    const device = computed(() => store.state.app.device)
 
     const closeSidebar = () => {
-      store.commit('app/setCollapse', 1);
-    };
+      store.commit('app/setCollapse', 1)
+    }
 
     return {
       collapse,
       device,
       closeSidebar,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

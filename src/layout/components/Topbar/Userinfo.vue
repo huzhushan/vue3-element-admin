@@ -21,26 +21,26 @@
   </el-dropdown>
 </template>
 <script>
-import { computed, defineComponent } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   setup() {
-    const store = useStore();
-    const router = useRouter();
-    const userinfo = computed(() => store.state.account.userinfo);
+    const store = useStore()
+    const router = useRouter()
+    const userinfo = computed(() => store.state.account.userinfo)
     const logout = () => {
-      store.commit('app/clearToken');
-      store.commit('account/clearUserinfo');
-      store.dispatch('tags/delAllTags');
-      router.push('/login');
-    };
+      store.commit('app/clearToken')
+      store.commit('account/clearUserinfo')
+      store.dispatch('tags/delAllTags')
+      router.push('/login')
+    }
     return {
       userinfo,
       logout,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

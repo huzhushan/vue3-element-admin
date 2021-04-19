@@ -1,12 +1,12 @@
-import { onMounted, onBeforeUnmount, reactive, toRefs, nextTick } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { isAffix } from './useTags';
+import { onMounted, onBeforeUnmount, reactive, toRefs, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { isAffix } from './useTags'
 
 export const useContextMenu = tagList => {
-  const store = useStore();
-  const router = useRouter();
-  const route = useRoute();
+  const store = useStore()
+  const router = useRouter()
+  const route = useRoute()
 
   const state = reactive({
     visible: false,
@@ -14,89 +14,89 @@ export const useContextMenu = tagList => {
     left: 0,
     selectedTag: {},
     openMenu(tag, e) {
-      state.visible = true;
-      state.left = e.clientX;
-      state.top = e.clientY;
-      state.selectedTag = tag;
+      state.visible = true
+      state.left = e.clientX
+      state.top = e.clientY
+      state.selectedTag = tag
     },
     closeMenu() {
-      state.visible = false;
+      state.visible = false
     },
     refreshSelectedTag(tag) {
-      store.dispatch('tags/delCacheList', tag);
-      const { fullPath } = tag;
+      store.dispatch('tags/delCacheList', tag)
+      const { fullPath } = tag
       nextTick(() => {
         router.replace({
           path: '/redirect' + fullPath,
-        });
-      });
+        })
+      })
     },
     closeTag(tag) {
-      if (isAffix(tag)) return;
+      if (isAffix(tag)) return
 
       const closedTagIndex = tagList.value.findIndex(
         item => item.fullPath === tag.fullPath
-      );
-      store.dispatch('tags/delTag', tag);
+      )
+      store.dispatch('tags/delTag', tag)
       if (isActive(tag)) {
-        toLastTag(closedTagIndex - 1);
+        toLastTag(closedTagIndex - 1)
       }
     },
     closeOtherTags() {
-      store.dispatch('tags/delOtherTags', state.selectedTag);
-      router.push(state.selectedTag);
+      store.dispatch('tags/delOtherTags', state.selectedTag)
+      router.push(state.selectedTag)
     },
     closeLeftTags() {
-      state.closeSomeTags('left');
+      state.closeSomeTags('left')
     },
     closeRightTags() {
-      state.closeSomeTags('right');
+      state.closeSomeTags('right')
     },
     closeSomeTags(direction) {
       const index = tagList.value.findIndex(
         item => item.fullPath === state.selectedTag.fullPath
-      );
+      )
 
       if (
         (direction === 'left' && index <= 0) ||
         (direction === 'right' && index >= tagList.value.length - 1)
       ) {
-        return;
+        return
       }
 
       const needToClose =
         direction === 'left'
           ? tagList.value.slice(0, index)
-          : tagList.value.slice(index + 1);
-      store.dispatch('tags/delSomeTags', needToClose);
-      router.push(state.selectedTag);
+          : tagList.value.slice(index + 1)
+      store.dispatch('tags/delSomeTags', needToClose)
+      router.push(state.selectedTag)
     },
     closeAllTags() {
-      store.dispatch('tags/delAllTags');
-      router.push('/');
+      store.dispatch('tags/delAllTags')
+      router.push('/')
     },
-  });
+  })
 
   const isActive = tag => {
-    return tag.fullPath === route.fullPath;
-  };
+    return tag.fullPath === route.fullPath
+  }
 
   const toLastTag = lastTagIndex => {
-    const lastTag = tagList.value[lastTagIndex];
+    const lastTag = tagList.value[lastTagIndex]
     if (lastTag) {
-      router.push(lastTag.fullPath);
+      router.push(lastTag.fullPath)
     } else {
-      router.push('/');
+      router.push('/')
     }
-  };
+  }
 
   onMounted(() => {
-    document.addEventListener('click', state.closeMenu);
-  });
+    document.addEventListener('click', state.closeMenu)
+  })
 
   onBeforeUnmount(() => {
-    document.removeEventListener('click', state.closeMenu);
-  });
+    document.removeEventListener('click', state.closeMenu)
+  })
 
-  return toRefs(state);
-};
+  return toRefs(state)
+}

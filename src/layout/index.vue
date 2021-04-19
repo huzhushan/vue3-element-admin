@@ -13,12 +13,12 @@
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
-import Sidebar from './components/Sidebar/index.vue';
-import Topbar from './components/Topbar/index.vue';
-import Tagsbar from './components/Tagsbar/index.vue';
-import Content from './components/Content/index.vue';
-import { useResizeHandler } from './hooks/useResizeHandler';
+import { defineComponent } from 'vue'
+import Sidebar from './components/Sidebar/index.vue'
+import Topbar from './components/Topbar/index.vue'
+import Tagsbar from './components/Tagsbar/index.vue'
+import Content from './components/Content/index.vue'
+import { useResizeHandler } from './hooks/useResizeHandler'
 
 export default defineComponent({
   name: 'layout',
@@ -29,9 +29,9 @@ export default defineComponent({
     Content,
   },
   setup() {
-    useResizeHandler();
+    useResizeHandler()
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

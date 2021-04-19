@@ -15,11 +15,11 @@
   </el-scrollbar>
 </template>
 <script>
-import { computed, defineComponent } from 'vue';
-import Submenu from './Submenu.vue';
-import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
-import config from './config/menu.module.scss';
+import { computed, defineComponent } from 'vue'
+import Submenu from './Submenu.vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import config from './config/menu.module.scss'
 
 export default defineComponent({
   components: {
@@ -32,20 +32,20 @@ export default defineComponent({
     },
   },
   setup() {
-    const route = useRoute();
-    const store = useStore();
+    const route = useRoute()
+    const store = useStore()
     store.dispatch(
       'menu/generateMenus',
       store.state.account.userinfo && store.state.account.userinfo.role
-    );
+    )
 
     return {
       menus: computed(() => store.state.menu.menus),
       activePath: computed(() => route.path),
       variables: computed(() => config),
-    };
+    }
   },
-});
+})
 </script>
 <style lang="scss">
 // menu hover

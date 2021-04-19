@@ -1,6 +1,6 @@
 // home.js
-const Layout = () => import('@/layout/index.vue');
-const Home = () => import('@/views/home/index.vue');
+const Layout = () => import('@/layout/index.vue')
+const Home = () => import('@/views/home/index.vue')
 
 export default [
   {
@@ -23,4 +23,4 @@ export default [
       },
     ],
   },
-];
+]

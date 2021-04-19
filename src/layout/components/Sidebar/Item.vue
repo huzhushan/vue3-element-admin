@@ -5,18 +5,18 @@
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   props: ['title', 'icon'],
   setup({ icon }) {
-    const isElementIcon = computed(() => icon && icon.startsWith('el-icon'));
+    const isElementIcon = computed(() => icon && icon.startsWith('el-icon'))
 
     return {
       isElementIcon,
-    };
+    }
   },
-});
+})
 </script>
 <style lang="scss" scoped>
 .icon {

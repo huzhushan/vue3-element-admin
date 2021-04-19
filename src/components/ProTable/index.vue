@@ -212,7 +212,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, toRefs, onBeforeMount } from 'vue';
+import { defineComponent, reactive, toRefs, onBeforeMount } from 'vue'
 const formatDate = (date, format) => {
   var obj = {
     'M+': date.getMonth() + 1,
@@ -222,12 +222,12 @@ const formatDate = (date, format) => {
     's+': date.getSeconds(),
     'q+': Math.floor((date.getMonth() + 3) / 3),
     'S+': date.getMilliseconds(),
-  };
+  }
   if (/(y+)/i.test(format)) {
     format = format.replace(
       RegExp.$1,
       (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    );
+    )
   }
   for (var k in obj) {
     if (new RegExp('(' + k + ')').test(format)) {
@@ -236,25 +236,25 @@ const formatDate = (date, format) => {
         RegExp.$1.length == 1
           ? obj[k]
           : ('00' + obj[k]).substr(('' + obj[k]).length)
-      );
+      )
     }
   }
-  return format;
-};
+  return format
+}
 const getSearchModel = search => {
-  const searchModel = {};
+  const searchModel = {}
   if (search && search.fields) {
     search.fields.forEach(item => {
       switch (item.type) {
         case 'checkbox':
         case 'checkbox-button':
-          searchModel[item.name] = [];
-          break;
+          searchModel[item.name] = []
+          break
         default:
-          break;
+          break
       }
       if (item.defaultValue !== undefined) {
-        searchModel[item.name] = item.defaultValue;
+        searchModel[item.name] = item.defaultValue
         // 日期范围和时间范围真实变量默认值
         if (
           (item.type === 'daterange' || item.type === 'datetimerange') &&
@@ -262,14 +262,14 @@ const getSearchModel = search => {
           Array.isArray(item.defaultValue)
         ) {
           item.defaultValue.forEach((val, index) => {
-            searchModel[item.trueNames[index]] = val;
-          });
+            searchModel[item.trueNames[index]] = val
+          })
         }
       }
-    });
+    })
   }
-  return searchModel;
-};
+  return searchModel
+}
 export default defineComponent({
   props: {
     // 请求数据的方法
@@ -316,43 +316,43 @@ export default defineComponent({
     // 1、如果搜索配置有transform处理函数，执行transform
     // 2、删除日期范围默认的name字段
     const optimizeFields = search => {
-      const searchModel = JSON.parse(JSON.stringify(state.searchModel));
+      const searchModel = JSON.parse(JSON.stringify(state.searchModel))
       if (search && search.fields) {
         search.fields.forEach(item => {
           if (!searchModel.hasOwnProperty(item.name)) {
-            return;
+            return
           }
           if (item.transform) {
-            searchModel[item.name] = item.transform(searchModel[item.name]);
+            searchModel[item.name] = item.transform(searchModel[item.name])
           }
           if (
             (item.type === 'daterange' || item.type === 'datetimerange') &&
             !!item.trueNames
           ) {
-            delete searchModel[item.name];
+            delete searchModel[item.name]
           }
-        });
+        })
       }
-      return searchModel;
-    };
+      return searchModel
+    }
 
     // 请求列表数据
     const getTableData = async () => {
-      state.loading = true;
-      const searchModel = optimizeFields(props.search);
+      state.loading = true
+      const searchModel = optimizeFields(props.search)
       const { data, total } = await props.request({
         pageNum: state.pageNum,
         pageSize: state.pageSize,
         ...searchModel,
-      });
-      state.loading = false;
-      state.tableData = data;
-      state.total = total;
-    };
+      })
+      state.loading = false
+      state.tableData = data
+      state.total = total
+    }
 
     onBeforeMount(() => {
-      getTableData();
-    });
+      getTableData()
+    })
 
     const state = reactive({
       searchModel: getSearchModel(props.search),
@@ -366,80 +366,80 @@ export default defineComponent({
       },
       // 搜索
       handleSearch() {
-        state.pageNum = 1;
-        getTableData();
+        state.pageNum = 1
+        getTableData()
       },
       // 重置函数
       handleReset() {
         if (JSON.stringify(state.searchModel) === '{}') {
-          return;
+          return
         }
-        state.pageNum = 1;
-        state.searchModel = getSearchModel(props.search);
-        getTableData();
+        state.pageNum = 1
+        state.searchModel = getSearchModel(props.search)
+        getTableData()
       },
       // 刷新
       refresh() {
-        getTableData();
+        getTableData()
       },
 
       // 当前页变化
       handleCurrentChange() {
-        getTableData();
+        getTableData()
       },
       // 改变每页size数量
       handleSizeChange() {
-        state.pageNum = 1;
-        getTableData();
+        state.pageNum = 1
+        getTableData()
       },
       // 全选
       handleSelectionChange(arr) {
-        emit('selectionChange', arr);
+        emit('selectionChange', arr)
       },
       // 过滤方法
       filterHandler(value, row, column) {
-        const property = column['property'];
-        return row[property] === value;
+        const property = column['property']
+        return row[property] === value
       },
       // 日期范围
       handleDateChange(date, item, format) {
-        state.searchModel[item.name] = date ? formatDate(date, format) : '';
+        state.searchModel[item.name] = date ? formatDate(date, format) : ''
       },
       handleRangeChange(date, item, format) {
-        const arr = !!date && date.map(d => formatDate(d, format));
-        state.searchModel[item.name] = arr ? arr : [];
+        const arr = !!date && date.map(d => formatDate(d, format))
+        state.searchModel[item.name] = arr ? arr : []
 
         if (!item.trueNames) {
-          return;
+          return
         }
 
         if (arr) {
           arr.forEach((val, index) => {
-            state.searchModel[item.trueNames[index]] = val;
-          });
+            state.searchModel[item.trueNames[index]] = val
+          })
         } else {
           item.trueNames.forEach(key => {
-            delete state.searchModel[key];
-          });
+            delete state.searchModel[key]
+          })
         }
       },
-    });
+    })
 
     if (typeof props.pagination === 'object') {
-      const { layout, pageSizes, style } = props.pagination;
+      const { layout, pageSizes, style } = props.pagination
       state.paginationConfig = {
         show: true,
         layout: layout || 'total, sizes, prev, pager, next, jumper',
         pageSizes: pageSizes || [10, 20, 30, 40, 50, 100],
         style: style || {},
-      };
+      }
     }
 
     return {
       ...toRefs(state),
-    };
+    }
   },
-});
+})
 </script>
 <style lang="scss" scoped>
 .page-box {

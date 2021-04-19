@@ -1,13 +1,13 @@
-const Layout = () => import('@/layout/index.vue');
-const List = () => import('@/views/test/index.vue');
-const Add = () => import('@/views/test/Add.vue');
-const Auth = () => import('@/views/test/Auth.vue');
-const NoAuth = () => import('@/views/test/NoAuth.vue');
-const Nest = () => import('@/views/test/Nest.vue');
-const NestPage1 = () => import('@/views/test/nest/Page1.vue');
-const NestPage2 = () => import('@/views/test/nest/Page2.vue');
-const Iscache = () => import('@/views/test/Cache.vue');
-const Nocache = () => import('@/views/test/Nocache.vue');
+const Layout = () => import('@/layout/index.vue')
+const List = () => import('@/views/test/index.vue')
+const Add = () => import('@/views/test/Add.vue')
+const Auth = () => import('@/views/test/Auth.vue')
+const NoAuth = () => import('@/views/test/NoAuth.vue')
+const Nest = () => import('@/views/test/Nest.vue')
+const NestPage1 = () => import('@/views/test/nest/Page1.vue')
+const NestPage2 = () => import('@/views/test/nest/Page2.vue')
+const Iscache = () => import('@/views/test/Cache.vue')
+const Nocache = () => import('@/views/test/Nocache.vue')
 
 export default [
   {
@@ -109,4 +109,4 @@ export default [
       },
     ],
   },
-];
+]

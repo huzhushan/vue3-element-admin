@@ -15,8 +15,8 @@
   </el-submenu>
 </template>
 <script>
-import { defineComponent } from 'vue';
-import Item from './Item.vue';
+import { defineComponent } from 'vue'
+import Item from './Item.vue'
 export default defineComponent({
   name: 'Submenu',
   components: {
@@ -32,5 +32,5 @@ export default defineComponent({
       default: false,
     },
   },
-});
+})
 </script>

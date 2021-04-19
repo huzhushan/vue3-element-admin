@@ -1,5 +1,5 @@
 // login.js
-const Login = () => import('@/views/login/index.vue');
+const Login = () => import('@/views/login/index.vue')
 
 export default [
   {
@@ -7,4 +7,4 @@ export default [
     name: 'login',
     component: Login,
   },
-];
+]
