@@ -6,14 +6,14 @@
   </dl>
 </template>
 <script>
-import { defineComponent, onActivated } from "vue";
+import { defineComponent, onActivated } from 'vue';
 
 export default defineComponent({
-  name: "test-cache", // 该name必须跟路由配置的name一致
+  name: 'test-cache', // 该name必须跟路由配置的name一致
   setup() {
-    console.log("cache");
+    console.log('cache');
     onActivated(() => {
-      console.log("onActivated");
+      console.log('onActivated');
     });
   },
 });

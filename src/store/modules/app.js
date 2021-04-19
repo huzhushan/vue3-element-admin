@@ -1,6 +1,6 @@
-import { getItem, setItem, removeItem } from "@/utils/storage"; //getItem和setItem是封装的操作localStorage的方法
-export const TOKEN = "VEA-TOKEN";
-const COLLAPSE = "VEA-COLLAPSE";
+import { getItem, setItem, removeItem } from '@/utils/storage'; //getItem和setItem是封装的操作localStorage的方法
+export const TOKEN = 'VEA-TOKEN';
+const COLLAPSE = 'VEA-COLLAPSE';
 
 export default {
   namespaced: true,
@@ -8,33 +8,33 @@ export default {
     title: 'Vue3 Element Admin',
     authorization: getItem(TOKEN),
     sidebar: {
-      collapse: getItem(COLLAPSE)
+      collapse: getItem(COLLAPSE),
     },
     device: 'desktop',
   },
   mutations: {
-    setToken (state, data) {
+    setToken(state, data) {
       state.authorization = data;
       // 保存到localStorage
       setItem(TOKEN, data);
     },
-    clearToken (state) {
+    clearToken(state) {
       state.authorization = '';
 
       removeItem(TOKEN);
     },
-    setCollapse (state, data) {
+    setCollapse(state, data) {
       state.sidebar.collapse = data;
       // 保存到localStorage
       setItem(COLLAPSE, data);
     },
-    clearCollapse (state) {
+    clearCollapse(state) {
       state.sidebar.collapse = '';
 
       removeItem(COLLAPSE);
     },
-    setDevice (state, device) {
-      state.device = device
+    setDevice(state, device) {
+      state.device = device;
     },
   },
   actions: {},

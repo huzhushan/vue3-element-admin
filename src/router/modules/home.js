@@ -1,27 +1,26 @@
 // home.js
-const Layout = () => import('@/layout/index.vue')
-const Home = () => import("@/views/home/index.vue");
+const Layout = () => import('@/layout/index.vue');
+const Home = () => import('@/views/home/index.vue');
 
 export default [
   {
     path: '/home',
     component: Layout,
-    name: "Dashboard",
+    name: 'Dashboard',
     meta: {
-      title: "Dashboard",
+      title: 'Dashboard',
     },
     icon: 'home',
     children: [
       {
-        path: "",
-        name: "home",
+        path: '',
+        name: 'home',
         component: Home,
         meta: {
-          title: "首页",
-          affix: true
-        }
-      }
-    ]
+          title: '首页',
+          affix: true,
+        },
+      },
+    ],
   },
-
-]
+];

@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
-import Logo from "./Logo.vue";
-import Menus from "./Menus.vue";
-import { useStore } from "vuex";
+import { defineComponent, computed } from 'vue';
+import Logo from './Logo.vue';
+import Menus from './Menus.vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   components: {
@@ -26,7 +26,7 @@ export default defineComponent({
     const device = computed(() => store.state.app.device);
 
     const closeSidebar = () => {
-      store.commit("app/setCollapse", 1);
+      store.commit('app/setCollapse', 1);
     };
 
     return {

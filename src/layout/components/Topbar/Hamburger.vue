@@ -6,15 +6,15 @@
   ></i>
 </template>
 <script>
-import { defineComponent, computed } from "vue";
-import { useStore } from "vuex";
+import { defineComponent, computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
     const store = useStore();
     const collapse = computed(() => !!store.state.app.sidebar.collapse);
     const handleToggleMenu = () => {
-      store.commit("app/setCollapse", +!collapse.value);
+      store.commit('app/setCollapse', +!collapse.value);
     };
     return {
       collapse,

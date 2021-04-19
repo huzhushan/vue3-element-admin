@@ -1,18 +1,15 @@
-import store from '@/store'
+import store from '@/store';
 
-const checkUserinfo = (code) => {
-  const userinfo = store.state.account.userinfo
-  if (!!userinfo) {
-    return `/error/${code}`
+const checkUserinfo = code => {
+  const userinfo = store.state.account.userinfo;
+  if (userinfo) {
+    return `/error/${code}`;
   }
-  return true
-}
+  return true;
+};
 
-const Layout = () => import('@/layout/index.vue')
-const Error = () => import("@/views/error/index.vue");
-
-
-
+const Layout = () => import('@/layout/index.vue');
+const Error = () => import('@/views/error/index.vue');
 
 export default [
   {
@@ -25,8 +22,8 @@ export default [
         component: Error,
         meta: { title: '403' },
         props: {
-          error: '403'
-        }
+          error: '403',
+        },
       },
       {
         path: '500',
@@ -34,8 +31,8 @@ export default [
         component: Error,
         meta: { title: '500' },
         props: {
-          error: '500'
-        }
+          error: '500',
+        },
       },
       {
         path: '404',
@@ -43,42 +40,42 @@ export default [
         component: Error,
         meta: { title: '404' },
         props: {
-          error: '404'
-        }
-      }
-    ]
+          error: '404',
+        },
+      },
+    ],
   },
   {
     path: '/403',
     name: 'forbidden',
     component: Error,
     props: {
-      error: '403'
+      error: '403',
     },
-    beforeEnter () {
-      return checkUserinfo('403')
-    }
+    beforeEnter() {
+      return checkUserinfo('403');
+    },
   },
   {
     path: '/500',
     name: 'server-error',
     component: Error,
     props: {
-      error: '500'
+      error: '500',
     },
-    beforeEnter () {
-      return checkUserinfo('500')
-    }
+    beforeEnter() {
+      return checkUserinfo('500');
+    },
   },
   {
     path: '/:pathMatch(.*)',
     name: 'not-found',
     component: Error,
     props: {
-      error: '404'
+      error: '404',
     },
-    beforeEnter () {
-      return checkUserinfo('404')
-    }
+    beforeEnter() {
+      return checkUserinfo('404');
+    },
   },
-]
+];

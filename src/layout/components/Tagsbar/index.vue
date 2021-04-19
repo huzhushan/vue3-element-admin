@@ -10,7 +10,7 @@
         v-for="(tag, i) in tagList"
         :key="tag.fullPath"
         :to="tag"
-        :ref="(el) => setItemRef(i, el)"
+        :ref="el => setItemRef(i, el)"
         custom
         v-slot="{ navigate, isExactActive }"
       >
@@ -46,17 +46,17 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { useTags } from "./hooks/useTags";
-import { useContextMenu } from "./hooks/useContextMenu";
+import { defineComponent } from 'vue';
+import { useTags } from './hooks/useTags';
+import { useContextMenu } from './hooks/useContextMenu';
 
 export default defineComponent({
-  name: "Tagsbar",
+  name: 'Tagsbar',
   setup() {
     const tags = useTags();
     const contextMenu = useContextMenu(tags.tagList);
 
-    const onScroll = (e) => {
+    const onScroll = e => {
       tags.handleScroll(e);
       contextMenu.closeMenu.value();
     };

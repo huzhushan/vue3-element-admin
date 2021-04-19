@@ -1,23 +1,16 @@
 <template>
-  <i
-    v-if="isElementIcon"
-    :class="`icon ${icon}`"
-  />
-  <svg-icon
-    class="icon"
-    v-else-if="!!icon"
-    :name="icon"
-  />
-  <span>{{title}}</span>
+  <i v-if="isElementIcon" :class="`icon ${icon}`" />
+  <svg-icon class="icon" v-else-if="!!icon" :name="icon" />
+  <span>{{ title }}</span>
 </template>
 
 <script>
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
-  props: ["title", "icon"],
+  props: ['title', 'icon'],
   setup({ icon }) {
-    const isElementIcon = computed(() => icon && icon.startsWith("el-icon"));
+    const isElementIcon = computed(() => icon && icon.startsWith('el-icon'));
 
     return {
       isElementIcon,

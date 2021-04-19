@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "home",
+  name: 'home',
   setup() {},
 });
 </script>

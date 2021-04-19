@@ -1,5 +1,5 @@
-const Layout = () => import('@/layout/index.vue')
-const Redirect = () => import("@/views/redirect/index.vue");
+const Layout = () => import('@/layout/index.vue');
+const Redirect = () => import('@/views/redirect/index.vue');
 
 export default [
   {
@@ -9,7 +9,7 @@ export default [
       {
         path: '',
         component: Redirect,
-      }
-    ]
-  }
-]
+      },
+    ],
+  },
+];

@@ -1,8 +1,10 @@
 <script>
 export default {
   created() {
-    this.$router.replace(this.$route.fullPath.replace(/^\/redirect/, ""));
+    this.$router.replace(this.$route.fullPath.replace(/^\/redirect/, ''));
   },
-  render() {},
+  render(h) {
+    return h();
+  },
 };
 </script>

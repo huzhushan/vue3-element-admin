@@ -1,15 +1,14 @@
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-export const useScrollbar = (tagsItem) => {
+export const useScrollbar = tagsItem => {
   const scrollContainer = ref(null);
 
-  const handleScroll = (e) => {
+  const handleScroll = e => {
     const eventDelta = e.wheelDelta || -e.deltaY;
     scrollContainer.value.wrap.scrollLeft -= eventDelta / 4;
   };
 
-
-  const moveToTarget = (currentTag) => {
+  const moveToTarget = currentTag => {
     const containerWidth = scrollContainer.value.scrollbar.offsetWidth;
     const scrollWrapper = scrollContainer.value.wrap;
     const tagList = tagsItem.value;
@@ -26,8 +25,11 @@ export const useScrollbar = (tagsItem) => {
     } else if (lastTag === currentTag) {
       scrollWrapper.scrollLeft = scrollWrapper.scrollWidth - containerWidth;
     } else {
-      const el = currentTag.$el.nextElementSibling
-      scrollWrapper.scrollLeft = el.offsetLeft + el.offsetWidth > containerWidth ? el.offsetLeft - el.offsetWidth : 0
+      const el = currentTag.$el.nextElementSibling;
+      scrollWrapper.scrollLeft =
+        el.offsetLeft + el.offsetWidth > containerWidth
+          ? el.offsetLeft - el.offsetWidth
+          : 0;
     }
   };
 
@@ -36,4 +38,4 @@ export const useScrollbar = (tagsItem) => {
     handleScroll,
     moveToTarget,
   };
-}
+};

@@ -1,38 +1,38 @@
-import { onBeforeMount, onBeforeUnmount, watch } from "vue"
-import { useRouter } from "vue-router"
-import { useStore } from "vuex"
+import { onBeforeMount, onBeforeUnmount /*watch*/ } from 'vue';
+// import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
-const WIDTH = 768
+const WIDTH = 768;
 export const useResizeHandler = () => {
-  const store = useStore()
-  const router = useRouter()
-  const route = router.currentRoute
+  const store = useStore();
+  // const router = useRouter();
+  // const route = router.currentRoute;
 
   const isMobile = () => {
-    return window.innerWidth < WIDTH
-  }
+    return window.innerWidth < WIDTH;
+  };
 
   const resizeHandler = () => {
     if (isMobile()) {
-      store.commit('app/setDevice', 'mobile')
-      store.commit('app/setCollapse', 1)
+      store.commit('app/setDevice', 'mobile');
+      store.commit('app/setCollapse', 1);
     } else {
-      store.commit('app/setDevice', 'desktop')
-      store.commit('app/setCollapse', 0)
+      store.commit('app/setDevice', 'desktop');
+      store.commit('app/setCollapse', 0);
     }
-  }
+  };
 
   onBeforeMount(() => {
     if (isMobile()) {
-      store.commit('app/setDevice', 'mobile')
-      store.commit('app/setCollapse', 1)
+      store.commit('app/setDevice', 'mobile');
+      store.commit('app/setCollapse', 1);
     }
-    window.addEventListener('resize', resizeHandler)
-  })
+    window.addEventListener('resize', resizeHandler);
+  });
 
   onBeforeUnmount(() => {
-    window.removeEventListener('resize', resizeHandler)
-  })
+    window.removeEventListener('resize', resizeHandler);
+  });
 
   // // 监听路由的时候不能使用useRoute获取路由，否则会有警告
   // watch(route, () => {
@@ -40,7 +40,4 @@ export const useResizeHandler = () => {
   //     store.commit('app/setCollapse', 1)
   //   }
   // })
-
-}
-
-
+};

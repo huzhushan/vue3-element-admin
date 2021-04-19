@@ -212,42 +212,42 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, toRefs, onBeforeMount } from "vue";
+import { defineComponent, reactive, toRefs, onBeforeMount } from 'vue';
 const formatDate = (date, format) => {
   var obj = {
-    "M+": date.getMonth() + 1,
-    "D+": date.getDate(),
-    "H+": date.getHours(),
-    "m+": date.getMinutes(),
-    "s+": date.getSeconds(),
-    "q+": Math.floor((date.getMonth() + 3) / 3),
-    "S+": date.getMilliseconds(),
+    'M+': date.getMonth() + 1,
+    'D+': date.getDate(),
+    'H+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds(),
+    'q+': Math.floor((date.getMonth() + 3) / 3),
+    'S+': date.getMilliseconds(),
   };
   if (/(y+)/i.test(format)) {
     format = format.replace(
       RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
     );
   }
   for (var k in obj) {
-    if (new RegExp("(" + k + ")").test(format)) {
+    if (new RegExp('(' + k + ')').test(format)) {
       format = format.replace(
         RegExp.$1,
         RegExp.$1.length == 1
           ? obj[k]
-          : ("00" + obj[k]).substr(("" + obj[k]).length)
+          : ('00' + obj[k]).substr(('' + obj[k]).length)
       );
     }
   }
   return format;
 };
-const getSearchModel = (search) => {
+const getSearchModel = search => {
   const searchModel = {};
   if (search && search.fields) {
-    search.fields.forEach((item) => {
+    search.fields.forEach(item => {
       switch (item.type) {
-        case "checkbox":
-        case "checkbox-button":
+        case 'checkbox':
+        case 'checkbox-button':
           searchModel[item.name] = [];
           break;
         default:
@@ -257,7 +257,7 @@ const getSearchModel = (search) => {
         searchModel[item.name] = item.defaultValue;
         // 日期范围和时间范围真实变量默认值
         if (
-          (item.type === "daterange" || item.type === "datetimerange") &&
+          (item.type === 'daterange' || item.type === 'datetimerange') &&
           !!item.trueNames &&
           Array.isArray(item.defaultValue)
         ) {
@@ -279,7 +279,7 @@ export default defineComponent({
     // 表格标题
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     // 是否隐藏标题栏
     hideTitleBar: {
@@ -298,14 +298,12 @@ export default defineComponent({
     // 表头配置
     columns: {
       type: Array,
-      default: function (params) {
-        return [];
-      },
+      default: () => [],
     },
     // 行数据的Key，同elementUI的table组件的row-key
     rowKey: {
       type: String,
-      default: "id",
+      default: 'id',
     },
     // 分页配置，false表示不显示分页
     pagination: {
@@ -317,18 +315,18 @@ export default defineComponent({
     // 优化搜索字段，
     // 1、如果搜索配置有transform处理函数，执行transform
     // 2、删除日期范围默认的name字段
-    const optimizeFields = (search) => {
+    const optimizeFields = search => {
       const searchModel = JSON.parse(JSON.stringify(state.searchModel));
       if (search && search.fields) {
-        search.fields.forEach((item) => {
+        search.fields.forEach(item => {
           if (!searchModel.hasOwnProperty(item.name)) {
             return;
           }
-          if (!!item.transform) {
+          if (item.transform) {
             searchModel[item.name] = item.transform(searchModel[item.name]);
           }
           if (
-            (item.type === "daterange" || item.type === "datetimerange") &&
+            (item.type === 'daterange' || item.type === 'datetimerange') &&
             !!item.trueNames
           ) {
             delete searchModel[item.name];
@@ -373,7 +371,7 @@ export default defineComponent({
       },
       // 重置函数
       handleReset() {
-        if (JSON.stringify(state.searchModel) === "{}") {
+        if (JSON.stringify(state.searchModel) === '{}') {
           return;
         }
         state.pageNum = 1;
@@ -386,52 +384,52 @@ export default defineComponent({
       },
 
       // 当前页变化
-      handleCurrentChange(page) {
+      handleCurrentChange() {
         getTableData();
       },
       // 改变每页size数量
-      handleSizeChange(value) {
+      handleSizeChange() {
         state.pageNum = 1;
         getTableData();
       },
       // 全选
       handleSelectionChange(arr) {
-        emit("selectionChange", arr);
+        emit('selectionChange', arr);
       },
       // 过滤方法
       filterHandler(value, row, column) {
-        const property = column["property"];
+        const property = column['property'];
         return row[property] === value;
       },
       // 日期范围
       handleDateChange(date, item, format) {
-        state.searchModel[item.name] = !!date ? formatDate(date, format) : "";
+        state.searchModel[item.name] = date ? formatDate(date, format) : '';
       },
       handleRangeChange(date, item, format) {
-        const arr = !!date && date.map((d) => formatDate(d, format));
-        state.searchModel[item.name] = !!arr ? arr : [];
+        const arr = !!date && date.map(d => formatDate(d, format));
+        state.searchModel[item.name] = arr ? arr : [];
 
         if (!item.trueNames) {
           return;
         }
 
-        if (!!arr) {
+        if (arr) {
           arr.forEach((val, index) => {
             state.searchModel[item.trueNames[index]] = val;
           });
         } else {
-          item.trueNames.forEach((key) => {
+          item.trueNames.forEach(key => {
             delete state.searchModel[key];
           });
         }
       },
     });
 
-    if (typeof props.pagination === "object") {
+    if (typeof props.pagination === 'object') {
       const { layout, pageSizes, style } = props.pagination;
       state.paginationConfig = {
         show: true,
-        layout: layout || "total, sizes, prev, pager, next, jumper",
+        layout: layout || 'total, sizes, prev, pager, next, jumper',
         pageSizes: pageSizes || [10, 20, 30, 40, 50, 100],
         style: style || {},
       };
@@ -491,4 +489,3 @@ export default defineComponent({
   }
 }
 </style>
-

@@ -43,12 +43,12 @@ import {
   toRefs,
   ref,
   computed,
-} from "vue";
-import { Login } from "@/api/login";
-import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+} from 'vue';
+import { Login } from '@/api/login';
+import { useStore } from 'vuex';
+import { useRouter, useRoute } from 'vue-router';
 export default defineComponent({
-  name: "login",
+  name: 'login',
   setup() {
     const { ctx } = getCurrentInstance(); // 可以把ctx当成vue2中的this
     const store = useStore();
@@ -56,42 +56,42 @@ export default defineComponent({
     const route = useRoute();
     const state = reactive({
       model: {
-        userName: "admin",
-        password: "123456",
+        userName: 'admin',
+        password: '123456',
       },
       rules: {
         userName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           {
             min: 6,
             max: 12,
-            message: "长度在 6 到 12 个字符",
-            trigger: "blur",
+            message: '长度在 6 到 12 个字符',
+            trigger: 'blur',
           },
         ],
       },
       loading: false,
-      btnText: computed(() => (state.loading ? "登录中..." : "登录")),
+      btnText: computed(() => (state.loading ? '登录中...' : '登录')),
       loginForm: ref(null),
       submit: () => {
         if (state.loading) {
           return;
         }
-        state.loginForm.validate(async (valid) => {
+        state.loginForm.validate(async valid => {
           if (valid) {
             state.loading = true;
             const { code, data, message } = await Login(state.model);
             if (+code === 200) {
               ctx.$message.success({
-                message: "登录成功",
+                message: '登录成功',
                 duration: 1000,
               });
               const targetPath = route.query.redirect;
-              router.push(!!targetPath ? targetPath : "/");
-              store.commit("app/setToken", data);
+              router.push(targetPath ? targetPath : '/');
+              store.commit('app/setToken', data);
             } else {
               ctx.$message.error(message);
             }
