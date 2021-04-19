@@ -14,13 +14,8 @@ module.exports = {
   rules: {
     "no-console": 0,
     'no-use-before-define': 'off',
-    'no-unused-vars': [
-      'warn',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-      },
-    ],
+    'no-unused-vars': 'warn',
+    'vue/no-unused-vars': 'warn',
     'no-prototype-builtins': 'off',
     'space-before-function-paren': 'off',
     'vue/custom-event-name-casing': 'off',
