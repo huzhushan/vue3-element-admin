@@ -14,7 +14,15 @@ module.exports = {
   rules: {
     "no-console": 0,
     'no-use-before-define': 'off',
-    'no-unused-vars': 'warn',
+    "no-unused-vars": [
+      'warn',
+      {
+        // 允许声明未使用变量
+        "vars": "local",
+        // 参数不检查
+        "args": "none"
+      }
+    ],
     'vue/no-unused-vars': 'warn',
     'no-prototype-builtins': 'off',
     'space-before-function-paren': 'off',
@@ -36,7 +44,7 @@ module.exports = {
         'tabWidth': 2, // 每个tab相当于多少个空格（默认2）
         'useTabs': false, // 是否使用tab进行缩进（默认false）
         'singleQuote': true, // 使用单引号（默认false）
-        'semi': true, // 声明结尾使用分号(默认true)
+        'semi': false, // 声明结尾使用分号(默认true)
         'trailingComma': 'es5', // 多行使用拖尾逗号（默认none）
         'bracketSpacing': true, // 对象字面量的大括号间使用空格（默认true）
         'jsxBracketSameLine': false, // 多行JSX中的>放置在最后一行的结尾，而不是另起一行（默认false）
