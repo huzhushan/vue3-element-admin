@@ -79,15 +79,6 @@ export default [
         },
       },
       {
-        path: 'error-log',
-        name: 'test-error-log',
-        component: ErrorLog,
-        meta: {
-          title: '测试错误日志',
-          roles: ['admin', 'visitor'],
-        },
-      },
-      {
         path: 'nest',
         name: 'nest',
         component: Nest,
@@ -116,6 +107,15 @@ export default [
             },
           },
         ],
+      },
+      {
+        path: 'error-log',
+        name: 'test-error-log',
+        component: ErrorLog,
+        meta: {
+          title: '测试错误日志',
+          roles: ['admin', 'visitor'],
+        },
       },
     ],
   },

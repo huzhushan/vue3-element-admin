@@ -13,6 +13,10 @@ const mutations = {
 
 const actions = {
   addErrorLog({ commit }, log) {
+    // 可以根据需要将错误上报给服务器
+    // ....code.......
+
+    // 触发mutations
     commit('ADD_ERROR_LOG', log)
   },
   clearErrorLog({ commit }) {

@@ -1,23 +1,26 @@
 import { nextTick } from 'vue'
 import store from '@/store'
 
-export default app => {
-  // 判断环境，决定是否需要监控错误，一般生产环境才需要进行错误上报
-  // import.meta.env.DEV代表开发环境
-  // import.meta.env.PROD代表生产环境
+// 判断环境，决定是否开启错误监控
+//   - import.meta.env.DEV 布尔值，代表开发环境
+//   - import.meta.env.PROD 布尔值，代表生产环境
 
-  // if (import.meta.env.PROD) {
-  app.config.errorHandler = function(err, vm, info) {
-    nextTick(() => {
-      store.dispatch('errorLog/addErrorLog', {
-        err,
-        vm,
-        info,
-        url: window.location.href,
-        id: Date.now(),
+// const flag =  import.meta.env.PROD  // 生产环境才进行错误监控
+const flag = true // 为了演示，默认开启错误监控。如果你的项目不需要错误监控，请设为false
+
+export default app => {
+  if (flag) {
+    app.config.errorHandler = function(err, vm, info) {
+      nextTick(() => {
+        store.dispatch('errorLog/addErrorLog', {
+          err,
+          // vm, // 这里不保存vm，否则渲染错误日志的时候控制台会有警告
+          info,
+          url: window.location.href,
+          id: Date.now(),
+        })
+        console.error(err, info)
       })
-      console.error(err, info)
-    })
+    }
   }
-  // }
 }

@@ -1,18 +1,14 @@
 <template>
-  <div v-if="errorLogs.length > 0">
-    <el-badge
-      :is-dot="true"
-      style="line-height: 25px;margin-top: -5px;"
-      @click="dialogTableVisible = true"
-    >
+  <div v-if="errorLogs.length > 0" class="errLog-container">
+    <el-badge :is-dot="true" @click="dialogTableVisible = true">
       <el-button style="padding: 8px 10px;" size="small" type="danger">
         <svg-icon name="bug" />
       </el-button>
     </el-badge>
 
-    <el-dialog v-model="dialogTableVisible" width="80%">
+    <el-dialog v-model="dialogTableVisible" width="80%" append-to-body>
       <template #title>
-        <span style="padding-right: 10px;">Error Log</span>
+        <span style="padding-right: 10px;">错误日志</span>
         <el-button
           size="mini"
           type="primary"
@@ -23,36 +19,43 @@
       </template>
       <el-table :data="errorLogs" border>
         <el-table-column label="Message">
-          <template v-slot="{ row }">
-            <div>
-              <span class="message-title">Msg:</span>
-              <el-tag type="danger">
-                {{ row.err.message }}
-              </el-tag>
-            </div>
-            <br />
-            <div>
-              <span class="message-title" style="padding-right: 10px;"
-                >Info:
-              </span>
-              <el-tag type="warning">
-                <!-- {{ row.vm.$vnode.tag }} error in {{ row.info }} -->
-              </el-tag>
-            </div>
-            <br />
-            <div>
+          <template #default="{ row }">
+            <div style="margin-bottom:10px">
               <span class="message-title" style="padding-right: 16px;"
-                >Url:
+                >页面:
               </span>
               <el-tag type="success">
                 {{ row.url }}
               </el-tag>
             </div>
+
+            <div style="margin-bottom:10px">
+              <span class="message-title">事件源:</span>
+              <el-tag type="primary">
+                {{ row.info && row.info }}
+              </el-tag>
+            </div>
+
+            <div style="margin-bottom:10px">
+              <span class="message-title">错误提示:</span>
+              <el-tag type="danger">
+                {{ row.err && row.err.message }}
+              </el-tag>
+            </div>
+
+            <div v-if="row.err && row.err.config">
+              <span class="message-title" style="padding-right: 16px;"
+                >接口地址:
+              </span>
+              <el-tag type="info">
+                {{ row.err && row.err.config && row.err.config.url }}
+              </el-tag>
+            </div>
           </template>
         </el-table-column>
         <el-table-column label="Stack">
-          <template v-slot="scope">
-            {{ scope.row.err.stack }}
+          <template #default="{ row }">
+            {{ row.err && row.err.stack }}
           </template>
         </el-table-column>
       </el-table>
@@ -61,32 +64,33 @@
 </template>
 
 <script>
-export default {
+import { defineComponent, ref, computed } from 'vue'
+import { useStore } from 'vuex'
+
+export default defineComponent({
   name: 'ErrorLog',
-  data() {
+  setup() {
+    const dialogTableVisible = ref(false)
+    const store = useStore()
+    const errorLogs = computed(() => store.state.errorLog.logs)
+    const clearAll = () => {
+      dialogTableVisible.value = false
+      store.dispatch('errorLog/clearErrorLog')
+    }
+
     return {
-      dialogTableVisible: false,
+      dialogTableVisible,
+      errorLogs,
+      clearAll,
     }
   },
-  computed: {
-    errorLogs() {
-      const logs = this.$store.state.errorLog.logs
-      logs.forEach(log => {
-        console.log(11, log.vm)
-      })
-      return logs
-    },
-  },
-  methods: {
-    clearAll() {
-      this.dialogTableVisible = false
-      this.$store.dispatch('errorLog/clearErrorLog')
-    },
-  },
-}
+})
 </script>
 
 <style scoped>
+.errLog-container {
+  margin-right: 10px;
+}
 .message-title {
   font-size: 16px;
   color: #333;

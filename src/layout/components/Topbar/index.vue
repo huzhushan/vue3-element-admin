@@ -6,7 +6,7 @@
       <breadcrumbs />
     </div>
     <div class="action">
-      <error-log class="errLog-container right-menu-item hover-effect" />
+      <error-log />
       <userinfo />
     </div>
   </div>
@@ -48,6 +48,10 @@ export default defineComponent({
     display: flex;
     align-items: center;
     overflow: hidden;
+  }
+  .action {
+    display: flex;
+    align-items: center;
   }
 }
 .mobile {
