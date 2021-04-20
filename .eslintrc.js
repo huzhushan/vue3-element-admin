@@ -15,7 +15,7 @@ module.exports = {
     'no-console': 0,
     'no-use-before-define': 'off',
     'no-unused-vars': [
-      'warn',
+      'error',
       {
         // 允许声明未使用变量
         vars: 'local',
@@ -23,7 +23,7 @@ module.exports = {
         args: 'none',
       },
     ],
-    'vue/no-unused-vars': 'warn',
+    'vue/no-unused-vars': 'error',
     'no-prototype-builtins': 'off',
     'space-before-function-paren': 'off',
     'vue/custom-event-name-casing': 'off',
