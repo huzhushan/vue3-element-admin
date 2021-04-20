@@ -25,7 +25,7 @@
       </el-button>
     </template>
     <template #operate="scope">
-      <el-button size="mini" type="primary">编辑aa</el-button>
+      <el-button size="mini" type="primary">编辑 - a</el-button>
       <el-button size="mini" type="danger">删除</el-button>
     </template>
   </pro-table>
