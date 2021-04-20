@@ -1,11 +1,11 @@
 export default [
   {
-    url: "/api/menus",
-    method: "get",
+    url: '/api/menus',
+    method: 'get',
     timeout: 100,
     response: {
       code: 200,
-      message: "获取菜单成功",
+      message: '获取菜单成功',
       data: [
         {
           url: '/test',
@@ -28,11 +28,11 @@ export default [
                   url: '/test/nest',
                   title: '子菜单',
                 },
-              ]
-            }
-          ]
-        }
-      ]
+              ],
+            },
+          ],
+        },
+      ],
     },
   },
 ]
