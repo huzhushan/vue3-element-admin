@@ -41,6 +41,7 @@
     "prettier": "^1.19.1",
     "sass": "^1.32.8",
     "vite": "^2.1.0",
+    "vite-plugin-eslint": "^1.1.0",
     "vite-plugin-mock": "^2.3.0",
     "vite-plugin-svg-icons": "^0.4.0"
   },
@@ -49,11 +50,6 @@
       "npm run lint",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "repository": {
     "type": "git",
