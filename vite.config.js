@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
 import viteSvgIcons from 'vite-plugin-svg-icons'
+import viteESLint from '@ehutch79/vite-eslint'
 
 // https://vitejs.dev/config/
 export default env => {
@@ -28,6 +29,9 @@ export default env => {
         iconDirs: [path.resolve(__dirname, 'src/assets/svg')],
         // 指定symbolId格式
         symbolId: 'icon-[dir]-[name]',
+      }),
+      viteESLint({
+        include: ['src/**/*.vue', 'src/**/*.js'],
       }),
     ],
     css: {
