@@ -6,6 +6,7 @@
       <breadcrumbs />
     </div>
     <div class="action">
+      <error-log class="errLog-container right-menu-item hover-effect" />
       <userinfo />
     </div>
   </div>
@@ -16,6 +17,7 @@ import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import Userinfo from './Userinfo.vue'
+import ErrorLog from '@/components/ErrorLog/index.vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -24,6 +26,7 @@ export default defineComponent({
     Hamburger,
     Breadcrumbs,
     Userinfo,
+    ErrorLog,
   },
   setup() {
     const store = useStore()

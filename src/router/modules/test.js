@@ -8,6 +8,7 @@ const NestPage1 = () => import('@/views/test/nest/Page1.vue')
 const NestPage2 = () => import('@/views/test/nest/Page2.vue')
 const Iscache = () => import('@/views/test/Cache.vue')
 const Nocache = () => import('@/views/test/Nocache.vue')
+const ErrorLog = () => import('@/views/test/error-log/index.vue')
 
 export default [
   {
@@ -75,6 +76,15 @@ export default [
           title: '该页面不缓存',
           roles: ['admin', 'visitor'],
           noCache: true, // 不缓存页面
+        },
+      },
+      {
+        path: 'error-log',
+        name: 'test-error-log',
+        component: ErrorLog,
+        meta: {
+          title: '测试错误日志',
+          roles: ['admin', 'visitor'],
         },
       },
       {

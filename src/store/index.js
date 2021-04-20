@@ -1,15 +1,13 @@
 //index.js
 import { createStore } from 'vuex'
-import app from './modules/app'
-import account from './modules/account'
-import menu from './modules/menu'
-import tags from './modules/tags'
+
+const modulesFiles = import.meta.globEager('./modules/*.js')
+const modules = Object.entries(modulesFiles).reduce((modules, [path, mod]) => {
+  const moduleName = path.replace(/^\.\/modules\/(.*)\.\w+$/, '$1')
+  modules[moduleName] = mod.default
+  return modules
+}, {})
 
 export default createStore({
-  modules: {
-    app,
-    account,
-    menu,
-    tags,
-  },
+  modules,
 })

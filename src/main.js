@@ -28,6 +28,10 @@ Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
 
+// 错误日志
+import useErrorHandler from './error-log'
+useErrorHandler(app)
+
 app
   .use(ElementPlus, {
     locale,
