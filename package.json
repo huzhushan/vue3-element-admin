@@ -45,8 +45,8 @@
     "vite-plugin-svg-icons": "^0.4.0"
   },
   "lint-staged": {
-    "*.{js,vue}": [
-      "eslint --ext .js,.vue src",
+    "src/**/*.{js,vue}": [
+      "npm run lint",
       "git add"
     ]
   },
