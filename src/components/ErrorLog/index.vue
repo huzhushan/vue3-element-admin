@@ -1,3 +1,14 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Date: 2021-04-21 09:18:32
+ * @LastEditors: huzhushan@126.com
+ * @LastEditTime: 2021-04-21 09:32:27
+ * @Author: huzhushan@126.com
+ * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
+ * @Github: https://github.com/huzhushan/vue3-element-admin
+ * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
+-->
 <template>
   <div v-if="errorLogs.length > 0" class="errLog-container">
     <el-badge :is-dot="true" @click="dialogTableVisible = true">
