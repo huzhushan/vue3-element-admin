@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:49:02
+ * @LastEditTime: 2021-04-23 15:36:32
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -36,6 +36,7 @@
 import router from '@/router'
 import store from '@/store'
 import { TOKEN } from '@/store/modules/app' // TOKEN变量名
+import { getItem } from '@/utils/storage'
 
 const getPageTitle = title => {
   const appTitle = store.state.app.title
@@ -64,6 +65,12 @@ router.beforeEach(async to => {
       replace: true,
     }
   } else {
+    // 判断是否处于锁屏状态
+    if (to.name !== 'lock' && !!getItem('__VEA_SCREEN_LOCKED__')) {
+      return { name: 'lock', replace: true }
+    }
+
+    // 获取用户角色信息，根据角色判断权限
     let userinfo = store.state.account.userinfo
     if (!userinfo) {
       try {

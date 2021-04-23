@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:50
+ * @LastEditTime: 2021-04-23 15:01:18
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -60,27 +60,40 @@
       <el-dropdown-menu>
         <el-dropdown-item>个人中心</el-dropdown-item>
         <el-dropdown-item>修改密码</el-dropdown-item>
-        <el-dropdown-item>锁定屏幕</el-dropdown-item>
+        <lock-modal />
         <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 <script>
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useUserinfo } from './hooks/useUserinfo'
+import LockModal from './LockModal.vue'
+
 export default defineComponent({
+  components: {
+    LockModal,
+  },
   setup() {
     const store = useStore()
     const router = useRouter()
-    const userinfo = computed(() => store.state.account.userinfo)
+
+    const { userinfo } = useUserinfo()
+
+    // 退出
     const logout = () => {
+      // 清除token
       store.commit('app/clearToken')
+      // 清除用户信息
       store.commit('account/clearUserinfo')
+      // 清除标签栏
       store.dispatch('tags/delAllTags')
       router.push('/login')
     }
+
     return {
       userinfo,
       logout,
