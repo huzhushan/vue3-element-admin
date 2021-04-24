@@ -67,6 +67,7 @@
               type="primary"
               class="btn-unlock"
               icon="el-icon-right"
+              :loading="loading"
               @click="submitForm"
             ></el-button>
           </template>
@@ -102,6 +103,7 @@ export default defineComponent({
     const lockModel = reactive({
       password: '',
     })
+    const loading = ref(false)
 
     const checkPwd = async (rule, value, callback) => {
       const encryption = new AesEncryption()
@@ -114,11 +116,12 @@ export default defineComponent({
         return callback()
       } else {
         // 尝试登录
+        loading.value = true
         const { code } = await Login({
           username: store.state.account.userinfo.name,
           password: value,
         })
-
+        loading.value = false
         if (+code === 200) {
           return callback()
         }
@@ -157,8 +160,8 @@ export default defineComponent({
         }
 
         // 返回锁屏前的页面
-        removeItem('__VEA_SCREEN_LOCKED__')
         router.push({ path: route.query.redirect || '/', replace: true })
+        removeItem('__VEA_SCREEN_LOCKED__')
       })
     }
 
@@ -179,6 +182,7 @@ export default defineComponent({
       lockRules,
       handleUnlock,
       submitForm,
+      loading,
       cancel,
       reLogin,
     }
