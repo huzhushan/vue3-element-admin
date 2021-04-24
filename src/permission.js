@@ -47,7 +47,7 @@ const getPageTitle = title => {
 }
 
 // 白名单，里面是路由对象的name
-const WhiteList = ['login', 'forbidden', 'server-error', 'not-found']
+const WhiteList = ['login', 'forbidden', 'server-error', 'not-found', 'lock']
 
 // vue-router4的路由守卫不再是通过next放行，而是通过return返回true或false或者一个路由地址
 router.beforeEach(async to => {
@@ -65,11 +65,6 @@ router.beforeEach(async to => {
       replace: true,
     }
   } else {
-    // 判断是否处于锁屏状态
-    if (to.name !== 'lock' && !!getItem('__VEA_SCREEN_LOCKED__')) {
-      return { name: 'lock', replace: true }
-    }
-
     // 获取用户角色信息，根据角色判断权限
     let userinfo = store.state.account.userinfo
     if (!userinfo) {
@@ -80,6 +75,18 @@ router.beforeEach(async to => {
         return false
       }
     }
+
+    // 判断是否处于锁屏状态
+    if (to.name !== 'lock' && !!getItem('__VEA_SCREEN_LOCKED__')) {
+      return {
+        name: 'lock',
+        query: {
+          redirect: to.path,
+        },
+        replace: true,
+      }
+    }
+
     // 如果没有权限，跳转到403页面
     if (
       !!to.meta &&

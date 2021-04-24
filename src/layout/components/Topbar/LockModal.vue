@@ -60,22 +60,14 @@
     custom-class="lock-modal"
     append-to-body
   >
-    <div class="userinfo">
-      <template v-if="!userinfo">
-        <i class="el-icon-user" />
-        <h3>admin</h3>
-      </template>
-      <template v-else>
-        <img class="avatar" :src="userinfo.avatar" />
-        <h3>{{ userinfo.name }}</h3>
-      </template>
-    </div>
+    <Avatar />
     <el-form :model="lockModel" :rules="lockRules" ref="lockForm">
       <el-form-item label="锁屏密码" prop="password">
         <el-input
           type="password"
           v-model.trim="lockModel.password"
           autocomplete="off"
+          @keyup.enter="submitForm"
         ></el-input>
       </el-form-item>
       <el-form-item>
@@ -94,16 +86,18 @@
 
 <script>
 import { defineComponent, reactive, ref } from 'vue'
-import { useUserinfo } from './hooks/useUserinfo'
+import Avatar from '@/components/Avatar/index.vue'
 import { setItem } from '@/utils/storage'
 import { AesEncryption } from '@/utils/encrypt'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
+  components: {
+    Avatar,
+  },
   setup() {
     const router = useRouter()
     const dialogVisible = ref(false)
-    const { userinfo } = useUserinfo()
     const lockForm = ref(null)
     const lockModel = reactive({
       password: '',
@@ -123,13 +117,12 @@ export default defineComponent({
         // 存储到localStorage
         setItem('__VEA_SCREEN_LOCKED__', pwd)
         // 跳转到锁屏页面
-        router.push('/lock')
+        router.push('/lock?redirect=' + router.currentRoute.value.fullPath)
       })
     }
 
     return {
       dialogVisible,
-      userinfo,
       lockForm,
       lockModel,
       lockRules,
@@ -145,25 +138,6 @@ export default defineComponent({
 }
 </style>
 <style lang="scss" scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  i {
-    font-size: 48px;
-    color: $mainColor;
-  }
-  h3 {
-    font-size: 14px;
-    font-weight: normal;
-    margin: 8px 0;
-  }
-  .avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-  }
-}
 .submit-btn {
   width: 100%;
 }

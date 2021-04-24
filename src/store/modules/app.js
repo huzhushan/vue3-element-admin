@@ -48,5 +48,12 @@ export default {
       state.device = device
     },
   },
-  actions: {},
+  actions: {
+    clearToken({ commit }) {
+      // 清除token
+      commit('clearToken')
+      // 清除用户信息
+      commit('account/clearUserinfo', '', { root: true })
+    },
+  },
 }

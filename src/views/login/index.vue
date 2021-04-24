@@ -58,6 +58,7 @@ import {
 import { Login } from '@/api/login'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+
 export default defineComponent({
   name: 'login',
   setup() {
@@ -100,8 +101,17 @@ export default defineComponent({
                 message: '登录成功',
                 duration: 1000,
               })
-              const targetPath = route.query.redirect
-              router.push(targetPath ? targetPath : '/')
+
+              const targetPath = decodeURIComponent(route.query.redirect)
+              if (targetPath.startsWith('http')) {
+                // 如果是一个url地址
+                window.location.href = targetPath
+              } else if (targetPath.startsWith('/')) {
+                // 如果是内部路由地址
+                router.push(targetPath)
+              } else {
+                router.push('/')
+              }
               store.commit('app/setToken', data)
             } else {
               ctx.$message.error(message)

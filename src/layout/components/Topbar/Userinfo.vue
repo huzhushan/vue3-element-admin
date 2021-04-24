@@ -70,7 +70,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { useUserinfo } from './hooks/useUserinfo'
+import { useUserinfo } from '@/components/Avatar/hooks/useUserinfo'
 import LockModal from './LockModal.vue'
 
 export default defineComponent({
@@ -86,9 +86,7 @@ export default defineComponent({
     // 退出
     const logout = () => {
       // 清除token
-      store.commit('app/clearToken')
-      // 清除用户信息
-      store.commit('account/clearUserinfo')
+      store.dispatch('app/clearToken')
       // 清除标签栏
       store.dispatch('tags/delAllTags')
       router.push('/login')

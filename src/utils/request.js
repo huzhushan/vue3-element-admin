@@ -69,7 +69,8 @@ service.interceptors.response.use(
       // 校验是否有 refresh_token
       const { authorization } = store.state.app
       if (!authorization || !authorization.refresh_token) {
-        router.push('/login')
+        const redirect = encodeURIComponent(window.location.href)
+        router.push(`/login?redirect=${redirect}`)
 
         // 代码不要往后执行了
         return Promise.reject(error)
@@ -97,9 +98,10 @@ service.interceptors.response.use(
       } catch (err) {
         // 如果获取失败，直接跳转 登录页
         // console.log('请求刷新 token 失败', err)
-        router.push('/login')
+        const redirect = encodeURIComponent(window.location.href)
+        router.push(`/login?redirect=${redirect}`)
         // 清除token
-        store.commit('app/clearToken')
+        store.dispatch('app/clearToken')
         return Promise.reject(error)
       }
     }
