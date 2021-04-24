@@ -71,7 +71,8 @@ service.interceptors.response.use(
       if (!authorization || !authorization.refresh_token) {
         const redirect = encodeURIComponent(window.location.href)
         router.push(`/login?redirect=${redirect}`)
-
+        // 清除token
+        store.dispatch('app/clearToken')
         // 代码不要往后执行了
         return Promise.reject(error)
       }
