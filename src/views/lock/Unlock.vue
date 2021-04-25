@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 19:24:53
+ * @LastEditTime: 2021-04-25 09:30:20
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -46,7 +46,7 @@
 
 <template>
   <h1 class="title">
-    ⚡屏幕已锁定
+    ⚡ 屏幕已锁定
     <div class="unlock-btn" @click="handleUnlock">
       <i class="el-icon-unlock"></i>解锁
     </div>
@@ -131,7 +131,7 @@ export default defineComponent({
 
     const lockRules = reactive({
       password: [
-        { required: true, message: '请输入锁屏密码' },
+        { required: true, message: '请输入密码' },
         {
           validator: checkPwd,
           message: '密码错误',
@@ -171,6 +171,8 @@ export default defineComponent({
     }
 
     const reLogin = () => {
+      // 清除token
+      store.dispatch('app/clearToken')
       removeItem('__VEA_SCREEN_LOCKED__')
       router.push('/login?redirect=' + (route.query.redirect || '/'))
     }
