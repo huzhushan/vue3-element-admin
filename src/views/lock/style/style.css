@@ -1,7 +1,3 @@
-.clock-wrapper {
-  transform: scale(.7);
-  margin: -160px 0;
-}
 .clock-border {
   box-shadow: 0 0 10px rgba(0,0,0,.5);
   position: relative;
