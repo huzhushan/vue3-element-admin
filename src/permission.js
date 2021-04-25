@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 15:36:32
+ * @LastEditTime: 2021-04-25 13:50:27
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -60,7 +60,7 @@ router.beforeEach(async to => {
     return {
       name: 'login',
       query: {
-        redirect: to.path, // redirect是指登录之后可以跳回到redirect指定的页面
+        redirect: to.fullPath, // redirect是指登录之后可以跳回到redirect指定的页面
       },
       replace: true,
     }
