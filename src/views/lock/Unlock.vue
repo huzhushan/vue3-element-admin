@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-25 09:30:20
+ * @LastEditTime: 2021-04-25 10:57:31
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -171,10 +171,10 @@ export default defineComponent({
     }
 
     const reLogin = () => {
+      router.push('/login?redirect=' + (route.query.redirect || '/'))
       // 清除token
       store.dispatch('app/clearToken')
       removeItem('__VEA_SCREEN_LOCKED__')
-      router.push('/login?redirect=' + (route.query.redirect || '/'))
     }
 
     return {
