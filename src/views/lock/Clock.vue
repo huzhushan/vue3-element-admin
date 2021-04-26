@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-23 15:43:29
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-25 10:51:13
+ * @LastEditTime: 2021-04-26 11:43:08
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -121,6 +121,6 @@ export default defineComponent({
 @import './style/style.css';
 .clock-wrapper {
   transform: scale(0.7);
-  margin: -200px 0;
+  margin: 0;
 }
 </style>
