@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 09:34:20
+ * @LastEditTime: 2021-04-28 17:40:11
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -20,7 +20,7 @@ const state = {
 }
 
 const mutations = {
-  ADD_TAG_LIST: (state, { path, fullPath, name, meta }) => {
+  ADD_TAG_LIST: (state, { path, fullPath, name, meta, params, query }) => {
     if (state.tagList.some(v => v.path === path)) return false
 
     state.tagList.splice(
@@ -28,7 +28,7 @@ const mutations = {
       0,
       Object.assign(
         {},
-        { path, fullPath, name, meta },
+        { path, fullPath, name, meta, params, query },
         {
           title: meta.title || '未命名',
           fullPath: fullPath || path,
@@ -156,8 +156,8 @@ const actions = {
     commit('DEL_ALL_CACHE_LIST')
   },
 
-  updateTagList({ commit }, tag) {
-    commit('UPDATE_TAG_LIST', tag)
+  updateTagList({ commit }, { path, fullPath, name, meta, params, query }) {
+    commit('UPDATE_TAG_LIST', { path, fullPath, name, meta, params, query })
   },
 }
 

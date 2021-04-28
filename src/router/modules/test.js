@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 10:49:35
+ * @LastEditTime: 2021-04-28 16:49:53
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -12,6 +12,7 @@
 const Layout = () => import('@/layout/index.vue')
 const List = () => import('@/views/test/index.vue')
 const Add = () => import('@/views/test/Add.vue')
+const Edit = () => import('@/views/test/Edit.vue')
 const Auth = () => import('@/views/test/Auth.vue')
 const NoAuth = () => import('@/views/test/NoAuth.vue')
 const Nest = () => import('@/views/test/Nest.vue')
@@ -47,6 +48,16 @@ export default [
         component: Add,
         meta: {
           title: '添加',
+          roles: ['admin', 'visitor'],
+        },
+        hidden: true, // 不在菜单中显示
+      },
+      {
+        path: 'edit/:id',
+        name: 'testEdit',
+        component: Edit,
+        meta: {
+          title: '编辑',
           roles: ['admin', 'visitor'],
         },
         hidden: true, // 不在菜单中显示
