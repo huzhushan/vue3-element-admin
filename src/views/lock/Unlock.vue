@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-28 09:35:20
+ * @LastEditTime: 2021-04-28 09:43:33
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -83,7 +83,6 @@
 <script>
 import { defineComponent, ref, reactive, getCurrentInstance } from 'vue'
 import Avatar from '@/components/Avatar/index.vue'
-import { getItem, removeItem } from '@/utils/storage'
 import { AesEncryption } from '@/utils/encrypt'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
