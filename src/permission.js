@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-25 13:50:27
+ * @LastEditTime: 2021-04-28 09:31:23
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -77,13 +77,16 @@ router.beforeEach(async to => {
     }
 
     // 判断是否处于锁屏状态
-    if (to.name !== 'lock' && !!getItem('__VEA_SCREEN_LOCKED__')) {
-      return {
-        name: 'lock',
-        query: {
-          redirect: to.path,
-        },
-        replace: true,
+    if (to.name !== 'lock') {
+      const { authorization } = store.state.app
+      if (!!authorization && !!authorization.screenCode) {
+        return {
+          name: 'lock',
+          query: {
+            redirect: to.path,
+          },
+          replace: true,
+        }
       }
     }
 

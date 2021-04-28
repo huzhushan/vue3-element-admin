@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-25 10:57:31
+ * @LastEditTime: 2021-04-28 09:35:20
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -106,12 +106,12 @@ export default defineComponent({
     const loading = ref(false)
 
     const checkPwd = async (rule, value, callback) => {
-      const encryption = new AesEncryption()
-      const cipher = getItem('__VEA_SCREEN_LOCKED__')
+      const { authorization } = store.state.app
+      const cipher = authorization && authorization.screenCode
       if (!cipher) {
         return callback()
       }
-      const pwd = encryption.decryptByAES(cipher)
+      const pwd = new AesEncryption().decryptByAES(cipher)
       if (pwd === value) {
         return callback()
       } else {
@@ -161,7 +161,8 @@ export default defineComponent({
 
         // 返回锁屏前的页面
         router.push({ path: route.query.redirect || '/', replace: true })
-        removeItem('__VEA_SCREEN_LOCKED__')
+        // 清除锁屏密码
+        store.dispatch('app/setScreenCode', '')
       })
     }
 
@@ -174,7 +175,6 @@ export default defineComponent({
       router.push('/login?redirect=' + (route.query.redirect || '/'))
       // 清除token
       store.dispatch('app/clearToken')
-      removeItem('__VEA_SCREEN_LOCKED__')
     }
 
     return {

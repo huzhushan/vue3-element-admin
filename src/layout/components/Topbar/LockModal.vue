@@ -44,7 +44,7 @@
  * @version: 
  * @Date: 2021-04-23 14:15:50
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 15:24:54
+ * @LastEditTime: 2021-04-28 09:23:23
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -87,9 +87,8 @@
 <script>
 import { defineComponent, reactive, ref } from 'vue'
 import Avatar from '@/components/Avatar/index.vue'
-import { setItem } from '@/utils/storage'
-import { AesEncryption } from '@/utils/encrypt'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   components: {
@@ -97,6 +96,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const store = useStore()
     const dialogVisible = ref(false)
     const lockForm = ref(null)
     const lockModel = reactive({
@@ -111,11 +111,9 @@ export default defineComponent({
           return false
         }
 
-        // 对密码加密
-        const encryption = new AesEncryption()
-        const pwd = encryption.encryptByAES(lockModel.password)
-        // 存储到localStorage
-        setItem('__VEA_SCREEN_LOCKED__', pwd)
+        // 对密码加密并跟token保存在一起
+        store.dispatch('app/setScreenCode', lockModel.password)
+
         // 跳转到锁屏页面
         router.push('/lock?redirect=' + router.currentRoute.value.fullPath)
       })
