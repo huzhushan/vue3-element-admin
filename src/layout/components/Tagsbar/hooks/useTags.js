@@ -24,7 +24,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:12
+ * @LastEditTime: 2021-04-29 11:13:55
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -63,6 +63,7 @@ export const useTags = () => {
   )
 
   const filterAffixTags = routes => {
+    console.log(222, routes)
     return routes.filter(route => isAffix(route))
   }
 
@@ -71,7 +72,7 @@ export const useTags = () => {
 
     for (const tag of affixTags) {
       if (tag.name) {
-        store.dispatch('tags/addTagList', tag)
+        store.dispatch('tags/addTag', tag)
       }
     }
   }

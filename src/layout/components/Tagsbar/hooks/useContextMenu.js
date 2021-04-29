@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:01
+ * @LastEditTime: 2021-04-29 10:52:41
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -58,7 +58,7 @@ export const useContextMenu = tagList => {
       state.visible = false
     },
     refreshSelectedTag(tag) {
-      store.dispatch('tags/delCacheList', tag)
+      store.commit('tags/DEL_CACHE_LIST', tag)
       const { fullPath } = tag
       nextTick(() => {
         router.replace({

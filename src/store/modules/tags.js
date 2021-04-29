@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-28 17:40:11
+ * @LastEditTime: 2021-04-29 11:19:20
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -16,25 +16,30 @@ const TAGLIST = 'VEA-TAGLIST'
 const state = {
   tagList: getItem(TAGLIST) || [],
   cacheList: [],
-  activePosition: 0,
+  activePosition: -1,
 }
 
 const mutations = {
   ADD_TAG_LIST: (state, { path, fullPath, name, meta, params, query }) => {
     if (state.tagList.some(v => v.path === path)) return false
 
-    state.tagList.splice(
-      state.activePosition + 1,
-      0,
-      Object.assign(
-        {},
-        { path, fullPath, name, meta, params, query },
-        {
-          title: meta.title || '未命名',
-          fullPath: fullPath || path,
-        }
-      )
+    const target = Object.assign(
+      {},
+      { path, fullPath, name, meta, params, query },
+      {
+        title: meta.title || '未命名',
+        fullPath: fullPath || path,
+      }
     )
+    if (state.activePosition === -1) {
+      if (name === 'home') {
+        state.tagList.unshift(target)
+      } else {
+        state.tagList.push(target)
+      }
+    } else {
+      state.tagList.splice(state.activePosition + 1, 0, target)
+    }
 
     // 保存到localStorage
     setItem(TAGLIST, state.tagList)
@@ -107,55 +112,26 @@ const actions = {
   saveActivePosition({ commit }, index) {
     commit('SAVE_ACTIVE_POSITION', index)
   },
-  addTag({ dispatch }, tag) {
-    dispatch('addTagList', tag)
-    dispatch('addCacheList', tag)
-  },
-  addTagList({ commit }, tag) {
+  addTag({ commit }, tag) {
     commit('ADD_TAG_LIST', tag)
-  },
-  addCacheList({ commit }, tag) {
     commit('ADD_CACHE_LIST', tag)
   },
-
-  delTag({ dispatch }, tag) {
-    dispatch('delTagList', tag)
-    dispatch('delCacheList', tag)
-  },
-  delTagList({ commit }, tag) {
+  delTag({ commit }, tag) {
     commit('DEL_TAG_LIST', tag)
-  },
-  delCacheList({ commit }, tag) {
     commit('DEL_CACHE_LIST', tag)
   },
-
-  delOtherTags({ dispatch }, tag) {
-    dispatch('delOtherTagList', tag)
-    dispatch('delOtherCacheList', tag)
-  },
-  delOtherTagList({ commit }, tag) {
+  delOtherTags({ commit }, tag) {
     commit('DEL_OTHER_TAG_LIST', tag)
-  },
-  delOtherCacheList({ commit }, tag) {
     commit('DEL_OTHER_CACHE_LIST', tag)
   },
-
   delSomeTags({ commit }, tags) {
     commit('DEL_SOME_TAG_LIST', tags)
     commit('DEL_SOME_CACHE_LIST', tags)
   },
-
-  delAllTags({ dispatch }) {
-    dispatch('delAllTagList')
-    dispatch('delAllCacheList')
-  },
-  delAllTagList({ commit }) {
+  delAllTags({ commit }) {
     commit('DEL_ALL_TAG_LIST')
-  },
-  delAllCacheList({ commit }) {
     commit('DEL_ALL_CACHE_LIST')
   },
-
   updateTagList({ commit }, { path, fullPath, name, meta, params, query }) {
     commit('UPDATE_TAG_LIST', { path, fullPath, name, meta, params, query })
   },
