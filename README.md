@@ -19,8 +19,8 @@
 
 ## 视频教程
 
-- [使用 vue3-element-admin 开发后台管理系统]() - 待更新
-- [vue3-element-admin 架构搭建过程]() - 待更新
+- [使用 vue3-element-admin 开发后台管理系统](https://www.bilibili.com/video/BV12v411V7ho/)
+- [vue3-element-admin 架构搭建过程](https://study.163.com/course/courseMain.htm?courseId=1211577825&share=2&shareId=400000000685053) 
 
 ## 技术储备
 
