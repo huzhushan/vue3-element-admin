@@ -3,7 +3,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 09:33:20
+ * @LastEditTime: 2021-07-19 09:58:03
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -29,7 +29,6 @@
           prefix-icon="el-icon-lock"
           show-password
           clearable
-          @input.enter="submit"
           placeholder="密码"
         />
       </el-form-item>
@@ -62,7 +61,7 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'login',
   setup() {
-    const { ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
+    const { proxy: ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
     const store = useStore()
     const router = useRouter()
     const route = useRoute()

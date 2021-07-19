@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-28 09:43:33
+ * @LastEditTime: 2021-07-19 10:04:01
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -93,7 +93,7 @@ export default defineComponent({
     Avatar,
   },
   setup() {
-    const { ctx } = getCurrentInstance()
+    const { proxy: ctx } = getCurrentInstance()
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
