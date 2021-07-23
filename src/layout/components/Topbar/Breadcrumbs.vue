@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:34
+ * @LastEditTime: 2021-07-23 14:13:23
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -36,9 +36,9 @@
 
 <template>
   <el-breadcrumb
-    separator="/"
+    separator-class="el-icon-arrow-right"
     class="breadcrumb"
-    :class="{ mobile: device === 'mobile' }"
+    :class="{ mobile: device === 'mobile', show: isHorizontalMenu }"
   >
     <el-breadcrumb-item
       v-for="(item, index) in breadcrumbs"
@@ -51,7 +51,14 @@
   </el-breadcrumb>
 </template>
 <script>
-import { defineComponent, computed, ref, onBeforeMount, watch } from 'vue'
+import {
+  defineComponent,
+  computed,
+  ref,
+  onBeforeMount,
+  watch,
+  inject,
+} from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -62,6 +69,11 @@ export default defineComponent({
     const router = useRouter()
     const route = router.currentRoute // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
     const breadcrumbs = ref([])
+
+    const defaultSettings = inject('defaultSettings')
+    const isHorizontalMenu = computed(
+      () => defaultSettings.menus.mode === 'horizontal'
+    )
 
     const getBreadcrumbs = route => {
       const home = [{ path: '/', meta: { title: '首页' } }]
@@ -87,6 +99,7 @@ export default defineComponent({
     return {
       device,
       breadcrumbs,
+      isHorizontalMenu,
     }
   },
 })
@@ -112,6 +125,20 @@ export default defineComponent({
   }
   &.mobile {
     display: none;
+  }
+  &.show {
+    display: block;
+    margin: 0;
+    padding: 16px;
+    background: #f5f5f5;
+  }
+}
+</style>
+<style lang="scss">
+.el-breadcrumb__inner {
+  &.is-link,
+  a {
+    color: #5c5c5c;
   }
 }
 </style>

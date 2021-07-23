@@ -27,7 +27,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 11:08:56
+ * @LastEditTime: 2021-07-22 18:04:34
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -57,6 +57,10 @@ import './permission'
 
 // 引入svg图标注册脚本
 import 'vite-plugin-svg-icons/register'
+
+// 引入全局设置
+import defaultSettings from './defaultSettings'
+app.provide('defaultSettings', defaultSettings)
 
 // 注册全局组件
 import * as Components from './global-components'

@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:46:48
+ * @LastEditTime: 2021-07-23 11:07:24
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -38,6 +38,7 @@
   <el-scrollbar class="scroll">
     <el-menu
       class="menu"
+      :mode="mode"
       :collapse="collapse"
       :uniqueOpened="true"
       :router="true"
@@ -65,6 +66,10 @@ export default defineComponent({
     collapse: {
       type: Boolean,
       default: false,
+    },
+    mode: {
+      type: String,
+      default: 'vertical',
     },
   },
   setup() {
@@ -130,9 +135,23 @@ export default defineComponent({
 .el-submenu__title i {
   color: $arrowColor;
 }
+
+// 水平菜单
+.el-menu--horizontal {
+  .el-menu-item,
+  .el-submenu .el-submenu__title {
+    height: $horizontalMenuHeight;
+    line-height: $horizontalMenuHeight;
+  }
+  .el-menu-item.is-active,
+  .el-submenu.is-active .el-submenu__title {
+    border: none;
+  }
+}
 </style>
 <style lang="scss" scoped>
 .scroll {
+  height: auto;
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;

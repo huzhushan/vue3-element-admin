@@ -52,7 +52,6 @@ export default defineComponent({
         { label: '邮箱', prop: 'userEmail' },
         {
           label: '操作',
-          fixed: 'right',
           width: 180,
           align: 'center',
           tdSlot: 'operate', // 自定义单元格内容的插槽名称

@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:18
+ * @LastEditTime: 2021-07-23 14:39:22
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -21,7 +21,7 @@
  -->
 
 <template>
-  <div class="tags-container">
+  <div class="tags-container" :class="{ hide: !isTagsbarShow }">
     <el-scrollbar
       ref="scrollContainer"
       :vertical="false"
@@ -68,13 +68,16 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, inject, computed } from 'vue'
 import { useTags } from './hooks/useTags'
 import { useContextMenu } from './hooks/useContextMenu'
 
 export default defineComponent({
   name: 'Tagsbar',
   setup() {
+    const defaultSettings = inject('defaultSettings')
+    const isTagsbarShow = computed(() => defaultSettings.tagsbar.isShow)
+
     const tags = useTags()
     const contextMenu = useContextMenu(tags.tagList)
 
@@ -84,6 +87,7 @@ export default defineComponent({
     }
 
     return {
+      isTagsbarShow,
       onScroll,
       ...tags,
       ...contextMenu,
@@ -97,8 +101,10 @@ export default defineComponent({
   height: 32px;
   width: 100%;
   background: #fff;
-  border-bottom: 1px solid #eaeaea;
-
+  border-bottom: 1px solid #e0e4ef;
+  &.hide {
+    display: none;
+  }
   .scroll-container {
     white-space: nowrap;
     overflow: hidden;
@@ -128,8 +134,8 @@ export default defineComponent({
       margin-right: 15px;
     }
     &.active {
-      color: $mainColor;
-      border-bottom: 2px solid $mainColor;
+      color: #303133;
+      background: #f5f5f5;
     }
     .title {
       display: inline-block;
@@ -141,7 +147,7 @@ export default defineComponent({
     }
     .el-icon-close {
       color: #5c5c5c;
-      margin-left: 2px;
+      margin-left: 8px;
       width: 16px;
       height: 16px;
       vertical-align: 2px;

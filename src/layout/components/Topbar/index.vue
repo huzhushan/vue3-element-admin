@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:46
+ * @LastEditTime: 2021-07-23 13:42:10
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -45,11 +45,15 @@
  -->
 
 <template>
-  <div class="header">
+  <div class="header" :class="{ 'no-border': isHorizontalMenu }">
     <div class="navigation">
-      <logo v-if="device === 'mobile'" class="mobile" />
-      <hamburger />
-      <breadcrumbs />
+      <logo
+        v-if="isShowLogo"
+        class="mobile"
+        :class="{ 'show-title': isHorizontalMenu }"
+      />
+      <hamburger v-if="isShowHamburger" />
+      <breadcrumbs v-if="isShowBreadcrumbs" />
     </div>
     <div class="action">
       <error-log />
@@ -58,7 +62,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, inject } from 'vue'
 import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
@@ -75,11 +79,31 @@ export default defineComponent({
     ErrorLog,
   },
   setup() {
+    const defaultSettings = inject('defaultSettings')
+
     const store = useStore()
     const device = computed(() => store.state.app.device)
 
+    const isHorizontalMenu = computed(
+      () => defaultSettings.menus.mode === 'horizontal'
+    )
+
+    const isShowLogo = computed(
+      () => isHorizontalMenu.value || device.value === 'mobile'
+    )
+
+    const isShowHamburger = computed(() => !isHorizontalMenu.value)
+
+    const isShowBreadcrumbs = computed(
+      () => defaultSettings.breadcrumbs.isShow && !isHorizontalMenu.value
+    )
+
     return {
       device,
+      isHorizontalMenu,
+      isShowLogo,
+      isShowHamburger,
+      isShowBreadcrumbs,
     }
   },
 })
@@ -87,9 +111,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .header {
   height: 48px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #e0e4ef;
   display: flex;
   justify-content: space-between;
+  &.no-border {
+    border: none;
+  }
   .navigation {
     display: flex;
     align-items: center;
@@ -108,6 +135,12 @@ export default defineComponent({
   }
   ::v-deep(.title) {
     display: none;
+  }
+}
+.show-title {
+  ::v-deep(.title) {
+    display: block;
+    color: #333;
   }
 }
 </style>
