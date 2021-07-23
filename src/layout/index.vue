@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 14:39:15
+ * @LastEditTime: 2021-07-23 17:19:35
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -42,16 +42,19 @@
         <topbar />
         <menus mode="horizontal" v-if="isHorizontalMenu" />
         <tagsbar />
-        <breadcrumbs v-if="isBreadcrumbsShow" />
+        <breadcrumbs
+          v-if="isBreadcrumbsShow"
+          @on-breadcrumbs-change="handleBreadcrumbsChange"
+        />
       </div>
-      <div class="main" :class="{ pt0: isBreadcrumbsShow }">
+      <div class="main" :class="{ pt0: isBreadcrumbsShow && paddingFlag }">
         <Content />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, computed, inject } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Topbar from './components/Topbar/index.vue'
 import Menus from './components/Sidebar/Menus.vue'
@@ -59,6 +62,7 @@ import Tagsbar from './components/Tagsbar/index.vue'
 import Breadcrumbs from './components/Topbar/Breadcrumbs.vue'
 import Content from './components/Content/index.vue'
 import { useResizeHandler } from './hooks/useResizeHandler'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'layout',
@@ -72,22 +76,28 @@ export default defineComponent({
   },
   setup() {
     useResizeHandler()
-
-    const defaultSettings = inject('defaultSettings')
-    const isFluid = computed(() => defaultSettings.layout.isFluid)
-    const isTopbarFixed = computed(() => defaultSettings.topbar.isFixed)
+    const store = useStore()
+    const defaultSettings = computed(() => store.state.layoutSettings)
+    const isFluid = computed(() => defaultSettings.value.layout.isFluid)
+    const isTopbarFixed = computed(() => defaultSettings.value.topbar.isFixed)
     const isHorizontalMenu = computed(
-      () => defaultSettings.menus.mode === 'horizontal'
+      () => defaultSettings.value.menus.mode === 'horizontal'
     )
     const isBreadcrumbsShow = computed(
-      () => isHorizontalMenu.value && defaultSettings.breadcrumbs.isShow
+      () => isHorizontalMenu.value && defaultSettings.value.breadcrumbs.isShow
     )
+    const paddingFlag = ref(true)
+    const handleBreadcrumbsChange = boo => {
+      paddingFlag.value = boo
+    }
 
     return {
       isFluid,
       isTopbarFixed,
       isHorizontalMenu,
       isBreadcrumbsShow,
+      paddingFlag,
+      handleBreadcrumbsChange,
     }
   },
 })

@@ -48,7 +48,8 @@
   <h1 class="title">
     ⚡ 屏幕已锁定
     <div class="unlock-btn" @click="handleUnlock">
-      <i class="el-icon-unlock"></i>解锁
+      <i class="el-icon-unlock"></i>
+      解锁
     </div>
   </h1>
   <div class="unlock-modal" v-show="showModal">

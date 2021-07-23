@@ -60,15 +60,16 @@
           type="primary"
           icon="el-icon-delete"
           @click="clearAll"
-          >Clear All</el-button
         >
+          Clear All
+        </el-button>
       </template>
       <el-table :data="errorLogs" border>
         <el-table-column label="Message">
           <template #default="{ row }">
             <div style="margin-bottom:10px">
-              <span class="message-title" style="padding-right: 16px;"
-                >页面:
+              <span class="message-title" style="padding-right: 16px;">
+                页面:
               </span>
               <el-tag type="success">
                 {{ row.url }}
@@ -90,8 +91,8 @@
             </div>
 
             <div v-if="row.err && row.err.config">
-              <span class="message-title" style="padding-right: 16px;"
-                >接口地址:
+              <span class="message-title" style="padding-right: 16px;">
+                接口地址:
               </span>
               <el-tag type="info">
                 {{ row.err && row.err.config && row.err.config.url }}

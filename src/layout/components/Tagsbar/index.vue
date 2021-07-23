@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 14:39:22
+ * @LastEditTime: 2021-07-23 16:48:37
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -68,15 +68,17 @@
 </template>
 
 <script>
-import { defineComponent, inject, computed } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useTags } from './hooks/useTags'
 import { useContextMenu } from './hooks/useContextMenu'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Tagsbar',
   setup() {
-    const defaultSettings = inject('defaultSettings')
-    const isTagsbarShow = computed(() => defaultSettings.tagsbar.isShow)
+    const store = useStore()
+    const defaultSettings = computed(() => store.state.layoutSettings)
+    const isTagsbarShow = computed(() => defaultSettings.value.tagsbar.isShow)
 
     const tags = useTags()
     const contextMenu = useContextMenu(tags.tagList)

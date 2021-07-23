@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 13:42:10
+ * @LastEditTime: 2021-07-23 16:49:39
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, inject } from 'vue'
+import { defineComponent, computed } from 'vue'
 import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
@@ -79,13 +79,13 @@ export default defineComponent({
     ErrorLog,
   },
   setup() {
-    const defaultSettings = inject('defaultSettings')
-
     const store = useStore()
+    const defaultSettings = computed(() => store.state.layoutSettings)
+
     const device = computed(() => store.state.app.device)
 
     const isHorizontalMenu = computed(
-      () => defaultSettings.menus.mode === 'horizontal'
+      () => defaultSettings.value.menus.mode === 'horizontal'
     )
 
     const isShowLogo = computed(
@@ -95,7 +95,7 @@ export default defineComponent({
     const isShowHamburger = computed(() => !isHorizontalMenu.value)
 
     const isShowBreadcrumbs = computed(
-      () => defaultSettings.breadcrumbs.isShow && !isHorizontalMenu.value
+      () => defaultSettings.value.breadcrumbs.isShow && !isHorizontalMenu.value
     )
 
     return {

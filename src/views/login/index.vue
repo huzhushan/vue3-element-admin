@@ -38,8 +38,9 @@
           type="primary"
           class="btn"
           @click="submit"
-          >{{ btnText }}</el-button
         >
+          {{ btnText }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>

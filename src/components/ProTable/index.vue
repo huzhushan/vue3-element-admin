@@ -73,8 +73,9 @@
             v-for="option of item.options"
             :key="option.value"
             :label="option.value"
-            >{{ option.name }}</el-radio
           >
+            {{ option.name }}
+          </el-radio>
         </el-radio-group>
         <el-radio-group
           v-model="searchModel[item.name]"
@@ -85,8 +86,9 @@
             v-for="option of item.options"
             :key="option.value"
             :label="option.value"
-            >{{ option.name }}</el-radio-button
           >
+            {{ option.name }}
+          </el-radio-button>
         </el-radio-group>
         <el-checkbox-group
           v-model="searchModel[item.name]"
@@ -97,8 +99,9 @@
             v-for="option of item.options"
             :key="option.value"
             :label="option.value"
-            >{{ option.name }}</el-checkbox
           >
+            {{ option.name }}
+          </el-checkbox>
         </el-checkbox-group>
         <el-checkbox-group
           v-model="searchModel[item.name]"
@@ -109,8 +112,9 @@
             v-for="option of item.options"
             :key="option.value"
             :label="option.value"
-            >{{ option.name }}</el-checkbox-button
           >
+            {{ option.name }}
+          </el-checkbox-button>
         </el-checkbox-group>
         <el-date-picker
           v-else-if="item.type === 'date'"
@@ -182,12 +186,12 @@
         ></el-input>
       </el-form-item>
       <el-form-item class="search-btn">
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch"
-          >查询</el-button
-        >
-        <el-button @click="handleReset" icon="el-icon-refresh-right"
-          >重置</el-button
-        >
+        <el-button type="primary" icon="el-icon-search" @click="handleSearch">
+          查询
+        </el-button>
+        <el-button @click="handleReset" icon="el-icon-refresh-right">
+          重置
+        </el-button>
       </el-form-item>
     </el-form>
 
