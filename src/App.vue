@@ -24,7 +24,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 15:12:50
+ * @LastEditTime: 2021-07-23 17:43:39
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -33,19 +33,7 @@
 
 <template>
   <router-view />
-  <layout-settings />
 </template>
-<script>
-import { defineComponent } from 'vue'
-import LayoutSettings from '@/components/LayoutSettings/index.vue'
-
-export default defineComponent({
-  components: {
-    LayoutSettings,
-  },
-  setup() {},
-})
-</script>
 
 <style lang="scss">
 html,

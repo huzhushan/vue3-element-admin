@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:49:39
+ * @LastEditTime: 2021-07-23 17:43:27
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -60,6 +60,7 @@
       <userinfo />
     </div>
   </div>
+  <layout-settings />
 </template>
 <script>
 import { defineComponent, computed } from 'vue'
@@ -68,6 +69,7 @@ import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import Userinfo from './Userinfo.vue'
 import ErrorLog from '@/components/ErrorLog/index.vue'
+import LayoutSettings from '@/components/LayoutSettings/index.vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -77,6 +79,7 @@ export default defineComponent({
     Breadcrumbs,
     Userinfo,
     ErrorLog,
+    LayoutSettings,
   },
   setup() {
     const store = useStore()
