@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 11:07:24
+ * @LastEditTime: 2021-07-26 16:02:28
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -75,10 +75,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
-    store.dispatch(
-      'menu/generateMenus',
-      store.state.account.userinfo && store.state.account.userinfo.role
-    )
 
     return {
       menus: computed(() => store.state.menu.menus),
