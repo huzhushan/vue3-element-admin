@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-05-06 09:21:41
+ * @LastEditTime: 2021-07-26 16:32:34
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -46,7 +46,7 @@ const getPageTitle = title => {
 }
 
 // 白名单，里面是路由对象的name
-const WhiteList = ['login', 'forbidden', 'server-error', 'not-found', 'lock']
+const WhiteList = ['login', 'lock']
 
 // vue-router4的路由守卫不再是通过next放行，而是通过return返回true或false或者一个路由地址
 router.beforeEach(async to => {
@@ -74,6 +74,15 @@ router.beforeEach(async to => {
         return false
       }
     }
+    // 获取动态菜单（如果你的项目有动态菜单，在此处获取动态菜单）
+    if (store.state.menu.menus.length <= 0) {
+      try {
+        await store.dispatch('menu/generateMenus', userinfo)
+        return to.fullPath // 添加动态路由后，必须加这一句触发重定向
+      } catch (err) {
+        return false
+      }
+    }
 
     // 判断是否处于锁屏状态
     if (to.name !== 'lock') {
@@ -87,15 +96,6 @@ router.beforeEach(async to => {
           replace: true,
         }
       }
-    }
-
-    // 如果没有权限，跳转到403页面
-    if (
-      !!to.meta &&
-      !!to.meta.roles &&
-      !to.meta.roles.includes(userinfo.role)
-    ) {
-      return { path: '/403', replace: true }
     }
   }
 })

@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-29 11:20:14
+ * @LastEditTime: 2021-07-26 16:30:58
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -31,7 +31,6 @@ export default [
       title: '测试页面',
     },
     icon: 'el-icon-location',
-    roles: ['admin', 'visitor'],
     children: [
       {
         path: '',
@@ -39,7 +38,6 @@ export default [
         component: List,
         meta: {
           title: '列表',
-          roles: ['admin', 'visitor'],
         },
       },
       {
@@ -48,7 +46,6 @@ export default [
         component: Add,
         meta: {
           title: '添加',
-          roles: ['admin', 'visitor'],
         },
         hidden: true, // 不在菜单中显示
       },
@@ -58,7 +55,6 @@ export default [
         component: Edit,
         meta: {
           title: '编辑',
-          roles: ['admin', 'visitor'],
         },
         hidden: true, // 不在菜单中显示
       },
@@ -68,7 +64,6 @@ export default [
         component: Auth,
         meta: {
           title: '权限测试',
-          roles: ['admin', 'visitor'],
         },
       },
       {
@@ -77,7 +72,6 @@ export default [
         component: NoAuth,
         meta: {
           title: '权限页面',
-          roles: ['admin'],
         },
         hidden: true,
       },
@@ -87,7 +81,6 @@ export default [
         component: Iscache,
         meta: {
           title: '该页面可缓存',
-          roles: ['admin', 'visitor'],
         },
       },
       {
@@ -96,7 +89,6 @@ export default [
         component: Nocache,
         meta: {
           title: '该页面不缓存',
-          roles: ['admin', 'visitor'],
           noCache: true, // 不缓存页面
         },
       },
@@ -107,7 +99,6 @@ export default [
         redirect: '/test/nest/page1',
         meta: {
           title: '二级菜单',
-          roles: ['admin', 'visitor'],
         },
         children: [
           {
@@ -116,7 +107,6 @@ export default [
             component: NestPage1,
             meta: {
               title: 'page1',
-              roles: ['admin', 'visitor'],
             },
           },
           {
@@ -125,7 +115,6 @@ export default [
             component: NestPage2,
             meta: {
               title: 'page2',
-              roles: ['admin', 'visitor'],
             },
           },
         ],
@@ -136,7 +125,6 @@ export default [
         component: ErrorLog,
         meta: {
           title: '测试错误日志',
-          roles: ['admin', 'visitor'],
         },
       },
     ],

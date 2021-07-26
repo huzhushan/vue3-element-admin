@@ -3,21 +3,22 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 09:34:17
+ * @LastEditTime: 2021-07-26 16:11:08
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
-import { allMenus } from '@/router'
-// import { GetMenus } from '@/api/menu';
+import { fixedRoutes, asyncRoutes } from '@/router'
+import { GetMenus } from '@/api/menu'
+import router from '@/router'
 
-const hasPermission = (role, route) => {
-  if (!!route.meta && !!route.meta.roles && !route.meta.roles.includes(role)) {
-    return false
-  }
-  return true
-}
+// const hasPermission = (role, route) => {
+//   if (!!route.meta && !!route.meta.roles && !route.meta.roles.includes(role)) {
+//     return false
+//   }
+//   return true
+// }
 
 const generateUrl = (path, parentPath) => {
   return path.startsWith('/')
@@ -27,11 +28,34 @@ const generateUrl = (path, parentPath) => {
     : parentPath
 }
 
-const getFilterMenus = (arr, role, parentPath = '') => {
+const getFilterRoutes = (targetRoutes, ajaxRoutes) => {
+  const filterRoutes = []
+
+  ajaxRoutes.forEach(item => {
+    const target = targetRoutes.find(target => target.name === item.name)
+
+    if (target) {
+      const { children: targetChildren, ...rest } = target
+      const route = {
+        ...rest,
+      }
+
+      if (item.children) {
+        route.children = getFilterRoutes(targetChildren, item.children)
+      }
+
+      filterRoutes.push(route)
+    }
+  })
+
+  return filterRoutes
+}
+
+const getFilterMenus = (arr, parentPath = '') => {
   const menus = []
 
   arr.forEach(item => {
-    if (hasPermission(role, item) && !item.hidden) {
+    if (!item.hidden) {
       const menu = {
         url: generateUrl(item.path, parentPath),
         title: item.meta.title,
@@ -41,7 +65,7 @@ const getFilterMenus = (arr, role, parentPath = '') => {
         if (item.children.filter(child => !child.hidden).length <= 1) {
           menu.url = generateUrl(item.children[0].path, menu.url)
         } else {
-          menu.children = getFilterMenus(item.children, role, menu.url)
+          menu.children = getFilterMenus(item.children, menu.url)
         }
       }
       menus.push(menu)
@@ -62,16 +86,19 @@ export default {
     },
   },
   actions: {
-    async generateMenus({ commit }, role) {
-      // 方式一：根据角色生成菜单
-      const menus = getFilterMenus(allMenus, role)
-      commit('SET_MENUS', menus)
+    async generateMenus({ commit }, userinfo) {
+      // 从后台获取菜单
+      const { code, data } = await GetMenus({ role: userinfo.role })
 
-      // // 方式二：从后台获取菜单
-      // const { code, data } = await GetMenus();
-      // if (+code === 200) {
-      //   commit('SET_MENUS', data)
-      // }
+      if (+code === 200) {
+        // 过滤出需要添加的动态路由
+        const filterRoutes = getFilterRoutes(asyncRoutes, data)
+        filterRoutes.forEach(route => router.addRoute(route))
+
+        // 生成菜单
+        const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
+        commit('SET_MENUS', menus)
+      }
     },
   },
 }
