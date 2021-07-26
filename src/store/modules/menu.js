@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:11:08
+ * @LastEditTime: 2021-07-26 18:22:01
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -87,6 +87,11 @@ export default {
   },
   actions: {
     async generateMenus({ commit }, userinfo) {
+      // // 方式一：只有固定菜单
+      // const menus = getFilterMenus(fixedRoutes)
+      // commit('SET_MENUS', menus)
+
+      // 方式二：有动态菜单
       // 从后台获取菜单
       const { code, data } = await GetMenus({ role: userinfo.role })
 

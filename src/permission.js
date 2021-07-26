@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:32:34
+ * @LastEditTime: 2021-07-26 18:28:31
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -74,11 +74,12 @@ router.beforeEach(async to => {
         return false
       }
     }
-    // 获取动态菜单（如果你的项目有动态菜单，在此处获取动态菜单）
+
+    // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
     if (store.state.menu.menus.length <= 0) {
       try {
         await store.dispatch('menu/generateMenus', userinfo)
-        return to.fullPath // 添加动态路由后，必须加这一句触发重定向
+        return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
       } catch (err) {
         return false
       }
