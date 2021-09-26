@@ -24,7 +24,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 17:26:35
+ * @LastEditTime: 2021-09-18 13:17:44
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -32,8 +32,28 @@
  -->
 
 <template>
-  <router-view />
+  <el-config-provider :locale="locale">
+    <router-view />
+  </el-config-provider>
 </template>
+
+<script>
+import { defineComponent } from 'vue'
+import { ElConfigProvider } from 'element-plus'
+
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+
+export default defineComponent({
+  components: {
+    [ElConfigProvider.name]: ElConfigProvider,
+  },
+  data() {
+    return {
+      locale: zhCn,
+    }
+  },
+})
+</script>
 
 <style lang="scss">
 html,

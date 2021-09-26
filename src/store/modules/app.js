@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-28 09:38:35
+ * @LastEditTime: 2021-09-18 15:40:50
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -56,6 +56,10 @@ export default {
       commit('clearToken')
       // 清除用户信息
       commit('account/clearUserinfo', '', { root: true })
+      // 清除标签栏
+      commit('tags/CLEAR_ALL_TAGS', '', { root: true })
+      // 清空menus
+      commit('menu/SET_MENUS', [], { root: true })
     },
     setScreenCode({ commit, state }, password) {
       const authorization = toRaw(state.authorization)

@@ -27,7 +27,7 @@
  * @version:
  * @Date: 2021-07-23 16:10:49
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:19:35
+ * @LastEditTime: 2021-09-18 15:03:26
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -35,7 +35,7 @@
  */
 
 import { getItem, setItem } from '@/utils/storage' //getItem和setItem是封装的操作localStorage的方法
-import defaultSettings from '@/defaultSettings'
+import defaultSettings from '@/default-settings'
 export default {
   namespaced: true,
   state: getItem('defaultSettings') || defaultSettings,
