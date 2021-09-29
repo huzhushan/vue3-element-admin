@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 15:01:18
+ * @LastEditTime: 2021-09-18 15:39:30
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -87,8 +87,6 @@ export default defineComponent({
     const logout = () => {
       // 清除token
       store.dispatch('app/clearToken')
-      // 清除标签栏
-      store.dispatch('tags/delAllTags')
       router.push('/login')
     }
 

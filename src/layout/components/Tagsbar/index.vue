@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:48:37
+ * @LastEditTime: 2021-09-18 17:50:46
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -68,13 +68,17 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, getCurrentInstance } from 'vue'
 import { useTags } from './hooks/useTags'
 import { useContextMenu } from './hooks/useContextMenu'
 import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Tagsbar',
+  mounted() {
+    const instance = getCurrentInstance()
+    instance.appContext.config.globalProperties.$tagsbar = this
+  },
   setup() {
     const store = useStore()
     const defaultSettings = computed(() => store.state.layoutSettings)

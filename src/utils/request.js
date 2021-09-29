@@ -22,7 +22,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:48:30
+ * @LastEditTime: 2021-09-18 15:44:39
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -69,10 +69,21 @@ service.interceptors.response.use(
       // 校验是否有 refresh_token
       const { authorization } = store.state.app
       if (!authorization || !authorization.refresh_token) {
+        if (router.currentRoute.value.name === 'login') {
+          return Promise.reject(error)
+        }
         const redirect = encodeURIComponent(window.location.href)
         router.push(`/login?redirect=${redirect}`)
         // 清除token
         store.dispatch('app/clearToken')
+        setTimeout(() => {
+          ElMessage.closeAll()
+          try {
+            ElMessage.error(error.response.data.msg)
+          } catch (err) {
+            ElMessage.error(error.message)
+          }
+        })
         // 代码不要往后执行了
         return Promise.reject(error)
       }
@@ -108,7 +119,12 @@ service.interceptors.response.use(
     }
 
     // console.dir(error) // 可在此进行错误上报
-    ElMessage.error(error.message)
+    ElMessage.closeAll()
+    try {
+      ElMessage.error(error.response.data.msg)
+    } catch (err) {
+      ElMessage.error(error.message)
+    }
 
     return Promise.reject(error)
   }

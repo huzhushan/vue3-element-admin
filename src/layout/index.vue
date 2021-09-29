@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 17:19:35
+ * @LastEditTime: 2021-09-18 14:58:53
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -36,11 +36,11 @@
 
 <template>
   <div class="wrapper" :class="{ fluid: isFluid }">
-    <sidebar v-if="!isHorizontalMenu" />
+    <sidebar v-if="isMenusShow && !isHorizontalMenu" />
     <div class="right" :class="{ flex: isTopbarFixed }">
       <div class="top">
         <topbar />
-        <menus mode="horizontal" v-if="isHorizontalMenu" />
+        <menus mode="horizontal" v-if="isMenusShow && isHorizontalMenu" />
         <tagsbar />
         <breadcrumbs
           v-if="isBreadcrumbsShow"
@@ -80,6 +80,7 @@ export default defineComponent({
     const defaultSettings = computed(() => store.state.layoutSettings)
     const isFluid = computed(() => defaultSettings.value.layout.isFluid)
     const isTopbarFixed = computed(() => defaultSettings.value.topbar.isFixed)
+    const isMenusShow = computed(() => defaultSettings.value.menus.isShow)
     const isHorizontalMenu = computed(
       () => defaultSettings.value.menus.mode === 'horizontal'
     )
@@ -94,6 +95,7 @@ export default defineComponent({
     return {
       isFluid,
       isTopbarFixed,
+      isMenusShow,
       isHorizontalMenu,
       isBreadcrumbsShow,
       paddingFlag,

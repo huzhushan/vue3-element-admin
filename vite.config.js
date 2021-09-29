@@ -14,7 +14,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-22 09:28:15
+ * @LastEditTime: 2021-09-18 15:09:15
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -76,6 +76,7 @@ export default env => {
         '/api': {
           target: 'http://dev.api.xxx.com', // 后端接口的域名
           changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
         },
       },
     },

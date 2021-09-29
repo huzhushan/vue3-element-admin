@@ -44,7 +44,7 @@
  * @version:
  * @Date: 2021-07-22 17:22:14
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 14:44:42
+ * @LastEditTime: 2021-09-18 15:02:01
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -53,6 +53,8 @@
 
 export default {
   menus: {
+    // 菜单栏是否显示
+    isShow: true,
     // 菜单栏排列方式
     mode: 'vertical', // horizontal: 水平排列   vertical: 垂直排列
   },

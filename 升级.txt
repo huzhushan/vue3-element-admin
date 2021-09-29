@@ -1,0 +1,12 @@
+升级element-plus
+升级sass
+更新App.vue国际化配置
+defaultSettings：重命名、增加menus.isShow
+permission.js增加loading
+permission.js删除所有动态路由
+退出的时候清空标签栏和menus
+tags增加清空标签栏的mutations
+404页面路由修改
+增加公共hooks
+增加树形下拉组件
+增加(按钮、组件等)权限控制自定义指令

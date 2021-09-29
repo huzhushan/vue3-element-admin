@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 09:34:31
+ * @LastEditTime: 2021-09-18 16:23:58
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -11,10 +11,10 @@
  */
 import store from '@/store'
 
-const checkUserinfo = code => {
+const checkUserinfo = (code, fullPath) => {
   const userinfo = store.state.account.userinfo
   if (userinfo) {
-    return `/error/${code}`
+    return `/error/${code === '404' ? fullPath : code}`
   }
   return true
 }
@@ -46,7 +46,7 @@ export default [
         },
       },
       {
-        path: '404',
+        path: ':pathMatch(.*)',
         name: 'error-not-found',
         component: Error,
         meta: { title: '404' },
@@ -85,8 +85,8 @@ export default [
     props: {
       error: '404',
     },
-    beforeEnter() {
-      return checkUserinfo('404')
+    beforeEnter(to) {
+      return checkUserinfo('404', to.fullPath.replace('/', ''))
     },
   },
 ]
