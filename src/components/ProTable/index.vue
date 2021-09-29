@@ -22,7 +22,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:45:46
+ * @LastEditTime: 2021-09-29 15:04:03
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -38,7 +38,7 @@
       class="search"
       :model="searchModel"
       :inline="true"
-      label-position="left"
+      label-position="right"
       :label-width="search.labelWidth"
       ref="searchForm"
     >
@@ -48,8 +48,9 @@
         :label="item.label"
         :prop="item.name"
       >
+        <slot v-if="item.type === 'custom'" :name="item.slot" />
         <el-select
-          v-if="item.type === 'select'"
+          v-else-if="item.type === 'select'"
           v-model="searchModel[item.name]"
           :filterable="!!item.filterable"
           :multiple="!!item.multiple"
@@ -171,6 +172,7 @@
         />
         <el-input
           v-else-if="item.type === 'textarea'"
+          :maxlength="item.maxlength"
           type="textarea"
           clearable
           v-model="searchModel[item.name]"
@@ -179,6 +181,7 @@
         ></el-input>
         <el-input
           v-else
+          :maxlength="item.maxlength"
           v-model="searchModel[item.name]"
           clearable
           :placeholder="`请输入${item.label}`"
@@ -219,7 +222,7 @@
           v-for="item in columns"
           :key="item.label"
           :filter-method="item.filters && filterHandler"
-          show-overflow-tooltip
+          :show-overflow-tooltip="!item.wrap"
           v-bind="item"
         >
           <template #header="scope" v-if="!!item.labelSlot">
@@ -247,7 +250,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, toRefs, onBeforeMount } from 'vue'
+import { defineComponent, reactive, toRefs, onBeforeMount, watch } from 'vue'
 const formatDate = (date, format) => {
   var obj = {
     'M+': date.getMonth() + 1,
@@ -321,6 +324,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    // 是否隐藏按钮操作
+    hideToolbar: {
+      type: Boolean,
+      default: false,
+    },
     // 搜索表单配置，false表示不显示搜索表单
     search: {
       type: [Boolean, Object],
@@ -337,8 +345,8 @@ export default defineComponent({
     },
     // 行数据的Key，同elementUI的table组件的row-key
     rowKey: {
-      type: String,
-      default: 'id',
+      type: [String, Function],
+      default: () => {},
     },
     // 分页配置，false表示不显示分页
     pagination: {
@@ -376,18 +384,14 @@ export default defineComponent({
       state.loading = true
       const searchModel = optimizeFields(props.search)
       const { data, total } = await props.request({
-        pageNum: state.pageNum,
-        pageSize: state.pageSize,
+        current: state.pageNum,
+        size: state.pageSize,
         ...searchModel,
       })
       state.loading = false
       state.tableData = data
       state.total = total
     }
-
-    onBeforeMount(() => {
-      getTableData()
-    })
 
     const state = reactive({
       searchModel: getSearchModel(props.search),
@@ -470,6 +474,18 @@ export default defineComponent({
       }
     }
 
+    watch(
+      () => props.search,
+      val => {
+        state.searchModel = getSearchModel(val)
+      },
+      { deep: true }
+    )
+
+    onBeforeMount(() => {
+      getTableData()
+    })
+
     return {
       ...toRefs(state),
     }
@@ -492,10 +508,11 @@ export default defineComponent({
     .search-btn {
       margin-left: auto;
     }
-    ::v-deep(.el-input-number .el-input__inner) {
+    :deep(.el-input-number .el-input__inner) {
       text-align: left;
     }
   }
+
   .head {
     display: flex;
     justify-content: space-between;
@@ -509,10 +526,6 @@ export default defineComponent({
   .table {
     padding: 20px;
     background: #fff;
-    ::v-deep(th) {
-      background: #f6f6f6;
-      color: rgba(0, 0, 0, 0.85);
-    }
   }
   .pagination {
     padding: 0 20px 20px;
