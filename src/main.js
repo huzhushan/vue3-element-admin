@@ -27,7 +27,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:50:08
+ * @LastEditTime: 2021-09-29 10:08:00
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -63,6 +63,10 @@ import * as Components from './global-components'
 Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
+
+// 注册自定义指令
+import * as Directives from '@/directive'
+Object.values(Directives).forEach(fn => fn(app))
 
 // 错误日志
 import useErrorHandler from './error-log'

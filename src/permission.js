@@ -26,7 +26,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 17:43:01
+ * @LastEditTime: 2021-09-29 09:47:46
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -68,16 +68,17 @@ router.beforeEach(async to => {
     // 获取用户角色信息，根据角色判断权限
     let userinfo = store.state.account.userinfo
     if (!userinfo) {
+      const loadingInstance = ElLoading.service({
+        lock: true,
+        text: '正在加载数据，请稍候~',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
       try {
-        const loadingInstance = ElLoading.service({
-          lock: true,
-          text: '正在加载数据，请稍候~',
-          background: 'rgba(0, 0, 0, 0.7)',
-        })
         // 获取用户信息
         userinfo = await store.dispatch('account/getUserinfo')
         loadingInstance.close()
       } catch (err) {
+        loadingInstance.close()
         return false
       }
 
@@ -90,16 +91,17 @@ router.beforeEach(async to => {
 
     // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
     if (store.state.menu.menus.length <= 0) {
+      const loadingInstance = ElLoading.service({
+        lock: true,
+        text: '正在加载数据，请稍候~',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
       try {
-        const loadingInstance = ElLoading.service({
-          lock: true,
-          text: '正在加载数据，请稍候~',
-          background: 'rgba(0, 0, 0, 0.7)',
-        })
         await store.dispatch('menu/generateMenus', userinfo)
         loadingInstance.close()
         return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
       } catch (err) {
+        loadingInstance.close()
         return false
       }
     }
