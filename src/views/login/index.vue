@@ -3,7 +3,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-11-12 11:28:20
+ * @LastEditTime: 2021-11-15 09:48:29
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -112,10 +112,8 @@ export default defineComponent({
               } else {
                 router.push('/')
               }
-              if (store.state.app.authorization) {
-                store.dispatch('app/clearToken')
-              }
-              store.commit('app/setToken', data)
+
+              store.dispatch('app/setToken', data)
             } else {
               ctx.$message.error(message)
             }
