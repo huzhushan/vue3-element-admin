@@ -24,7 +24,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-29 17:13:31
+ * @LastEditTime: 2021-11-23 10:56:09
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -74,6 +74,14 @@ export const useTags = () => {
         store.dispatch('tags/addTag', tag)
       }
     }
+
+    // 不在路由中的所有标签，需要删除
+    const noUseTags = tagList.value.filter(tag =>
+      routes.value.every(route => route.name !== tag.name)
+    )
+    noUseTags.forEach(tag => {
+      store.dispatch('tags/delTag', tag)
+    })
   }
 
   const addTag = () => {
