@@ -24,7 +24,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:46:37
+ * @LastEditTime: 2022-09-24 19:33:12
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -32,9 +32,9 @@
  -->
 
 <template>
-  <i v-if="isElementIcon" :class="`icon ${icon}`" />
-  <svg-icon class="icon" v-else-if="!!icon" :name="icon" />
-  <span>{{ title }}</span>
+  <svg-icon class="icon" v-if="isCustomSvg" :name="icon" />
+  <component :is="icon" v-else-if="!!icon" class="icon" />
+  <span>{{ $t(title) }}</span>
 </template>
 
 <script>
@@ -43,10 +43,10 @@ import { computed, defineComponent } from 'vue'
 export default defineComponent({
   props: ['title', 'icon'],
   setup({ icon }) {
-    const isElementIcon = computed(() => icon && icon.startsWith('el-icon'))
+    const isCustomSvg = computed(() => icon && icon.startsWith('icon-'))
 
     return {
-      isElementIcon,
+      isCustomSvg,
     }
   },
 })

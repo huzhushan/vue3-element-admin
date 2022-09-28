@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:46:17
+ * @LastEditTime: 2022-09-27 16:27:54
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -42,15 +42,15 @@
   </router-view>
 </template>
 <script>
+import { storeToRefs } from 'pinia'
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { useTags } from '@/pinia/modules/tags'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
     const route = useRoute()
-    const cacheList = computed(() => store.state.tags.cacheList)
+    const { cacheList } = storeToRefs(useTags())
     const key = computed(() => route.fullPath)
 
     return {

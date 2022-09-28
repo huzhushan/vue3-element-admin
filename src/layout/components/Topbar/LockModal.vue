@@ -44,7 +44,7 @@
  * @version: 
  * @Date: 2021-04-23 14:15:50
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-28 09:23:23
+ * @LastEditTime: 2022-09-27 17:55:16
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -52,17 +52,24 @@
  -->
 
 <template>
-  <el-dropdown-item @click="dialogVisible = true">锁定屏幕</el-dropdown-item>
+  <el-dropdown-item @click="dialogVisible = true">
+    {{ $t('topbar.lock-title') }}
+  </el-dropdown-item>
   <el-dialog
-    title="锁定屏幕"
+    :title="$t('topbar.lock-title')"
     v-model="dialogVisible"
     width="640px"
     custom-class="lock-modal"
     append-to-body
   >
     <Avatar />
-    <el-form :model="lockModel" :rules="lockRules" ref="lockForm">
-      <el-form-item label="锁屏密码" prop="password">
+    <el-form
+      :model="lockModel"
+      :rules="lockRules"
+      ref="lockForm"
+      label-width="90px"
+    >
+      <el-form-item :label="$t('topbar.lock-password')" prop="password">
         <el-input
           type="password"
           v-model.trim="lockModel.password"
@@ -71,13 +78,8 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button
-          size="small"
-          class="submit-btn"
-          type="primary"
-          @click="submitForm"
-        >
-          锁定屏幕
+        <el-button class="submit-btn" type="primary" @click="submitForm">
+          {{ $t('topbar.lock-title') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -85,25 +87,27 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, getCurrentInstance, reactive, ref } from 'vue'
 import Avatar from '@/components/Avatar/index.vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
   components: {
     Avatar,
   },
   setup() {
+    const { proxy } = getCurrentInstance()
     const router = useRouter()
-    const store = useStore()
     const dialogVisible = ref(false)
     const lockForm = ref(null)
     const lockModel = reactive({
       password: '',
     })
     const lockRules = reactive({
-      password: [{ required: true, message: '请输入锁屏密码' }],
+      password: [
+        { required: true, message: proxy.$t('topbar.lock-rules-password') },
+      ],
     })
     const submitForm = () => {
       lockForm.value.validate(valid => {
@@ -112,7 +116,7 @@ export default defineComponent({
         }
 
         // 对密码加密并跟token保存在一起
-        store.dispatch('app/setScreenCode', lockModel.password)
+        useApp().setScreenCode(lockModel.password)
 
         // 跳转到锁屏页面
         router.push('/lock?redirect=' + router.currentRoute.value.fullPath)
@@ -133,10 +137,5 @@ export default defineComponent({
 <style lang="scss">
 .lock-modal[aria-modal] {
   max-width: 90%;
-}
-</style>
-<style lang="scss" scoped>
-.submit-btn {
-  width: 100%;
 }
 </style>

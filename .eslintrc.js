@@ -24,7 +24,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:51:42
+ * @LastEditTime: 2022-09-24 16:29:19
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -71,5 +71,6 @@ module.exports = {
     'vue/require-default-prop': 'off',
     'vue/no-unused-components': 'warn',
     'vue/no-setup-props-destructure': 'off',
+    'vue/script-setup-uses-vars': 'off',
   },
 }

@@ -3,7 +3,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 09:33:01
+ * @LastEditTime: 2022-09-24 21:52:50
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -14,19 +14,19 @@
     <template v-if="error === '403'">
       <span class="code-403">403</span>
       <svg-icon name="error-icons-403" class="error-img" />
-      <h2 class="title">您无权访问此页面</h2>
+      <h2 class="title">{{ $t('error.noauth') }}</h2>
     </template>
     <template v-else-if="error === '500'">
       <svg-icon name="error-icons-500" class="error-img" />
-      <h2 class="title">服务器出错了</h2>
+      <h2 class="title">{{ $t('error.servererror') }}</h2>
     </template>
     <template v-else-if="error === '404'">
       <svg-icon name="error-icons-404" class="error-img" />
-      <h2 class="title">您访问的页面不存在</h2>
+      <h2 class="title">{{ $t('error.notfound') }}</h2>
     </template>
 
     <router-link to="/">
-      <el-button type="primary">返回首页</el-button>
+      <el-button type="primary">{{ $t('error.backhome') }}</el-button>
     </router-link>
   </div>
 </template>

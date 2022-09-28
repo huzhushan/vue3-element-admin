@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 14:58:53
+ * @LastEditTime: 2022-09-27 18:31:47
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -62,7 +62,8 @@ import Tagsbar from './components/Tagsbar/index.vue'
 import Breadcrumbs from './components/Topbar/Breadcrumbs.vue'
 import Content from './components/Content/index.vue'
 import { useResizeHandler } from './hooks/useResizeHandler'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useLayoutsettings } from '@/pinia/modules/layoutSettings'
 
 export default defineComponent({
   name: 'layout',
@@ -76,16 +77,13 @@ export default defineComponent({
   },
   setup() {
     useResizeHandler()
-    const store = useStore()
-    const defaultSettings = computed(() => store.state.layoutSettings)
-    const isFluid = computed(() => defaultSettings.value.layout.isFluid)
-    const isTopbarFixed = computed(() => defaultSettings.value.topbar.isFixed)
-    const isMenusShow = computed(() => defaultSettings.value.menus.isShow)
-    const isHorizontalMenu = computed(
-      () => defaultSettings.value.menus.mode === 'horizontal'
-    )
+    const defaultSettings = useLayoutsettings()
+    const isFluid = defaultSettings.layout.isFluid
+    const isTopbarFixed = defaultSettings.topbar.isFixed
+    const isMenusShow = defaultSettings.menus.isShow
+    const isHorizontalMenu = defaultSettings.menus.mode === 'horizontal'
     const isBreadcrumbsShow = computed(
-      () => isHorizontalMenu.value && defaultSettings.value.breadcrumbs.isShow
+      () => isHorizontalMenu && defaultSettings.breadcrumbs.isShow
     )
     const paddingFlag = ref(true)
     const handleBreadcrumbsChange = boo => {

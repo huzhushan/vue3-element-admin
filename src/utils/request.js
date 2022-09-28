@@ -22,7 +22,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 15:44:39
+ * @LastEditTime: 2022-09-27 18:17:20
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -31,8 +31,8 @@
 
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import store from '@/store'
 import router from '@/router'
+import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
   baseURL: '/',
@@ -43,7 +43,7 @@ const service = axios.create({
 // 拦截请求
 service.interceptors.request.use(
   config => {
-    const { authorization } = store.state.app
+    const { authorization } = useApp()
     if (authorization) {
       config.headers.Authorization = `Bearer ${authorization.token}`
     }
@@ -67,7 +67,7 @@ service.interceptors.response.use(
     // 响应拦截器中的 error 就是那个响应的错误对象
     if (error.response && error.response.status === 401) {
       // 校验是否有 refresh_token
-      const { authorization } = store.state.app
+      const { authorization, clearToken, setToken } = useApp()
       if (!authorization || !authorization.refresh_token) {
         if (router.currentRoute.value.name === 'login') {
           return Promise.reject(error)
@@ -75,7 +75,7 @@ service.interceptors.response.use(
         const redirect = encodeURIComponent(window.location.href)
         router.push(`/login?redirect=${redirect}`)
         // 清除token
-        store.dispatch('app/clearToken')
+        clearToken()
         setTimeout(() => {
           ElMessage.closeAll()
           try {
@@ -99,7 +99,7 @@ service.interceptors.response.use(
         })
         // 如果获取成功，则把新的 token 更新到容器中
         // console.log('刷新 token  成功', res)
-        store.commit('app/setToken', {
+        setToken({
           token: res.data.data.token, // 最新获取的可用 token
           refresh_token: authorization.refresh_token, // 还是原来的 refresh_token
         })
@@ -113,7 +113,7 @@ service.interceptors.response.use(
         const redirect = encodeURIComponent(window.location.href)
         router.push(`/login?redirect=${redirect}`)
         // 清除token
-        store.dispatch('app/clearToken')
+        clearToken()
         return Promise.reject(error)
       }
     }

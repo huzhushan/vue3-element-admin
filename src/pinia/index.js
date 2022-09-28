@@ -14,22 +14,15 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:48:11
+ * @LastEditTime: 2022-09-27 14:52:09
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 
-import { createStore } from 'vuex'
+import { createPinia } from 'pinia'
 
-const modulesFiles = import.meta.globEager('./modules/*.js')
-const modules = Object.entries(modulesFiles).reduce((modules, [path, mod]) => {
-  const moduleName = path.replace(/^\.\/modules\/(.*)\.\w+$/, '$1')
-  modules[moduleName] = mod.default
-  return modules
-}, {})
+const pinia = createPinia()
 
-export default createStore({
-  modules,
-})
+export default pinia

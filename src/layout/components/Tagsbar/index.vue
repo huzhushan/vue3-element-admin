@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 17:50:46
+ * @LastEditTime: 2022-09-24 20:38:36
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -43,12 +43,15 @@
           @click.middle="closeTag(tag)"
           @contextmenu.prevent="openMenu(tag, $event)"
         >
-          <span class="title">{{ tag.title }}</span>
-          <span
+          <span class="title">{{ $t(tag.title) }}</span>
+
+          <el-icon
             v-if="!isAffix(tag)"
             class="el-icon-close"
             @click.prevent.stop="closeTag(tag)"
-          />
+          >
+            <Close />
+          </el-icon>
         </div>
       </router-link>
     </el-scrollbar>
@@ -58,12 +61,14 @@
     :style="{ left: left + 'px', top: top + 'px' }"
     class="contextmenu"
   >
-    <li @click="refreshSelectedTag(selectedTag)">刷新</li>
-    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
-    <li @click="closeOtherTags">关闭其他</li>
-    <li @click="closeLeftTags">关闭左侧</li>
-    <li @click="closeRightTags">关闭右侧</li>
-    <li @click="closeAllTags">关闭全部</li>
+    <li @click="refreshSelectedTag(selectedTag)">{{ $t('tags.refresh') }}</li>
+    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">
+      {{ $t('tags.close') }}
+    </li>
+    <li @click="closeOtherTags">{{ $t('tags.other') }}</li>
+    <li @click="closeLeftTags">{{ $t('tags.left') }}</li>
+    <li @click="closeRightTags">{{ $t('tags.right') }}</li>
+    <li @click="closeAllTags">{{ $t('tags.all') }}</li>
   </ul>
 </template>
 
@@ -71,7 +76,7 @@
 import { defineComponent, computed, getCurrentInstance } from 'vue'
 import { useTags } from './hooks/useTags'
 import { useContextMenu } from './hooks/useContextMenu'
-import { useStore } from 'vuex'
+import { useLayoutsettings } from '@/pinia/modules/layoutSettings'
 
 export default defineComponent({
   name: 'Tagsbar',
@@ -80,9 +85,8 @@ export default defineComponent({
     instance.appContext.config.globalProperties.$tagsbar = this
   },
   setup() {
-    const store = useStore()
-    const defaultSettings = computed(() => store.state.layoutSettings)
-    const isTagsbarShow = computed(() => defaultSettings.value.tagsbar.isShow)
+    const defaultSettings = useLayoutsettings()
+    const isTagsbarShow = computed(() => defaultSettings.tagsbar.isShow)
 
     const tags = useTags()
     const contextMenu = useContextMenu(tags.tagList)
@@ -156,7 +160,7 @@ export default defineComponent({
       margin-left: 8px;
       width: 16px;
       height: 16px;
-      vertical-align: 2px;
+      vertical-align: -2px;
       border-radius: 50%;
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);

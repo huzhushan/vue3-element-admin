@@ -14,7 +14,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 15:09:15
+ * @LastEditTime: 2022-09-24 14:33:17
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -61,7 +61,9 @@ export default env => {
       preprocessorOptions: {
         scss: {
           // 全局变量
-          additionalData: '@import "./src/assets/style/global-variables.scss";',
+          // additionalData: '@import "./src/assets/style/global-variables.scss";',
+          // element-plus升级到v2需要改成以下写法
+          additionalData: `@use "./src/assets/style/global-variables.scss" as *;`,
         },
       },
     },
@@ -71,6 +73,7 @@ export default env => {
       },
     },
     server: {
+      port: 3001,
       open: true,
       proxy: {
         '/api': {

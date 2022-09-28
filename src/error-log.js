@@ -13,7 +13,7 @@
  * @version:
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:48:49
+ * @LastEditTime: 2022-09-27 15:53:02
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -21,7 +21,8 @@
  */
 
 import { nextTick } from 'vue'
-import store from '@/store'
+import { useErrorlog } from './pinia/modules/errorLog'
+// import store from '@/store'
 
 // 判断环境，决定是否开启错误监控
 //   - import.meta.env.DEV 布尔值，代表开发环境
@@ -34,7 +35,7 @@ export default app => {
   if (flag) {
     app.config.errorHandler = function(err, vm, info) {
       nextTick(() => {
-        store.dispatch('errorLog/addErrorLog', {
+        useErrorlog().addErrorLog({
           err,
           // vm, // 这里不保存vm，否则渲染错误日志的时候控制台会有警告
           info,

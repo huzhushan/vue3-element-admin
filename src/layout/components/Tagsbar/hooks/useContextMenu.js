@@ -26,22 +26,23 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-29 10:52:41
+ * @LastEditTime: 2022-09-27 16:52:30
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 
+import { useTags } from '@/pinia/modules/tags'
 import { onMounted, onBeforeUnmount, reactive, toRefs, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 import { isAffix } from './useTags'
 
 export const useContextMenu = tagList => {
-  const store = useStore()
   const router = useRouter()
   const route = useRoute()
+
+  const tagsStore = useTags()
 
   const state = reactive({
     visible: false,
@@ -58,7 +59,7 @@ export const useContextMenu = tagList => {
       state.visible = false
     },
     refreshSelectedTag(tag) {
-      store.commit('tags/DEL_CACHE_LIST', tag)
+      tagsStore.deCacheList(tag)
       const { fullPath } = tag
       nextTick(() => {
         router.replace({
@@ -72,13 +73,13 @@ export const useContextMenu = tagList => {
       const closedTagIndex = tagList.value.findIndex(
         item => item.fullPath === tag.fullPath
       )
-      store.dispatch('tags/delTag', tag)
+      tagsStore.delTag(tag)
       if (isActive(tag)) {
         toLastTag(closedTagIndex - 1)
       }
     },
     closeOtherTags() {
-      store.dispatch('tags/delOtherTags', state.selectedTag)
+      tagsStore.delOtherTags(state.selectedTag)
       router.push(state.selectedTag)
     },
     closeLeftTags() {
@@ -103,11 +104,11 @@ export const useContextMenu = tagList => {
         direction === 'left'
           ? tagList.value.slice(0, index)
           : tagList.value.slice(index + 1)
-      store.dispatch('tags/delSomeTags', needToClose)
+      tagsStore.delSomeTags(needToClose)
       router.push(state.selectedTag)
     },
     closeAllTags() {
-      store.dispatch('tags/delAllTags')
+      tagsStore.delAllTags()
       router.push('/')
     },
   })

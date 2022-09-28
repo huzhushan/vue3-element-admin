@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:45:38
+ * @LastEditTime: 2022-09-27 17:50:59
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -111,18 +111,20 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent, ref } from 'vue'
+import { useErrorlog } from '@/pinia/modules/errorLog'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'ErrorLog',
   setup() {
     const dialogTableVisible = ref(false)
-    const store = useStore()
-    const errorLogs = computed(() => store.state.errorLog.logs)
+    const errorStore = useErrorlog()
+    const { logs: errorLogs } = storeToRefs(errorStore)
+    const { clearErrorLog } = errorStore
     const clearAll = () => {
       dialogTableVisible.value = false
-      store.dispatch('errorLog/clearErrorLog')
+      clearErrorLog()
     }
 
     return {

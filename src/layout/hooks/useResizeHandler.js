@@ -24,22 +24,23 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-29 11:31:50
+ * @LastEditTime: 2022-09-27 19:02:14
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 
-import { onBeforeMount, onBeforeUnmount /*watch*/ } from 'vue'
-// import { useRouter } from 'vue-router';
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useApp } from '@/pinia/modules/app'
+import { onBeforeMount, onBeforeUnmount, computed } from 'vue'
 
 const WIDTH = 768
 export const useResizeHandler = () => {
-  const store = useStore()
-  // const router = useRouter();
-  // const route = router.currentRoute;
+  const appStore = useApp()
+  const { sidebar } = storeToRefs(appStore)
+  const { setDevice, setCollapse } = appStore
+  const collapse = computed(() => sidebar.value.collapse)
 
   const isMobile = () => {
     return window.innerWidth < WIDTH
@@ -47,11 +48,11 @@ export const useResizeHandler = () => {
 
   const resizeHandler = () => {
     if (isMobile()) {
-      store.commit('app/setDevice', 'mobile')
-      store.commit('app/setCollapse', 1)
+      setDevice('mobile')
+      setCollapse(1)
     } else {
-      store.commit('app/setDevice', 'desktop')
-      store.commit('app/setCollapse', 0)
+      setDevice('desktop')
+      setCollapse(collapse.value)
     }
   }
 
@@ -63,11 +64,4 @@ export const useResizeHandler = () => {
   onBeforeUnmount(() => {
     window.removeEventListener('resize', resizeHandler)
   })
-
-  // // 监听路由的时候不能使用useRoute获取路由，否则会有警告
-  // watch(route, () => {
-  //   if (store.state.app.device === 'mobile' && !store.state.app.sidebar.collapse) {
-  //     store.commit('app/setCollapse', 1)
-  //   }
-  // })
 }

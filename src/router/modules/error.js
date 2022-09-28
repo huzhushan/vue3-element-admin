@@ -3,16 +3,17 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 16:23:58
+ * @LastEditTime: 2022-09-27 18:14:03
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
-import store from '@/store'
+
+import { useAccount } from '@/pinia/modules/account'
 
 const checkUserinfo = (code, fullPath) => {
-  const userinfo = store.state.account.userinfo
+  const { userinfo } = useAccount()
   if (userinfo) {
     return `/error/${code === '404' ? fullPath : code}`
   }

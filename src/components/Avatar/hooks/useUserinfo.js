@@ -17,19 +17,16 @@
  * @version:
  * @Date: 2021-04-23 14:56:06
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-23 15:00:31
+ * @LastEditTime: 2022-09-27 16:07:53
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
-
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAccount } from '@/pinia/modules/account'
 
 export const useUserinfo = () => {
-  const store = useStore()
-  const userinfo = computed(() => store.state.account.userinfo)
-
+  const { userinfo } = storeToRefs(useAccount())
   return { userinfo }
 }

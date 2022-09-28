@@ -27,23 +27,23 @@
  * @version:
  * @Date: 2021-08-20 11:15:27
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 17:25:32
+ * @LastEditTime: 2022-09-27 16:15:56
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 
+import { useTags } from '@/pinia/modules/tags'
 import { reactive, toRefs, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 
 // 关闭当前标签
 export default () => {
   const instance = getCurrentInstance()
-  const store = useStore()
   const router = useRouter()
   const route = useRoute()
+  const { delTag } = useTags()
   const state = reactive({
     /**
      * @param {String} fullPath 要跳转到那个页面的地址
@@ -52,7 +52,7 @@ export default () => {
      * @return {*}
      */
     closeTag({ fullPath, reload, f5 } = {}) {
-      store.dispatch('tags/delTag', route)
+      delTag(route)
       fullPath ? router.push(fullPath) : router.back()
       reload &&
         setTimeout(() => {

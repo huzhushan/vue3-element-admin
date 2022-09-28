@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-19 10:04:01
+ * @LastEditTime: 2022-09-27 18:37:28
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -46,10 +46,10 @@
 
 <template>
   <h1 class="title">
-    ⚡ 屏幕已锁定
+    ⚡ {{ $t('topbar.lock-locked') }}
     <div class="unlock-btn" @click="handleUnlock">
       <i class="el-icon-unlock"></i>
-      解锁
+      {{ $t('topbar.lock-lock') }}
     </div>
   </h1>
   <div class="unlock-modal" v-show="showModal">
@@ -60,14 +60,15 @@
           type="password"
           v-model.trim="lockModel.password"
           autocomplete="off"
-          placeholder="请输入锁屏密码或登录密码"
+          :placeholder="$t('topbar.lock-rules-password2')"
           @keyup.enter="submitForm"
+          style="width:320px"
         >
           <template #append>
             <el-button
               type="primary"
               class="btn-unlock"
-              icon="el-icon-right"
+              icon="Right"
               :loading="loading"
               @click="submitForm"
             ></el-button>
@@ -75,8 +76,12 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="cancel" type="text">取消</el-button>
-        <el-button @click="reLogin" type="text">重新登录</el-button>
+        <el-button @click="cancel" type="text">
+          {{ $t('public.cancel') }}
+        </el-button>
+        <el-button @click="reLogin" type="text">
+          {{ $t('topbar.lock-relogin') }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -86,8 +91,10 @@ import { defineComponent, ref, reactive, getCurrentInstance } from 'vue'
 import Avatar from '@/components/Avatar/index.vue'
 import { AesEncryption } from '@/utils/encrypt'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 import { Login } from '@/api/login'
+import { useApp } from '@/pinia/modules/app'
+import { storeToRefs } from 'pinia'
+import { useAccount } from '@/pinia/modules/account'
 
 export default defineComponent({
   components: {
@@ -95,7 +102,6 @@ export default defineComponent({
   },
   setup() {
     const { proxy: ctx } = getCurrentInstance()
-    const store = useStore()
     const router = useRouter()
     const route = useRoute()
     const showModal = ref(false)
@@ -105,9 +111,15 @@ export default defineComponent({
     })
     const loading = ref(false)
 
+    const appStore = useApp()
+    const { authorization } = storeToRefs(appStore)
+    const { clearToken, setScreenCode } = appStore
+    const accountStore = useAccount()
+    const { userinfo } = storeToRefs(accountStore)
+    const { getUserinfo } = accountStore
+
     const checkPwd = async (rule, value, callback) => {
-      const { authorization } = store.state.app
-      const cipher = authorization && authorization.screenCode
+      const cipher = authorization.value && authorization.value.screenCode
       if (!cipher) {
         return callback()
       }
@@ -118,7 +130,7 @@ export default defineComponent({
         // 尝试登录
         loading.value = true
         const { code } = await Login({
-          username: store.state.account.userinfo.name,
+          username: userinfo.value.name,
           password: value,
         })
         loading.value = false
@@ -131,10 +143,10 @@ export default defineComponent({
 
     const lockRules = reactive({
       password: [
-        { required: true, message: '请输入密码' },
+        { required: true, message: ctx.$t('topbar.lock-rules-password2') },
         {
           validator: checkPwd,
-          message: '密码错误',
+          message: ctx.$t('topbar.lock-rules-password3'),
           trigger: 'none',
         },
       ],
@@ -142,13 +154,14 @@ export default defineComponent({
 
     const handleUnlock = () => {
       // 判断当前是否登录
-      const { authorization } = store.state.app
-      if (authorization) {
+      if (authorization.value) {
         showModal.value = true
         // 尝试获取用户信息
-        !store.state.account.userinfo && store.dispatch('account/getUserinfo')
+        if (!userinfo.value) {
+          getUserinfo()
+        }
       } else {
-        ctx.$message('您的账号已退出，请直接登录')
+        ctx.$message(ctx.$t('topbar.lock-error'))
         reLogin()
       }
     }
@@ -162,7 +175,7 @@ export default defineComponent({
         // 返回锁屏前的页面
         router.push({ path: route.query.redirect || '/', replace: true })
         // 清除锁屏密码
-        store.dispatch('app/setScreenCode', '')
+        setScreenCode('')
       })
     }
 
@@ -174,7 +187,7 @@ export default defineComponent({
     const reLogin = () => {
       router.push('/login?redirect=' + (route.query.redirect || '/'))
       // 清除token
-      store.dispatch('app/clearToken')
+      clearToken()
     }
 
     return {

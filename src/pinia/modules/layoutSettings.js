@@ -27,24 +27,24 @@
  * @version:
  * @Date: 2021-07-23 16:10:49
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 15:03:26
+ * @LastEditTime: 2022-09-27 15:47:50
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
-
+import { defineStore } from 'pinia'
 import { getItem, setItem } from '@/utils/storage' //getItem和setItem是封装的操作localStorage的方法
 import defaultSettings from '@/default-settings'
-export default {
-  namespaced: true,
-  state: getItem('defaultSettings') || defaultSettings,
-  mutations: {
-    SAVE_SETTINGS(state, data) {
+
+export const useLayoutsettings = defineStore('layoutSettings', {
+  state: () => getItem('defaultSettings') || defaultSettings,
+  actions: {
+    saveSettings(data) {
       Object.entries(data).forEach(([key, value]) => {
-        state[key] = value
+        this[key] = value
       })
       setItem('defaultSettings', data)
     },
   },
-}
+})

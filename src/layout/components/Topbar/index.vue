@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:49:39
+ * @LastEditTime: 2022-09-27 18:36:16
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -58,6 +58,7 @@
     <div class="action">
       <error-log />
       <userinfo />
+      <change-lang />
     </div>
   </div>
 </template>
@@ -67,8 +68,11 @@ import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import Userinfo from './Userinfo.vue'
+import ChangeLang from './ChangeLang.vue'
 import ErrorLog from '@/components/ErrorLog/index.vue'
-import { useStore } from 'vuex'
+import { useLayoutsettings } from '@/pinia/modules/layoutSettings'
+import { storeToRefs } from 'pinia'
+import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
   components: {
@@ -76,16 +80,16 @@ export default defineComponent({
     Hamburger,
     Breadcrumbs,
     Userinfo,
+    ChangeLang,
     ErrorLog,
   },
   setup() {
-    const store = useStore()
-    const defaultSettings = computed(() => store.state.layoutSettings)
+    const defaultSettings = useLayoutsettings()
 
-    const device = computed(() => store.state.app.device)
+    const { device } = storeToRefs(useApp())
 
     const isHorizontalMenu = computed(
-      () => defaultSettings.value.menus.mode === 'horizontal'
+      () => defaultSettings.menus.mode === 'horizontal'
     )
 
     const isShowLogo = computed(
@@ -95,7 +99,7 @@ export default defineComponent({
     const isShowHamburger = computed(() => !isHorizontalMenu.value)
 
     const isShowBreadcrumbs = computed(
-      () => defaultSettings.value.breadcrumbs.isShow && !isHorizontalMenu.value
+      () => defaultSettings.breadcrumbs.isShow && !isHorizontalMenu.value
     )
 
     return {

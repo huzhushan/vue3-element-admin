@@ -27,7 +27,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-29 10:08:00
+ * @LastEditTime: 2022-09-27 19:04:15
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -42,15 +42,22 @@ const app = createApp(App)
 // 引入element-plus
 import ElementPlus from 'element-plus'
 import './assets/style/element-variables.scss'
-// 引入中文语言包
-import 'dayjs/locale/zh-cn'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+
+// 国际化
+import i18n from '@/i18n'
+
+// 全局注册element-plus/icons-vue
+import * as ICONS from '@element-plus/icons-vue'
+Object.entries(ICONS).forEach(([key, component]) => {
+  // app.component(key === 'PieChart' ? 'PieChartIcon' : key, component)
+  app.component(key, component)
+})
 
 // 引入路由
 import router from './router'
 
-// 引入store
-import store from './store'
+// 引入pinia
+import pinia from './pinia'
 
 // 权限控制
 import './permission'
@@ -73,9 +80,8 @@ import useErrorHandler from './error-log'
 useErrorHandler(app)
 
 app
-  .use(ElementPlus, {
-    locale,
-  })
-  .use(store)
+  .use(i18n)
+  .use(ElementPlus)
+  .use(pinia)
   .use(router)
   .mount('#app')

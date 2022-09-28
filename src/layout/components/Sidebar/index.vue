@@ -25,7 +25,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 09:36:42
+ * @LastEditTime: 2022-09-27 18:45:07
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
+import { useApp } from '@/pinia/modules/app'
+import { storeToRefs } from 'pinia'
+import { computed, defineComponent } from 'vue'
 import Logo from './Logo.vue'
 import Menus from './Menus.vue'
-import { useStore } from 'vuex'
 
 export default defineComponent({
   components: {
@@ -55,12 +56,13 @@ export default defineComponent({
     Menus,
   },
   setup() {
-    const store = useStore()
-    const collapse = computed(() => !!store.state.app.sidebar.collapse)
-    const device = computed(() => store.state.app.device)
+    const appStore = useApp()
+    const { sidebar, device } = storeToRefs(appStore)
+    const { setCollapse } = appStore
+    const collapse = computed(() => sidebar.value.collapse)
 
     const closeSidebar = () => {
-      store.commit('app/setCollapse', 1)
+      setCollapse(1)
     }
 
     return {

@@ -3,70 +3,67 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-11-15 09:51:45
+ * @LastEditTime: 2022-09-27 15:42:35
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
+
+import { defineStore } from 'pinia'
 import { getItem, setItem, removeItem } from '@/utils/storage' //getItem和setItem是封装的操作localStorage的方法
 import { AesEncryption } from '@/utils/encrypt'
 import { toRaw } from 'vue'
+import { useAccount } from './account'
+import { useTags } from './tags'
+import { useMenus } from './menu'
 export const TOKEN = 'VEA-TOKEN'
 const COLLAPSE = 'VEA-COLLAPSE'
 
-export default {
-  namespaced: true,
-  state: {
+export const useApp = defineStore('app', {
+  state: () => ({
     title: 'Vue3 Element Admin',
     authorization: getItem(TOKEN),
     sidebar: {
       collapse: getItem(COLLAPSE),
     },
     device: 'desktop',
-  },
-  mutations: {
-    setToken(state, data) {
-      state.authorization = data
-      // 保存到localStorage
-      setItem(TOKEN, data)
-    },
-    clearToken(state) {
-      state.authorization = ''
-
-      removeItem(TOKEN)
-    },
-    setCollapse(state, data) {
-      state.sidebar.collapse = data
+  }),
+  actions: {
+    setCollapse(data) {
+      this.sidebar.collapse = data
       // 保存到localStorage
       setItem(COLLAPSE, data)
     },
-    clearCollapse(state) {
-      state.sidebar.collapse = ''
-
+    clearCollapse() {
+      this.sidebar.collapse = ''
       removeItem(COLLAPSE)
     },
-    setDevice(state, device) {
-      state.device = device
+    setDevice(device) {
+      this.device = device
     },
-  },
-  actions: {
-    setToken({ commit, dispatch }, payload) {
-      dispatch('clearToken')
-      commit('setToken', payload)
+    setToken(data) {
+      this.authorization = data
+      // 保存到localStorage
+      setItem(TOKEN, data)
     },
-    clearToken({ commit }) {
+    initToken(data) {
+      this.clearToken()
+      this.setToken(data)
+    },
+    clearToken() {
       // 清除token
-      commit('clearToken')
+      this.authorization = ''
+      removeItem(TOKEN)
       // 清除用户信息
-      commit('account/clearUserinfo', '', { root: true })
+      useAccount().clearUserinfo()
       // 清除标签栏
-      commit('tags/CLEAR_ALL_TAGS', '', { root: true })
+      useTags().clearAllTags()
       // 清空menus
-      commit('menu/SET_MENUS', [], { root: true })
+      useMenus().setMenus([])
     },
-    setScreenCode({ commit, state }, password) {
-      const authorization = toRaw(state.authorization)
+    setScreenCode(password) {
+      const authorization = toRaw(this.authorization)
 
       if (!password) {
         try {
@@ -74,7 +71,10 @@ export default {
         } catch (err) {
           console.log(err)
         }
-        commit('setToken', authorization)
+
+        this.authorization = authorization
+        // 保存到localStorage
+        setItem(TOKEN, authorization)
 
         return
       }
@@ -82,10 +82,13 @@ export default {
       // 对密码加密
       const screenCode = new AesEncryption().encryptByAES(password)
 
-      commit('setToken', {
+      const res = {
         ...authorization,
         screenCode,
-      })
+      }
+      this.authorization = res
+      // 保存到localStorage
+      setItem(TOKEN, res)
     },
   },
-}
+})

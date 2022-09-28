@@ -24,7 +24,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:43:22
+ * @LastEditTime: 2022-09-27 18:51:22
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -51,10 +51,10 @@ export default [
           name: 'testEdit',
           title: '编辑',
         },
-        {
-          name: 'testAuth',
-          title: '权限测试',
-        },
+        // {
+        //   name: 'testAuth',
+        //   title: '权限测试',
+        // },
         {
           name: 'test-cache',
           title: '该页面可缓存',
@@ -82,12 +82,6 @@ export default [
           title: '测试错误日志',
         },
       ]
-
-      if (query.role === 'admin')
-        childs.push({
-          name: 'testNoAuth',
-          title: '权限页面',
-        })
 
       return {
         code: 200,

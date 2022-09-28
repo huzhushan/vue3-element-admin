@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:30:58
+ * @LastEditTime: 2022-09-27 18:51:35
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -28,16 +28,16 @@ export default [
     component: Layout,
     name: 'test',
     meta: {
-      title: '测试页面',
+      title: 'menu.test',
     },
-    icon: 'el-icon-location',
+    icon: 'Location',
     children: [
       {
         path: '',
         name: 'testList',
         component: List,
         meta: {
-          title: '列表',
+          title: 'menu.testList',
         },
       },
       {
@@ -45,7 +45,7 @@ export default [
         name: 'testAdd',
         component: Add,
         meta: {
-          title: '添加',
+          title: 'menu.testAdd',
         },
         hidden: true, // 不在菜单中显示
       },
@@ -54,33 +54,33 @@ export default [
         name: 'testEdit',
         component: Edit,
         meta: {
-          title: '编辑',
+          title: 'menu.testEdit',
         },
         hidden: true, // 不在菜单中显示
       },
-      {
-        path: 'auth',
-        name: 'testAuth',
-        component: Auth,
-        meta: {
-          title: '权限测试',
-        },
-      },
-      {
-        path: 'noauth',
-        name: 'testNoAuth',
-        component: NoAuth,
-        meta: {
-          title: '权限页面',
-        },
-        hidden: true,
-      },
+      // {
+      //   path: 'auth',
+      //   name: 'testAuth',
+      //   component: Auth,
+      //   meta: {
+      //     title: 'menu.testAuth',
+      //   },
+      // },
+      // {
+      //   path: 'noauth',
+      //   name: 'testNoAuth',
+      //   component: NoAuth,
+      //   meta: {
+      //     title: 'menu.testNoAuth',
+      //   },
+      //   hidden: true,
+      // },
       {
         path: 'cache',
         name: 'test-cache',
         component: Iscache,
         meta: {
-          title: '该页面可缓存',
+          title: 'menu.test-cache',
         },
       },
       {
@@ -88,7 +88,7 @@ export default [
         name: 'test-no-cache',
         component: Nocache,
         meta: {
-          title: '该页面不缓存',
+          title: 'menu.test-no-cache',
           noCache: true, // 不缓存页面
         },
       },
@@ -98,7 +98,7 @@ export default [
         component: Nest,
         redirect: '/test/nest/page1',
         meta: {
-          title: '二级菜单',
+          title: 'menu.nest',
         },
         children: [
           {
@@ -106,7 +106,7 @@ export default [
             name: 'nestPage1',
             component: NestPage1,
             meta: {
-              title: 'page1',
+              title: 'menu.nestPage1',
             },
           },
           {
@@ -114,7 +114,7 @@ export default [
             name: 'nestPage2',
             component: NestPage2,
             meta: {
-              title: 'page2',
+              title: 'menu.nestPage2',
             },
           },
         ],
@@ -124,7 +124,7 @@ export default [
         name: 'test-error-log',
         component: ErrorLog,
         meta: {
-          title: '测试错误日志',
+          title: 'menu.test-error-log',
         },
       },
     ],

@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-09-18 15:39:30
+ * @LastEditTime: 2022-09-27 17:56:21
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -45,7 +45,7 @@
  -->
 
 <template>
-  <el-dropdown trigger="click">
+  <el-dropdown trigger="hover">
     <div class="userinfo">
       <template v-if="!userinfo">
         <i class="el-icon-user" />
@@ -58,27 +58,28 @@
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>个人中心</el-dropdown-item>
-        <el-dropdown-item>修改密码</el-dropdown-item>
+        <el-dropdown-item>{{ $t('topbar.center') }}</el-dropdown-item>
+        <el-dropdown-item>{{ $t('topbar.password') }}</el-dropdown-item>
         <lock-modal />
-        <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+        <el-dropdown-item @click="logout">
+          {{ $t('topbar.logout') }}
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useUserinfo } from '@/components/Avatar/hooks/useUserinfo'
 import LockModal from './LockModal.vue'
+import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
   components: {
     LockModal,
   },
   setup() {
-    const store = useStore()
     const router = useRouter()
 
     const { userinfo } = useUserinfo()
@@ -86,7 +87,7 @@ export default defineComponent({
     // 退出
     const logout = () => {
       // 清除token
-      store.dispatch('app/clearToken')
+      useApp().clearToken()
       router.push('/login')
     }
 

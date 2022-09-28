@@ -3,7 +3,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-11-15 09:48:29
+ * @LastEditTime: 2022-09-27 18:24:27
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -17,19 +17,19 @@
         <el-input
           class="text"
           v-model="model.userName"
-          prefix-icon="el-icon-user-solid"
+          prefix-icon="User"
           clearable
-          placeholder="用户名"
+          :placeholder="$t('login.username')"
         />
       </el-form-item>
       <el-form-item prop="password">
         <el-input
           class="text"
           v-model="model.password"
-          prefix-icon="el-icon-lock"
+          prefix-icon="Lock"
           show-password
           clearable
-          placeholder="密码"
+          :placeholder="$t('login.password')"
         />
       </el-form-item>
       <el-form-item>
@@ -37,12 +37,16 @@
           :loading="loading"
           type="primary"
           class="btn"
+          size="large"
           @click="submit"
         >
           {{ btnText }}
         </el-button>
       </el-form-item>
     </el-form>
+  </div>
+  <div class="change-lang">
+    <change-lang />
   </div>
 </template>
 
@@ -54,39 +58,57 @@ import {
   toRefs,
   ref,
   computed,
+  watch,
 } from 'vue'
 import { Login } from '@/api/login'
-import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import ChangeLang from '@/layout/components/Topbar/ChangeLang.vue'
+import useLang from '@/i18n/useLang'
+import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
+  components: { ChangeLang },
   name: 'login',
   setup() {
     const { proxy: ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
-    const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const { lang } = useLang()
+    watch(lang, () => {
+      state.rules = getRules()
+    })
+    const getRules = () => ({
+      userName: [
+        {
+          required: true,
+          message: ctx.$t('login.rules-username'),
+          trigger: 'blur',
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: ctx.$t('login.rules-password'),
+          trigger: 'blur',
+        },
+        {
+          min: 6,
+          max: 12,
+          message: ctx.$t('login.rules-regpassword'),
+          trigger: 'blur',
+        },
+      ],
+    })
     const state = reactive({
       model: {
         userName: 'admin',
         password: '123456',
       },
-      rules: {
-        userName: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          {
-            min: 6,
-            max: 12,
-            message: '长度在 6 到 12 个字符',
-            trigger: 'blur',
-          },
-        ],
-      },
+      rules: getRules(),
       loading: false,
-      btnText: computed(() => (state.loading ? '登录中...' : '登录')),
+      btnText: computed(() =>
+        state.loading ? ctx.$t('login.logining') : ctx.$t('login.login')
+      ),
       loginForm: ref(null),
       submit: () => {
         if (state.loading) {
@@ -98,7 +120,7 @@ export default defineComponent({
             const { code, data, message } = await Login(state.model)
             if (+code === 200) {
               ctx.$message.success({
-                message: '登录成功',
+                message: ctx.$t('login.loginsuccess'),
                 duration: 1000,
               })
 
@@ -112,8 +134,7 @@ export default defineComponent({
               } else {
                 router.push('/')
               }
-
-              store.dispatch('app/setToken', data)
+              useApp().initToken(data)
             } else {
               ctx.$message.error(message)
             }
@@ -144,6 +165,20 @@ export default defineComponent({
     padding: 0 24px;
     box-sizing: border-box;
     margin: 160px auto 0;
+    :deep {
+      .el-input__wrapper {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .el-input-group--append > .el-input__wrapper {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .el-input-group--prepend > .el-input__wrapper {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
     .title {
       color: #fff;
       text-align: center;
@@ -153,8 +188,6 @@ export default defineComponent({
     .text {
       font-size: 16px;
       :deep(.el-input__inner) {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.1);
         color: #fff;
         height: 48px;
         line-height: 48px;
@@ -165,6 +198,22 @@ export default defineComponent({
     }
     .btn {
       width: 100%;
+    }
+  }
+}
+.change-lang {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  :deep {
+    .change-lang {
+      height: 24px;
+      &:hover {
+        background: none;
+      }
+      .icon {
+        color: #fff;
+      }
     }
   }
 }
