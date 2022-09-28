@@ -1,7 +1,14 @@
-/* 改变主题色变量 */
-$--color-primary: $mainColor;
+/**如果需要修改其它变量，可以在以下文件中查找
+ * https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
+ */
 
-/* 改变 icon 字体路径变量，必需 */
-$--font-path: "element-plus/lib/theme-chalk/fonts";
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': $mainColor,
+    ),
+  ),
+);
 
-@import "element-plus/packages/theme-chalk/src/index";
+@use "element-plus/theme-chalk/src/reset.scss" as *;
+@use "element-plus/theme-chalk/src/index.scss" as *;

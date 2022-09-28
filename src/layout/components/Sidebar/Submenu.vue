@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:46:55
+ * @LastEditTime: 2022-09-24 16:44:28
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -24,7 +24,7 @@
   <el-menu-item v-if="!menu.children" :index="menu.url">
     <item :icon="menu.icon" :title="menu.title" />
   </el-menu-item>
-  <el-submenu v-else :index="menu.url">
+  <el-sub-menu v-else :index="menu.url">
     <template #title>
       <item :icon="menu.icon" :title="menu.title" />
     </template>
@@ -34,7 +34,7 @@
       :is-nest="true"
       :menu="submenu"
     />
-  </el-submenu>
+  </el-sub-menu>
 </template>
 <script>
 import { defineComponent } from 'vue'

@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-21 09:18:32
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 17:43:27
+ * @LastEditTime: 2022-09-25 14:13:53
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -58,6 +58,7 @@
     <div class="action">
       <error-log />
       <userinfo />
+      <change-lang />
     </div>
   </div>
   <layout-settings />
@@ -68,6 +69,7 @@ import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import Userinfo from './Userinfo.vue'
+import ChangeLang from './ChangeLang.vue'
 import ErrorLog from '@/components/ErrorLog/index.vue'
 import LayoutSettings from '@/components/LayoutSettings/index.vue'
 import { useStore } from 'vuex'
@@ -78,6 +80,7 @@ export default defineComponent({
     Hamburger,
     Breadcrumbs,
     Userinfo,
+    ChangeLang,
     ErrorLog,
     LayoutSettings,
   },

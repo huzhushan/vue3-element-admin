@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 17:22:14
+ * @LastEditTime: 2022-09-24 20:34:32
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -50,17 +50,25 @@
       :class="{ no_link: index === breadcrumbs.length - 1 }"
       :to="index < breadcrumbs.length - 1 ? item.path : ''"
     >
-      {{ item.meta.title }}
+      {{ $t(item.meta.title) }}
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 <script>
-import { defineComponent, computed, ref, onBeforeMount, watch } from 'vue'
+import {
+  defineComponent,
+  computed,
+  ref,
+  onBeforeMount,
+  watch,
+  getCurrentInstance,
+} from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default defineComponent({
   setup(props, { emit }) {
+    const { proxy } = getCurrentInstance()
     const store = useStore()
     const device = computed(() => store.state.app.device)
     const router = useRouter()
@@ -72,7 +80,7 @@ export default defineComponent({
     )
 
     const getBreadcrumbs = route => {
-      const home = [{ path: '/', meta: { title: '首页' } }]
+      const home = [{ path: '/', meta: { title: proxy.$t('menu.homepage') } }]
       if (route.name === 'home') {
         return home
       } else {
@@ -91,6 +99,7 @@ export default defineComponent({
     watch(
       route,
       newRoute => {
+        route.value.meta.truetitle = proxy.$t(route.value.meta.title)
         breadcrumbs.value = getBreadcrumbs(newRoute)
         emit('on-breadcrumbs-change', breadcrumbs.value.length > 1)
       },
@@ -118,9 +127,9 @@ export default defineComponent({
   ::v-deep(.is-link) {
     font-weight: normal;
   }
-  ::v-deep(.el-breadcrumb__item) {
-    float: none;
-  }
+  // ::v-deep(.el-breadcrumb__item) {
+  //   float: none;
+  // }
   .no_link {
     ::v-deep(.el-breadcrumb__inner) {
       color: #97a8be !important;

@@ -1,57 +1,75 @@
 <template>
   <pro-table
     ref="table"
-    title="列表"
+    :title="$t('test/list.title')"
     :request="getList"
     :columns="columns"
     :search="searchConfig"
-    :pagination="paginationConfig"
     @selectionChange="handleSelectionChange"
   >
     <!-- 工具栏 -->
     <template #toolbar>
-      <el-button type="primary" icon="el-icon-delete" @click="batchDelete">
-        批量删除
+      <el-button type="primary" icon="Delete" @click="batchDelete">
+        {{ $t('test/list.batchDelete') }}
       </el-button>
-      <el-button
-        type="primary"
-        icon="el-icon-plus"
-        @click="$router.push('/test/add')"
-      >
-        添加一条
+      <el-button type="primary" icon="Plus" @click="$router.push('/test/add')">
+        {{ $t('test/list.add') }}
       </el-button>
-      <el-button type="primary" icon="el-icon-refresh" @click="refresh">
-        刷新
+      <el-button type="primary" icon="Refresh" @click="refresh">
+        {{ $t('test/list.refresh') }}
       </el-button>
+    </template>
+    <template #status="{row}">
+      <el-tag :type="row.status === 1 ? 'success' : 'error'">
+        {{ row.status === 1 ? $t('public.enabled') : $t('public.disabled') }}
+      </el-tag>
     </template>
     <template #operate="scope">
       <el-button
-        size="mini"
+        size="small"
         type="primary"
         @click="$router.push(`/test/edit/${scope.row.id}`)"
       >
-        编辑
+        {{ $t('public.edit') }}
       </el-button>
-      <el-button size="mini" type="danger">删除</el-button>
+      <el-button size="small" type="danger">
+        {{ $t('public.delete') }}
+      </el-button>
     </template>
   </pro-table>
 </template>
 
 <script>
 import { defineComponent, reactive, ref, toRefs } from 'vue'
-
+import { getUsers } from '@/api/test'
 export default defineComponent({
   name: 'testList',
   setup() {
+    // const { proxy } = getCurrentInstance()
+
     const state = reactive({
       // 表格列配置，大部分属性跟el-table-column配置一样
       columns: [
-        { type: 'selection' },
-        { label: '序号', type: 'index' },
-        { label: '名称', prop: 'nickName', sortable: true, width: 180 },
-        { label: '邮箱', prop: 'userEmail' },
+        { type: 'selection', width: 56 },
+        { label: 'test/list.index', type: 'index', width: 80 },
         {
-          label: '操作',
+          label: 'test/list.name',
+          prop: 'nickName',
+          sortable: true,
+          width: 180,
+        },
+        {
+          label: 'test/list.email',
+          prop: 'userEmail',
+          minWidth: 200,
+        },
+        {
+          label: 'public.status',
+          tdSlot: 'status',
+          width: 180,
+        },
+        {
+          label: 'public.operate',
           width: 180,
           align: 'center',
           tdSlot: 'operate', // 自定义单元格内容的插槽名称
@@ -60,145 +78,141 @@ export default defineComponent({
       // 搜索配置
       searchConfig: {
         labelWidth: '90px', // 必须带上单位
-        inputWidth: '360px', // 必须带上单位
+        inputWidth: '400px', // 必须带上单位
         fields: [
           {
             type: 'text',
-            label: '账户名称',
+            label: 'test/list.name',
             name: 'nickName',
             defaultValue: 'abc',
           },
           {
-            type: 'textarea',
-            label: '描述',
-            name: 'description',
-          },
-          {
-            label: '状态',
+            label: 'public.status',
             name: 'status',
             type: 'select',
             defaultValue: 1,
             options: [
               {
-                name: '已发布',
+                name: 'test/list.publish',
                 value: 1,
               },
               {
-                name: '未发布',
+                name: 'test/list.nopublish',
                 value: 0,
               },
             ],
           },
           {
-            label: '性别',
+            label: 'test/list.gender',
             name: 'sex',
             type: 'radio',
             options: [
               {
-                name: '男',
+                name: 'public.male',
                 value: 1,
               },
               {
-                name: '女',
+                name: 'public.female',
                 value: 0,
               },
             ],
           },
           {
-            label: '城市',
+            label: 'test/list.city',
             name: 'city',
             type: 'radio-button',
             options: [
               {
-                name: '北京',
+                name: 'test/list.bj',
                 value: 'bj',
               },
               {
-                name: '上海',
+                name: 'test/list.sh',
                 value: 'sh',
               },
               {
-                name: '广州',
+                name: 'test/list.gz',
                 value: 'gz',
               },
               {
-                name: '深圳',
+                name: 'test/list.sz',
                 value: 'sz',
               },
             ],
           },
           {
-            label: '爱好',
+            label: 'test/list.hobby',
             name: 'hobby',
             type: 'checkbox',
-            defaultValue: ['吃饭'],
+            defaultValue: ['eat'],
             options: [
               {
-                name: '吃饭',
-                value: '吃饭',
+                name: 'test/list.eat',
+                value: 'eat',
               },
               {
-                name: '睡觉',
-                value: '睡觉',
+                name: 'test/list.sleep',
+                value: 'sleep',
               },
               {
-                name: '打豆豆',
-                value: '打豆豆',
+                name: 'test/list.bit',
+                value: 'bit',
               },
             ],
             // transform: (val) => val.join(","),
           },
           {
-            label: '水果',
+            label: 'test/list.fruit',
             name: 'fruit',
             type: 'checkbox-button',
             options: [
               {
-                name: '苹果',
-                value: '苹果',
+                name: 'test/list.apple',
+                value: 'apple',
               },
               {
-                name: '香蕉',
-                value: '香蕉',
+                name: 'test/list.banana',
+                value: 'banana',
               },
               {
-                name: '橘子',
-                value: '橘子',
+                name: 'test/list.orange',
+                value: 'orange',
               },
               {
-                name: '葡萄',
-                value: '葡萄',
+                name: 'test/list.grape',
+                value: 'grape',
               },
             ],
             transform: val => val.join(','),
           },
           {
-            label: '日期',
+            label: 'test/list.date',
             name: 'date',
             type: 'date',
           },
           {
-            label: '时间',
+            label: 'test/list.time',
             name: 'datetime',
             type: 'datetime',
             defaultValue: '2020-10-10 8:00:00',
           },
           {
-            label: '日期范围',
+            label: 'test/list.daterange',
             name: 'daterange',
             type: 'daterange',
             trueNames: ['startDate', 'endDate'],
+            style: { width: '400px' },
           },
           {
-            label: '时间范围',
+            label: 'test/list.timerange',
             name: 'datetimerange',
             type: 'datetimerange',
             trueNames: ['startTime', 'endTime'],
-            style: { width: '360px' },
+            style: { width: '400px' },
             defaultValue: ['2020-10-10 9:00:00', '2020-10-11 18:30:00'],
           },
           {
-            label: '数量',
+            label: 'test/list.num',
             name: 'num',
             type: 'number',
             min: 0,
@@ -207,12 +221,12 @@ export default defineComponent({
         ],
       },
       // 分页配置
-      paginationConfig: {
-        layout: 'total, prev, pager, next, sizes', // 分页组件显示哪些功能
-        pageSize: 5, // 每页条数
-        pageSizes: [5, 10, 20, 50],
-        style: { textAlign: 'left' },
-      },
+      // paginationConfig: {
+      //   layout: 'total, prev, pager, next, sizes', // 分页组件显示哪些功能
+      //   pageSize: 10, // 每页条数
+      //   pageSizes: [5, 10, 20, 50],
+      //   style: { 'justify-content': 'flex-end' },
+      // },
       selectedItems: [],
       batchDelete() {
         console.log(state.selectedItems)
@@ -225,28 +239,7 @@ export default defineComponent({
       async getList(params) {
         console.log(params)
         // params是从组件接收的，包含分页和搜索字段。
-        const { data } = await new Promise(rs => {
-          setTimeout(() => {
-            rs({
-              code: 200,
-              data: {
-                list: [
-                  {
-                    id: 1,
-                    nickName: 'zhangsan',
-                    userEmail: 'zhangsan@xx.com',
-                  },
-                  {
-                    id: 2,
-                    nickName: 'lisi',
-                    userEmail: 'lisi@xx.com',
-                  },
-                ],
-                total: 100,
-              },
-            })
-          }, 3000)
-        })
+        const { data } = await getUsers(params)
 
         // 必须要返回一个对象，包含data数组和total总数
         return {

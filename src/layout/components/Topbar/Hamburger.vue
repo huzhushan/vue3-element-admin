@@ -18,7 +18,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:47:40
+ * @LastEditTime: 2022-09-24 15:41:44
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -26,17 +26,22 @@
  -->
 
 <template>
-  <i
-    class="fold-btn el-icon-s-fold"
+  <el-icon
+    :size="20"
+    class="fold-btn"
     :class="{ collapse: collapse }"
     @click="handleToggleMenu"
-  ></i>
+  >
+    <Fold />
+  </el-icon>
 </template>
 <script>
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+import { Fold } from '@element-plus/icons-vue'
 
 export default defineComponent({
+  components: { Fold },
   setup() {
     const store = useStore()
     const collapse = computed(() => !!store.state.app.sidebar.collapse)
@@ -54,11 +59,7 @@ export default defineComponent({
 .fold-btn {
   line-height: 48px;
   padding: 0 10px;
-  font-size: 18px;
   cursor: pointer;
-  &:hover {
-    background: #f5f5f5;
-  }
   &.collapse {
     transform: scale(-1, 1);
   }

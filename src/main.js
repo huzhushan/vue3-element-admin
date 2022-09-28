@@ -27,7 +27,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-23 16:50:08
+ * @LastEditTime: 2022-09-24 17:46:03
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -45,6 +45,16 @@ import './assets/style/element-variables.scss'
 // 引入中文语言包
 import 'dayjs/locale/zh-cn'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
+
+// 国际化
+import i18n from '@/i18n'
+
+// 全局注册element-plus/icons-vue
+import * as SVGICONS from '@element-plus/icons-vue'
+Object.entries(SVGICONS).forEach(([key, component]) => {
+  // app.component(key === 'PieChart' ? 'PieChartIcon' : key, component)
+  app.component(key, component)
+})
 
 // 引入路由
 import router from './router'
@@ -64,11 +74,16 @@ Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
 
+// 注册自定义指令
+import * as Directives from '@/directive'
+Object.values(Directives).forEach(fn => fn(app))
+
 // 错误日志
 import useErrorHandler from './error-log'
 useErrorHandler(app)
 
 app
+  .use(i18n)
   .use(ElementPlus, {
     locale,
   })

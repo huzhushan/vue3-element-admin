@@ -26,16 +26,18 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 18:28:31
+ * @LastEditTime: 2022-09-24 20:40:37
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 
+import { ElLoading } from 'element-plus'
 import router from '@/router'
 import store from '@/store'
 import { TOKEN } from '@/store/modules/app' // TOKEN变量名
+import { nextTick } from 'vue'
 
 const getPageTitle = title => {
   const appTitle = store.state.app.title
@@ -48,9 +50,16 @@ const getPageTitle = title => {
 // 白名单，里面是路由对象的name
 const WhiteList = ['login', 'lock']
 
+let loadingInstance = null
+
 // vue-router4的路由守卫不再是通过next放行，而是通过return返回true或false或者一个路由地址
 router.beforeEach(async to => {
-  document.title = getPageTitle(!!to.meta && to.meta.title)
+  loadingInstance = ElLoading.service({
+    lock: true,
+    // text: '正在加载数据，请稍候~',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  // document.title = getPageTitle(!!to.meta && to.meta.title)
 
   if (WhiteList.includes(to.name)) {
     return true
@@ -71,8 +80,11 @@ router.beforeEach(async to => {
         // 获取用户信息
         userinfo = await store.dispatch('account/getUserinfo')
       } catch (err) {
+        loadingInstance.close()
         return false
       }
+
+      return to.fullPath
     }
 
     // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
@@ -81,6 +93,7 @@ router.beforeEach(async to => {
         await store.dispatch('menu/generateMenus', userinfo)
         return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
       } catch (err) {
+        loadingInstance.close()
         return false
       }
     }
@@ -98,5 +111,14 @@ router.beforeEach(async to => {
         }
       }
     }
+  }
+})
+
+router.afterEach(to => {
+  loadingInstance.close()
+  if (router.currentRoute.value.name === to.name) {
+    nextTick(() => {
+      document.title = getPageTitle(!!to.meta && to.meta.truetitle)
+    })
   }
 })

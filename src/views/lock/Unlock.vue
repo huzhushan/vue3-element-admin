@@ -37,7 +37,7 @@
  * @version: 
  * @Date: 2021-04-23 19:17:20
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-19 10:04:01
+ * @LastEditTime: 2022-09-24 22:07:58
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -46,10 +46,10 @@
 
 <template>
   <h1 class="title">
-    ⚡ 屏幕已锁定
+    ⚡ {{ $t('topbar.lock-locked') }}
     <div class="unlock-btn" @click="handleUnlock">
       <i class="el-icon-unlock"></i>
-      解锁
+      {{ $t('topbar.lock-lock') }}
     </div>
   </h1>
   <div class="unlock-modal" v-show="showModal">
@@ -60,14 +60,15 @@
           type="password"
           v-model.trim="lockModel.password"
           autocomplete="off"
-          placeholder="请输入锁屏密码或登录密码"
+          :placeholder="$t('topbar.lock-rules-password2')"
           @keyup.enter="submitForm"
+          style="width:320px"
         >
           <template #append>
             <el-button
               type="primary"
               class="btn-unlock"
-              icon="el-icon-right"
+              icon="Right"
               :loading="loading"
               @click="submitForm"
             ></el-button>
@@ -75,8 +76,12 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="cancel" type="text">取消</el-button>
-        <el-button @click="reLogin" type="text">重新登录</el-button>
+        <el-button @click="cancel" type="text">
+          {{ $t('public.cancel') }}
+        </el-button>
+        <el-button @click="reLogin" type="text">
+          {{ $t('topbar.lock-relogin') }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -131,10 +136,10 @@ export default defineComponent({
 
     const lockRules = reactive({
       password: [
-        { required: true, message: '请输入密码' },
+        { required: true, message: ctx.$t('topbar.lock-rules-password2') },
         {
           validator: checkPwd,
-          message: '密码错误',
+          message: ctx.$t('topbar.lock-rules-password3'),
           trigger: 'none',
         },
       ],
@@ -148,7 +153,7 @@ export default defineComponent({
         // 尝试获取用户信息
         !store.state.account.userinfo && store.dispatch('account/getUserinfo')
       } else {
-        ctx.$message('您的账号已退出，请直接登录')
+        ctx.$message(ctx.$t('topbar.lock-error'))
         reLogin()
       }
     }

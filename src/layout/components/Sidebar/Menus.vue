@@ -27,7 +27,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:02:28
+ * @LastEditTime: 2022-09-24 18:31:45
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -87,15 +87,15 @@ export default defineComponent({
 <style lang="scss">
 // menu hover
 .el-menu-item,
-.el-submenu__title {
+.el-sub-menu__title {
   &:hover {
     background-color: $menuHover !important;
   }
 }
 
-.el-submenu {
+.el-sub-menu {
   .el-menu-item,
-  .el-submenu .el-submenu__title {
+  .el-sub-menu .el-sub-menu__title {
     background-color: $subMenuBg !important;
 
     &:hover {
@@ -112,7 +112,7 @@ export default defineComponent({
 
 .el-menu--collapse {
   .el-menu-item.is-active,
-  .el-submenu.is-active > .el-submenu__title {
+  .el-sub-menu.is-active > .el-sub-menu__title {
     position: relative;
     background-color: $collapseMenuActiveBg !important;
     color: $collapseMenuActiveColor !important;
@@ -128,19 +128,20 @@ export default defineComponent({
   }
 }
 
-.el-submenu__title i {
+.el-sub-menu__title i {
   color: $arrowColor;
 }
 
 // 水平菜单
 .el-menu--horizontal {
   .el-menu-item,
-  .el-submenu .el-submenu__title {
+  .el-sub-menu .el-sub-menu__title {
     height: $horizontalMenuHeight;
     line-height: $horizontalMenuHeight;
+    border-bottom: none;
   }
   .el-menu-item.is-active,
-  .el-submenu.is-active .el-submenu__title {
+  .el-sub-menu.is-active .el-sub-menu__title {
     border: none;
   }
 }

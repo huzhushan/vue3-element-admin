@@ -24,16 +24,39 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:53:33
+ * @LastEditTime: 2022-09-25 14:13:17
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  -->
-
 <template>
-  <router-view />
+  <el-config-provider :locale="lang === 'zh-cn' ? localeZH : localeEN">
+    <router-view />
+  </el-config-provider>
 </template>
+
+<script>
+import { defineComponent } from 'vue'
+import { ElConfigProvider } from 'element-plus'
+import localeZH from 'element-plus/lib/locale/lang/zh-cn'
+import localeEN from 'element-plus/lib/locale/lang/en'
+import useLang from '@/i18n/useLang'
+
+export default defineComponent({
+  components: {
+    [ElConfigProvider.name]: ElConfigProvider,
+  },
+  setup() {
+    const { lang } = useLang()
+    return {
+      lang,
+      localeZH,
+      localeEN,
+    }
+  },
+})
+</script>
 
 <style lang="scss">
 html,
@@ -43,5 +66,8 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  * {
+    outline: none;
+  }
 }
 </style>

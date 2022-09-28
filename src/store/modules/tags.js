@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-29 11:19:20
+ * @LastEditTime: 2021-09-18 15:36:04
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -93,7 +93,12 @@ const mutations = {
   DEL_ALL_CACHE_LIST: state => {
     state.cacheList = []
   },
-
+  CLEAR_ALL_TAGS: state => {
+    state.cacheList = []
+    state.tagList = []
+    // 保存到localStorage
+    removeItem(TAGLIST)
+  },
   UPDATE_TAG_LIST: (state, tag) => {
     const index = state.tagList.findIndex(v => v.path === tag.path)
     if (index > -1) {

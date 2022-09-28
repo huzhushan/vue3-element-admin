@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 18:22:01
+ * @LastEditTime: 2022-09-24 20:21:03
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -96,6 +96,10 @@ export default {
       const { code, data } = await GetMenus({ role: userinfo.role })
 
       if (+code === 200) {
+        // 添加路由之前先删除所有动态路由
+        asyncRoutes.forEach(item => {
+          router.removeRoute(item.name)
+        })
         // 过滤出需要添加的动态路由
         const filterRoutes = getFilterRoutes(asyncRoutes, data)
         filterRoutes.forEach(route => router.addRoute(route))

@@ -13,7 +13,7 @@
  * @version: 
  * @Date: 2021-07-23 15:04:58
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 16:59:06
+ * @LastEditTime: 2022-09-25 14:37:04
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -23,40 +23,47 @@
   <el-button
     class="btn-switch"
     type="primary"
-    icon="el-icon-setting"
+    icon="Setting"
     @click="drawer = true"
   ></el-button>
-  <el-drawer title="布局设置" :size="320" v-model="drawer" destroy-on-close>
+  <el-drawer
+    :title="$t('settings.title')"
+    :size="320"
+    v-model="drawer"
+    destroy-on-close
+  >
     <div class="box">
       <div class="list">
         <div class="item">
-          <div>内容宽度</div>
+          <div>{{ $t('settings.item1') }}</div>
           <el-select class="select" size="mini" v-model="layout.isFluid">
-            <el-option :value="true" label="流式布局" />
-            <el-option :value="false" label="固定宽度" />
+            <el-option :value="true" :label="$t('settings.fluid')" />
+            <el-option :value="false" :label="$t('settings.fixed')" />
           </el-select>
         </div>
         <div class="item">
-          <div>菜单栏排列方式</div>
+          <div>{{ $t('settings.item2') }}</div>
           <el-select class="select" size="mini" v-model="menus.mode">
-            <el-option value="horizontal" label="水平排列" />
-            <el-option value="vertical" label="垂直排列" />
+            <el-option value="horizontal" :label="$t('settings.horizontal')" />
+            <el-option value="vertical" :label="$t('settings.vertical')" />
           </el-select>
         </div>
         <el-divider />
         <div class="item">
-          <div>显示标签栏</div>
+          <div>{{ $t('settings.item3') }}</div>
           <el-switch v-model="tagsbar.isShow" />
         </div>
         <div class="item">
-          <div>显示面包屑导航</div>
+          <div>{{ $t('settings.item4') }}</div>
           <el-switch v-model="breadcrumbs.isShow" />
         </div>
         <el-divider />
         <div class="item">
-          <div>固定头部</div>
+          <div>{{ $t('settings.item5') }}</div>
           <el-switch v-model="topbar.isFixed" />
         </div>
+        <el-divider />
+        <em style="color:#999">你可以在 src/default-settings.js 中修改</em>
       </div>
     </div>
   </el-drawer>
@@ -87,8 +94,9 @@ export default defineComponent({
 .btn-switch {
   position: fixed;
   top: 100px;
-  right: -6px;
+  right: -4px;
   font-size: 20px;
+  z-index: 1000;
 }
 .box {
   height: 100%;

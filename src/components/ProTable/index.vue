@@ -22,7 +22,7 @@
  * @version: 
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-04-21 12:45:46
+ * @LastEditTime: 2022-09-25 11:53:47
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -38,29 +38,30 @@
       class="search"
       :model="searchModel"
       :inline="true"
-      label-position="left"
+      label-position="right"
       :label-width="search.labelWidth"
       ref="searchForm"
     >
       <el-form-item
         v-for="item in search.fields"
         :key="item.name"
-        :label="item.label"
+        :label="$t(item.label)"
         :prop="item.name"
       >
+        <slot v-if="item.type === 'custom'" :name="item.slot" />
         <el-select
-          v-if="item.type === 'select'"
+          v-else-if="item.type === 'select'"
           v-model="searchModel[item.name]"
           :filterable="!!item.filterable"
           :multiple="!!item.multiple"
           clearable
-          :placeholder="`请选择${item.label}`"
+          :placeholder="$t(item.label)"
           :style="{ width: search.inputWidth, ...item.style }"
         >
           <el-option
             v-for="option of item.options"
             :key="option.value"
-            :label="option.name"
+            :label="$t(option.name)"
             :value="option.value"
           ></el-option>
         </el-select>
@@ -74,7 +75,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ option.name }}
+            {{ $t(option.name) }}
           </el-radio>
         </el-radio-group>
         <el-radio-group
@@ -87,7 +88,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ option.name }}
+            {{ $t(option.name) }}
           </el-radio-button>
         </el-radio-group>
         <el-checkbox-group
@@ -100,7 +101,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ option.name }}
+            {{ $t(option.name) }}
           </el-checkbox>
         </el-checkbox-group>
         <el-checkbox-group
@@ -113,7 +114,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ option.name }}
+            {{ $t(option.name) }}
           </el-checkbox-button>
         </el-checkbox-group>
         <el-date-picker
@@ -123,7 +124,7 @@
           format="YYYY-MM-DD"
           clearable
           @change="handleDateChange($event, item, 'YYYY-MM-DD')"
-          :placeholder="`请选择${item.label}`"
+          :placeholder="$t(item.label)"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-date-picker>
         <el-date-picker
@@ -133,7 +134,7 @@
           clearable
           @change="handleDateChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
           format="YYYY-MM-DD HH:mm:ss"
-          :placeholder="`请选择${item.label}`"
+          :placeholder="$t(item.label)"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-date-picker>
         <el-date-picker
@@ -142,11 +143,11 @@
           type="daterange"
           format="YYYY-MM-DD"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('public.startdate')"
+          :end-placeholder="$t('public.enddate')"
           clearable
           @change="handleRangeChange($event, item, 'YYYY-MM-DD')"
-          :style="{ width: search.inputWidth, ...item.style }"
+          :style="{ ...item.style }"
         ></el-date-picker>
         <el-date-picker
           v-else-if="item.type === 'datetimerange'"
@@ -154,16 +155,16 @@
           type="datetimerange"
           format="YYYY-MM-DD HH:mm:ss"
           range-separator="-"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
+          :start-placeholder="$t('public.starttime')"
+          :end-placeholder="$t('public.endtime')"
           clearable
           @change="handleRangeChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
-          :style="{ width: search.inputWidth, ...item.style }"
+          :style="{ ...item.style }"
         ></el-date-picker>
         <el-input-number
           v-else-if="item.type === 'number'"
           v-model="searchModel[item.name]"
-          :placeholder="`请输入${item.label}`"
+          :placeholder="$t(item.label)"
           controls-position="right"
           :min="item.min"
           :max="item.max"
@@ -171,26 +172,28 @@
         />
         <el-input
           v-else-if="item.type === 'textarea'"
+          :maxlength="item.maxlength"
           type="textarea"
           clearable
           v-model="searchModel[item.name]"
-          :placeholder="`请输入${item.label}`"
+          :placeholder="$t(item.label)"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-input>
         <el-input
           v-else
+          :maxlength="item.maxlength"
           v-model="searchModel[item.name]"
           clearable
-          :placeholder="`请输入${item.label}`"
+          :placeholder="$t(item.label)"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-input>
       </el-form-item>
       <el-form-item class="search-btn">
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch">
-          查询
+        <el-button type="primary" icon="Search" @click="handleSearch">
+          {{ $t('public.search') }}
         </el-button>
-        <el-button @click="handleReset" icon="el-icon-refresh-right">
-          重置
+        <el-button @click="handleReset" icon="RefreshRight">
+          {{ $t('public.reset') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -219,8 +222,9 @@
           v-for="item in columns"
           :key="item.label"
           :filter-method="item.filters && filterHandler"
-          show-overflow-tooltip
+          :show-overflow-tooltip="!item.wrap"
           v-bind="item"
+          :label="item.label ? $t(item.label) : ''"
         >
           <template #header="scope" v-if="!!item.labelSlot">
             <slot :name="item.labelSlot" v-bind="scope"></slot>
@@ -247,7 +251,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, toRefs, onBeforeMount } from 'vue'
+import { defineComponent, reactive, toRefs, onBeforeMount, watch } from 'vue'
 const formatDate = (date, format) => {
   var obj = {
     'M+': date.getMonth() + 1,
@@ -321,6 +325,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    // 是否隐藏按钮操作
+    hideToolbar: {
+      type: Boolean,
+      default: false,
+    },
     // 搜索表单配置，false表示不显示搜索表单
     search: {
       type: [Boolean, Object],
@@ -337,8 +346,8 @@ export default defineComponent({
     },
     // 行数据的Key，同elementUI的table组件的row-key
     rowKey: {
-      type: String,
-      default: 'id',
+      type: [String, Function],
+      default: () => {},
     },
     // 分页配置，false表示不显示分页
     pagination: {
@@ -376,18 +385,14 @@ export default defineComponent({
       state.loading = true
       const searchModel = optimizeFields(props.search)
       const { data, total } = await props.request({
-        pageNum: state.pageNum,
-        pageSize: state.pageSize,
+        current: state.pageNum,
+        size: state.pageSize,
         ...searchModel,
       })
       state.loading = false
       state.tableData = data
       state.total = total
     }
-
-    onBeforeMount(() => {
-      getTableData()
-    })
 
     const state = reactive({
       searchModel: getSearchModel(props.search),
@@ -470,6 +475,18 @@ export default defineComponent({
       }
     }
 
+    watch(
+      () => props.search,
+      val => {
+        state.searchModel = getSearchModel(val)
+      },
+      { deep: true }
+    )
+
+    onBeforeMount(() => {
+      getTableData()
+    })
+
     return {
       ...toRefs(state),
     }
@@ -492,10 +509,14 @@ export default defineComponent({
     .search-btn {
       margin-left: auto;
     }
-    ::v-deep(.el-input-number .el-input__inner) {
+    :deep(.el-input-number .el-input__inner) {
       text-align: left;
     }
+    :deep(.el-range-editor.el-input__wrapper) {
+      box-sizing: border-box;
+    }
   }
+
   .head {
     display: flex;
     justify-content: space-between;
@@ -509,15 +530,11 @@ export default defineComponent({
   .table {
     padding: 20px;
     background: #fff;
-    ::v-deep(th) {
-      background: #f6f6f6;
-      color: rgba(0, 0, 0, 0.85);
-    }
   }
   .pagination {
     padding: 0 20px 20px;
     background: #fff;
-    text-align: right;
+    justify-content: flex-end;
     :last-child {
       margin-right: 0;
     }

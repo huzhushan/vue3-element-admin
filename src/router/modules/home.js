@@ -3,7 +3,7 @@
  * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2021-07-26 14:37:08
+ * @LastEditTime: 2022-09-24 19:27:21
  * @Author: huzhushan@126.com
  * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
  * @Github: https://github.com/huzhushan/vue3-element-admin
@@ -19,16 +19,16 @@ export default [
     component: Layout,
     name: 'Dashboard',
     meta: {
-      title: '工作台',
+      title: 'menu.dashboard',
     },
-    icon: 'home',
+    icon: 'icon-home',
     children: [
       {
         path: '',
         name: 'home',
         component: Home,
         meta: {
-          title: '首页',
+          title: 'menu.homepage',
           affix: true,
         },
       },
