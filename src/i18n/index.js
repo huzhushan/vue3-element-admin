@@ -11,8 +11,8 @@ const getMessage = modules => {
 export default createI18n({
   locale: localStorage.getItem('__VEA__lang') || 'zh-cn',
   messages: {
-    'zh-cn': getMessage(import.meta.globEager('./locales/zh-cn/**/*.js')),
-    en: getMessage(import.meta.globEager('./locales/en/**/*.js')),
+    'zh-cn': getMessage(import.meta.glob('./locales/zh-cn/**/*.js', { eager: true })),
+    en: getMessage(import.meta.glob('./locales/en/**/*.js', { eager: true })),
   },
   legacy: false,
   globalInjection: true,
