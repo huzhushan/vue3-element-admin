@@ -67,6 +67,7 @@ import 'vite-plugin-svg-icons/register'
 
 // 注册全局组件
 import * as Components from './global-components'
+
 Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })

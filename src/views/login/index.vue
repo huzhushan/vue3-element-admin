@@ -12,7 +12,7 @@
 <template>
   <div class="login">
     <el-form class="form" :model="model" :rules="rules" ref="loginForm">
-      <h1 class="title">Vue3 Element Admin</h1>
+      <h1 class="title">后台管理</h1>
       <el-form-item prop="userName">
         <el-input
           class="text"
@@ -32,6 +32,19 @@
           :placeholder="$t('login.password')"
         />
       </el-form-item>
+
+      <el-form-item prop="captcha">
+          <div class="captcha">
+              <el-input
+                        class="text"
+                        v-model="model.captcha"
+                        prefix-icon="Picture"
+                        placeholder="请输入验证码"
+                        ></el-input>
+              <img :src="captchaSrc" @click="refreshCaptcha" />
+          </div>
+      </el-form-item>
+
       <el-form-item>
         <el-button
           :loading="loading"
@@ -58,9 +71,10 @@ import {
   toRefs,
   ref,
   computed,
+  onMounted,
   watch,
 } from 'vue'
-import { Login } from '@/api/login'
+import { Login , GetValidateCode } from '@/api/login'
 import { useRouter, useRoute } from 'vue-router'
 import ChangeLang from '@/layout/components/Topbar/ChangeLang.vue'
 import useLang from '@/i18n/useLang'
@@ -98,17 +112,41 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
+
+      captcha: [
+        {
+          require: true,
+          message: ctx.$t('login.rules-validate-code'),
+          trigger: 'blur',
+        },
+      ],
     })
+
+    // onMounted钩子函数
+    onMounted(() => {
+      state.refreshCaptcha()
+    })
+
     const state = reactive({
       model: {
         userName: 'admin',
-        password: '123456',
+        password: '111111',
+        captcha: '',      // 用户输入的验证码
+        codeKey: ''       // 后端返回的验证码key
       },
+
       rules: getRules(),
       loading: false,
+      captchaSrc:"",
+      refreshCaptcha: async () => {
+        const { data } = await GetValidateCode();
+        state.model.codeKey = data.codeKey
+        state.captchaSrc =data.codeValue
+      },
       btnText: computed(() =>
         state.loading ? ctx.$t('login.logining') : ctx.$t('login.login')
       ),
+
       loginForm: ref(null),
       submit: () => {
         if (state.loading) {
@@ -201,6 +239,19 @@ export default defineComponent({
     }
   }
 }
+
+.captcha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.captcha img {
+  cursor: pointer;
+  margin-left: 20px;
+} 
+
 .change-lang {
   position: fixed;
   right: 20px;

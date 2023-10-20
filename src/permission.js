@@ -36,7 +36,7 @@
 import { ElLoading } from 'element-plus'
 import router from '@/router'
 // import store from '@/store'
-import { TOKEN } from '@/store/modules/app' // TOKEN变量名
+import { TOKEN } from '@/pinia/modules/app' // TOKEN变量名
 import { nextTick } from 'vue'
 import { useApp } from './pinia/modules/app'
 import { useAccount } from './pinia/modules/account'
@@ -51,21 +51,24 @@ const getPageTitle = title => {
 }
 
 // 白名单，里面是路由对象的name
-const WhiteList = ['login', 'lock']
+const WhiteList = ['login', 'lock',"home"]
 
 let loadingInstance = null
 
 // vue-router4的路由守卫不再是通过next放行，而是通过return返回true或false或者一个路由地址
 router.beforeEach(async to => {
+
   loadingInstance = ElLoading.service({
     lock: true,
     // text: '正在加载数据，请稍候~',
     background: 'rgba(0, 0, 0, 0.7)',
+  
   })
 
   if (WhiteList.includes(to.name)) {
     return true
   }
+  // 如果token不存在，此时跳转到登录页面
   if (!window.localStorage[TOKEN]) {
     return {
       name: 'login',
