@@ -36,3 +36,12 @@ export const DeleteSysRoleById = (roleId) => {
         method: 'delete'
     })
 }
+
+
+// 查询用户的所有角色数据
+export const GetAllRoleList = (userId) => {
+    return request({
+        url: '/admin/system/sysRole/findAllRoles/' + userId,
+        method: 'get'
+    })
+}
