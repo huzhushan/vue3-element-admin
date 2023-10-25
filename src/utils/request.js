@@ -1,34 +1,3 @@
-/*
- *                        .::::.
- *                      .::::::::.
- *                     :::::::::::
- *                  ..:::::::::::'
- *               '::::::::::::'
- *                 .::::::::::
- *            '::::::::::::::..
- *                 ..::::::::::::.
- *               ``::::::::::::::::
- *                ::::``:::::::::'        .:::.
- *               ::::'   ':::::'       .::::::::.
- *             .::::'      ::::     .:::::::'::::.
- *            .:::'       :::::  .:::::::::' ':::::.
- *           .::'        :::::.:::::::::'      ':::::.
- *          .::'         ::::::::::::::'         ``::::.
- *      ...:::           ::::::::::::'              ``::.
- *     ````':.          ':::::::::'                  ::::..
- *                        '.:::::'                    ':'````..
- *
- * @Descripttion:
- * @version:
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-27 18:17:20
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- */
-
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
@@ -60,8 +29,14 @@ service.interceptors.request.use(
 // 拦截响应
 service.interceptors.response.use(
   // 响应成功进入第1个函数，该函数的参数是响应对象
-  response => {
-    return response.data
+  response => {		// service.interceptors.response.use第一个参数
+    const res = response.data
+    if (res.code == 208) {
+        const redirect = encodeURIComponent(window.location.href)  // 当前地址栏的url
+        router.push(`/login?redirect=${redirect}`)
+        return Promise.reject(new Error(res.message || 'Error'))
+    }
+    return res 
   },
   // 响应失败进入第2个函数，该函数的参数是错误对象
   async error => {
