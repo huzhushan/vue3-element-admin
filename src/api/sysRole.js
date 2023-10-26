@@ -45,3 +45,20 @@ export const GetAllRoleList = (userId) => {
         method: 'get'
     })
 }
+
+// 查询指定角色所对应的菜单id
+export const GetSysRoleMenuIds = (roleId) => {
+    return request({
+        url: "/admin/system/sysRoleMenu/findSysRoleMenuByRoleId/"+ roleId,
+        method: 'get'
+    })
+}
+
+// 根据角色分配菜单请求方法
+export const DoAssignMenuIdToSysRole = (assignMenuDto) => {
+    return request({
+        url: "/admin/system/sysRoleMenu/doAssign",
+        method: 'post',
+        data: assignMenuDto
+    })
+}
