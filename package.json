@@ -20,11 +20,15 @@
     "last 2 versions"
   ],
   "dependencies": {
+    "all": "^0.0.0",
     "axios": "^0.21.1",
     "pinia": "^2.0.14",
     "vue": "3.2.33",
     "vue-router": "^4.0.5",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "xterm": "^5.3.0",
+    "xterm-addon-attach": "^0.9.0",
+    "xterm-addon-fit": "^0.8.0"
   },
   "devDependencies": {
     "@ehutch79/vite-eslint": "0.0.1",

@@ -1,6 +1,9 @@
 export default {
   homepage: 'Homepage',
   dashboard: 'Dashboard',
+  terminal:'Terminal',
+  console:'Console',
+  termList:'Terminals List',
   test: 'Test page',
   testList: 'List',
   testAdd: 'Add',

@@ -1,6 +1,9 @@
 export default {
   homepage: '首页',
   dashboard: '工作台',
+  terminal: '终端管理',
+  console:'控制台',
+  termList:'终端列表',
   test: '测试页面',
   testList: '列表',
   testAdd: '添加',

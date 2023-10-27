@@ -6,14 +6,14 @@ import error from './modules/error'
 import login from './modules/login'
 import lock from './modules/lock'
 import home from './modules/home'
-import test from './modules/test'
+import terminal from './modules/terminal'
 import system from './modules/system'
 
 /* 菜单栏的路由 */
 // 固定菜单
-export const fixedRoutes = [...home,]
+export const fixedRoutes = [...home]
 // 动态菜单
-export const asyncRoutes = [...system]
+export const asyncRoutes = [...system,...terminal]
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -26,6 +26,7 @@ const router = createRouter({
     ...login,
     ...lock,
     ...fixedRoutes,
+    ...asyncRoutes,
     ...error,
   ],
   scrollBehavior(to, from, savedPosition) {
