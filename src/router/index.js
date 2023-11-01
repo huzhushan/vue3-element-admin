@@ -8,12 +8,17 @@ import lock from './modules/lock'
 import home from './modules/home'
 import terminal from './modules/terminal'
 import system from './modules/system'
+import product from './modules/product'
 
 /* 菜单栏的路由 */
 // 固定菜单
 export const fixedRoutes = [...home]
 // 动态菜单
-export const asyncRoutes = [...system,...terminal]
+export const asyncRoutes = [
+  ...system,
+  ...terminal,
+  ...product
+]
 
 const router = createRouter({
   history: createWebHashHistory(),

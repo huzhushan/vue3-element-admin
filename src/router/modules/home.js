@@ -5,7 +5,7 @@ export default [
   {
     path: '/home',
     component: Layout,
-    name: 'Dashboard',
+    name: 'HomeFilled',
     meta: {
       title: 'menu.dashboard',
     },

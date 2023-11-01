@@ -14,7 +14,7 @@ export default([
         meta: {
             title: '系统管理',
         },
-        icon: 'Location',
+        icon: 'Avatar',
         children: [
             {
                 path: '/sysRole',
