@@ -41,6 +41,7 @@ import { nextTick } from 'vue'
 import { useApp } from './pinia/modules/app'
 import { useAccount } from './pinia/modules/account'
 import { useMenus } from './pinia/modules/menu'
+import { storeToRefs } from 'pinia'
 
 const getPageTitle = title => {
   const { title: appTitle } = useApp()
@@ -75,7 +76,7 @@ router.beforeEach(async to => {
       replace: true,
     }
   } else {
-    const { userinfo, getUserinfo } = useAccount()
+    const { userinfo, getUserinfo } = storeToRefs(useAccount())
     // 获取用户角色信息，根据角色判断权限
     if (!userinfo) {
       try {
