@@ -58,8 +58,8 @@ export const useMenus = defineStore('menu', () => {
           icon: item.icon,
         }
         if (item.children) {
-          if (item.children.filter(child => !child.hidden).length <= 1) {
-            menu.url = generateUrl(item.children[0].path, menu.url)
+          if (item.children.filter(child => !child.hidden).length <= 0) {
+            delete menu.children
           } else {
             menu.children = getFilterMenus(item.children, menu.url)
           }
@@ -69,6 +69,47 @@ export const useMenus = defineStore('menu', () => {
     })
 
     return menus
+  }
+
+  // 扁平化树形数据
+  const flattenTree = tree => {
+    let result = []
+    tree.forEach(node => {
+      result.push(node) // 将当前节点添加到结果数组中
+      if (node.children && node.children.length) {
+        // 如果有子节点，将子节点添加到结果数组中
+        result = result.concat(flattenTree(node.children))
+        delete node.children
+      }
+    })
+    return result
+  }
+
+  const optimizeRoutes = (arr, parentPath = '', parentName = '') => {
+    return arr.map(obj => {
+      const item = {
+        ...obj,
+      }
+      item.path = item.path.startsWith('/')
+        ? item.path
+        : parentPath
+        ? `${parentPath}/${item.path}`
+        : item.path
+      if (parentName) {
+        item.meta.parent = parentName
+      }
+      if (item.children) {
+        item.children = optimizeRoutes(item.children, item.path, item.name)
+      }
+      return item
+    })
+  }
+
+  const formatRoutes = routes => {
+    return routes.map(route => ({
+      ...route,
+      children: flattenTree(optimizeRoutes(route.children || [])),
+    }))
   }
 
   const menus = ref([])
@@ -91,11 +132,14 @@ export const useMenus = defineStore('menu', () => {
       })
       // 过滤出需要添加的动态路由
       const filterRoutes = getFilterRoutes(asyncRoutes, data)
-      filterRoutes.forEach(route => router.addRoute(route))
 
       // 生成菜单
       const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
       setMenus(menus)
+
+      // 添加动态路由，由于只做了二级路由，所以需要将三级之后的children提到二级
+      const arr = formatRoutes(filterRoutes)
+      arr.forEach(route => router.addRoute(route))
     }
   }
   return {

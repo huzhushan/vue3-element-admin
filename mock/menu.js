@@ -42,15 +42,18 @@ export default [
         {
           name: 'testList',
           title: '列表',
+          children: [
+            {
+              name: 'testAdd',
+              title: '添加',
+            },
+            {
+              name: 'testEdit',
+              title: '编辑',
+            },
+          ]
         },
-        {
-          name: 'testAdd',
-          title: '添加',
-        },
-        {
-          name: 'testEdit',
-          title: '编辑',
-        },
+        
         // {
         //   name: 'testAuth',
         //   title: '权限测试',

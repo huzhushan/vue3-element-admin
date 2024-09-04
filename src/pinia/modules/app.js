@@ -28,6 +28,7 @@ export const useApp = defineStore('app', {
       collapse: getItem(COLLAPSE),
     },
     device: 'desktop',
+    matchedRoutes: [],
   }),
   actions: {
     setCollapse(data) {
@@ -41,6 +42,9 @@ export const useApp = defineStore('app', {
     },
     setDevice(device) {
       this.device = device
+    },
+    setMatchedRoutes(payload) {
+      this.matchedRoutes = payload
     },
     setToken(data) {
       this.authorization = data

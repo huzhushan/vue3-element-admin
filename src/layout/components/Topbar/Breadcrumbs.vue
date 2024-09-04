@@ -71,7 +71,8 @@ import { useRouter } from 'vue-router'
 export default defineComponent({
   setup(props, { emit }) {
     const { proxy } = getCurrentInstance()
-    const { device } = storeToRefs(useApp())
+    const appStore = useApp()
+    const { device } = storeToRefs(appStore)
     const router = useRouter()
     const route = router.currentRoute // 这里不使用useRoute获取当前路由，否则下面watch监听路由的时候会有警告
     const breadcrumbs = ref([])
@@ -80,16 +81,37 @@ export default defineComponent({
       () => defaultSettings.menus.mode === 'horizontal'
     )
 
+    const allRoutes = router.getRoutes()
+
+    const recursionArr = (matched, route) => {
+      const parent = route.meta.parent
+      if (parent) {
+        const parentRoute = allRoutes.find(item => item.name === parent)
+        if (parentRoute && parentRoute.meta && parentRoute.meta.title) {
+          matched.splice(
+            matched.findIndex(item => item.name === route.name),
+            0,
+            parentRoute
+          )
+          recursionArr(matched, parentRoute)
+        }
+      }
+    }
+
     const getBreadcrumbs = route => {
       const home = [{ path: '/', meta: { title: proxy.$t('menu.homepage') } }]
       if (route.name === 'home') {
+        appStore.setMatchedRoutes(home)
         return home
       } else {
         const matched = route.matched.filter(
           item => !!item.meta && !!item.meta.title
         )
 
-        return [...home, ...matched]
+        // return [...home, ...matched]
+        recursionArr(matched, route)
+        appStore.setMatchedRoutes(matched)
+        return matched
       }
     }
 

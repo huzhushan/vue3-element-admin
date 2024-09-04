@@ -18,7 +18,7 @@
       本页面主动抛出了错误（任何页面报错都会记录到错误日志中），现在你可以点击右上角的`debugger`图标查看错误日志
     </h4>
     <div>
-      你可以在`store/modules/errorLog.js`的`addErrorLog`方法中将错误上报到服务器
+      你可以在`pinia/modules/errorLog.js`的`addErrorLog`方法中将错误上报到服务器
     </div>
     <br />
     <div>

@@ -39,25 +39,28 @@ export default [
         meta: {
           title: 'menu.testList',
         },
+        children: [
+          {
+            path: 'add',
+            name: 'testAdd',
+            component: Add,
+            meta: {
+              title: 'menu.testAdd',
+            },
+            hidden: true, // 不在菜单中显示
+          },
+          {
+            path: 'edit/:id',
+            name: 'testEdit',
+            component: Edit,
+            meta: {
+              title: 'menu.testEdit',
+            },
+            hidden: true, // 不在菜单中显示
+          },
+        ],
       },
-      {
-        path: 'add',
-        name: 'testAdd',
-        component: Add,
-        meta: {
-          title: 'menu.testAdd',
-        },
-        hidden: true, // 不在菜单中显示
-      },
-      {
-        path: 'edit/:id',
-        name: 'testEdit',
-        component: Edit,
-        meta: {
-          title: 'menu.testEdit',
-        },
-        hidden: true, // 不在菜单中显示
-      },
+
       // {
       //   path: 'auth',
       //   name: 'testAuth',

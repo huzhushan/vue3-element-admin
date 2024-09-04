@@ -58,6 +58,7 @@ import { useRoute } from 'vue-router'
 import config from './config/menu.module.scss'
 import { storeToRefs } from 'pinia'
 import { useMenus } from '@/pinia/modules/menu'
+import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
   components: {
@@ -76,10 +77,16 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { menus } = storeToRefs(useMenus())
+    const appStore = useApp()
+    const { matchedRoutes } = storeToRefs(appStore)
 
     return {
       menus,
-      activePath: computed(() => route.path),
+      activePath: computed(() => {
+        return matchedRoutes.value.length > 1
+          ? matchedRoutes.value[1].path
+          : route.path
+      }),
       variables: computed(() => config),
     }
   },
